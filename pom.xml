@@ -146,4 +146,14 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>https://nexus.sdf.x-hub.io/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus</id>
+            <url>https://nexus.sdf.x-hub.io/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 </project>
