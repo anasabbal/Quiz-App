@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+
+  xquiz-database:
+    container_name: xQuiz-db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: xQuiz-db
+    networks:
+      - network
+
+networks:
+  network:
+
