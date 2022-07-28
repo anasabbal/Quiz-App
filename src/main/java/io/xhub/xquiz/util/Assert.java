@@ -8,9 +8,9 @@ public interface Assert {
 
     ExceptionPayload payload = ExceptionPayloadFactory.INVALID_PAYLOAD.get();
 
-    static void assertNotNull(Object value) {
+    static void assertNotNull(Object value, ExceptionPayload exception) {
         if (value == null) {
-            throw new BusinessException(payload);
+            throw new BusinessException(exception);
         }
     }
 

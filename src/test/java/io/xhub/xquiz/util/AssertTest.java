@@ -1,6 +1,8 @@
 package io.xhub.xquiz.util;
 
 import io.xhub.xquiz.exception.BusinessException;
+import io.xhub.xquiz.exception.ExceptionPayload;
+import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,19 +14,28 @@ class AssertTest {
     @Test
     @DisplayName("given null value when assertNotNull called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_null_object() {
-        assertThrows(BusinessException.class, () -> Assert.assertNotNull(null));
+        ExceptionPayload exceptionPayload = ExceptionPayloadFactory.INVALID_PAYLOAD.get();
+
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.assertNotNull(null, exceptionPayload));
+
+        assertEquals(exceptionPayload.getMessage(), actualException.getPayload().getMessage());
+
     }
 
     @Test
     @DisplayName("given not null value when assertNotNull called then dont throw invalid payload exception")
     void should_not_throw_invalid_payload_exception_given_not_null_object() {
-        assertDoesNotThrow(() -> Assert.assertNotNull("not null"));
+        assertDoesNotThrow(() -> Assert.assertNotNull("not null", ExceptionPayloadFactory.INVALID_PAYLOAD.get()));
     }
 
     @Test
     @DisplayName("given invalid email when assertRegex called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_invalid_email() {
-        assertThrows(BusinessException.class, () -> Assert.assertRegex("invalid email", EMAIL));
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.assertRegex("invalid email", EMAIL));
+
+        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test
@@ -36,7 +47,10 @@ class AssertTest {
     @Test
     @DisplayName("given invalid phone number when assertRegex called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_invalid_phone_number() {
-        assertThrows(BusinessException.class, () -> Assert.assertRegex("+212 NOT WORKING", PHONE_NUMBER));
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.assertRegex("+212 NOT WORKING", PHONE_NUMBER));
+
+        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test
@@ -48,7 +62,12 @@ class AssertTest {
     @Test
     @DisplayName("given invalid name when assertRegex called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_invalid_value() {
-        assertThrows(BusinessException.class, () -> Assert.assertRegex("A", ALPHABETIC_MIN_2_CHARS));
+
+
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.assertRegex("A", ALPHABETIC_MIN_2_CHARS));
+
+        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")

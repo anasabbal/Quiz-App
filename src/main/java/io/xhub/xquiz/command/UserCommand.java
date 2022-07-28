@@ -19,7 +19,7 @@ public class UserCommand implements Validatable {
     @Override
     public void validate() {
         assertRegex(firstName, ALPHABETIC_MIN_2_CHARS);
-        assertRegex(firstName, ALPHABETIC_MIN_2_CHARS);
+        assertRegex(lastName, ALPHABETIC_MIN_2_CHARS);
         assertRegex(email, EMAIL);
         if (phoneNumber != null)
             assertRegex(phoneNumber, PHONE_NUMBER);
