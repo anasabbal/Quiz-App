@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ExceptionPayloadFactory {
 
-    TECHNICAL_ERROR(0, HttpStatus.INTERNAL_SERVER_ERROR, "technical.error");
+    TECHNICAL_ERROR(0, HttpStatus.INTERNAL_SERVER_ERROR, "technical.error"),
+    INVALID_PAYLOAD(1, HttpStatus.BAD_REQUEST, "invalid.request.payload");
 
     private final Integer code;
     private final HttpStatus status;
