@@ -6,6 +6,7 @@ import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,14 +15,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class ThemeServiceImpl implements ThemeService{
 
     private final ThemeRepository themeRepository;
 
     @Override
-    public List<Theme>getThemes() {
+    @Transactional(readOnly = true)
+    public List<Theme> getThemes() {
         log.info("Begin fetching themes ");
-        List<Theme> themes = themeRepository.findAll();
+        List<Theme> themes = themeRepository.findAllByDeletedFalse();
         log.info("Themes with payload {} fetched successfully", JSONUtil.toJSON(themes));
         return themes;
     }
