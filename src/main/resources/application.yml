@@ -27,7 +27,7 @@ spring:
 server:
   servlet:
     context-path: /api
-  port: 8088
+  port: 8080
 
 # application config :
 application:
