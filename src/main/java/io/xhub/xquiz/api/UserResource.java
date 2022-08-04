@@ -24,7 +24,6 @@ import static io.xhub.xquiz.constants.ResourcePath.V1;
 public class UserResource {
 
     private final UserService userService;
-    private final AttendeeFeignClient attendeeFeignClient;
 
     @PostMapping
     public ResponseEntity<Void> register(@RequestBody final UserCommand userCommand) {
@@ -32,9 +31,4 @@ public class UserResource {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{registrationCode}")
-    public ResponseEntity<ResponseDTO> getAttendee(@PathVariable final String registrationCode) {
-
-        return ResponseEntity.ok(attendeeFeignClient.getAttendee(registrationCode));
-    }
 }
