@@ -34,7 +34,7 @@ public class EventResource {
     }
 
 
-    @PostMapping("/{id}/sessions")
+    @PostMapping("/sessions")
     public ResponseEntity createSession(
             @RequestBody final CreateEventSessionCommand body
     ) {
