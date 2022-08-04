@@ -17,11 +17,10 @@ import static io.xhub.xquiz.constants.ResourcePath.V1;
 @RequiredArgsConstructor
 public class EventResource {
 
-    private final EventMapper eventMapper;
     private final EventService eventService;
 
-    @GetMapping
+    @GetMapping // add pagination & criteria
     public ResponseEntity<List<EventDTO>> getEvents() {
-        return ResponseEntity.ok(eventMapper.toEventDTO(eventService.getAllActiveEvents()));
+        return ResponseEntity.ok(eventService.getAllActiveEvents());
     }
 }

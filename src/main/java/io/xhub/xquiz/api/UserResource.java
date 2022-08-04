@@ -1,6 +1,8 @@
 package io.xhub.xquiz.api;
 
 import io.xhub.xquiz.command.UserCommand;
+import io.xhub.xquiz.dto.ResponseDTO;
+import io.xhub.xquiz.feign.AttendeeFeignClient;
 import io.xhub.xquiz.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,10 +24,17 @@ import static io.xhub.xquiz.constants.ResourcePath.V1;
 public class UserResource {
 
     private final UserService userService;
+    private final AttendeeFeignClient attendeeFeignClient;
 
     @PostMapping
     public ResponseEntity<Void> register(@RequestBody final UserCommand userCommand) {
         userService.create(userCommand);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/{registrationCode}")
+    public ResponseEntity<ResponseDTO> getAttendee(@PathVariable final String registrationCode) {
+
+        return ResponseEntity.ok(attendeeFeignClient.getAttendee(registrationCode));
     }
 }

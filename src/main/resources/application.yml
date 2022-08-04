@@ -23,10 +23,19 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+
 server:
   servlet:
     context-path: /api
+  port: 8088
 
 # application config :
 application:
   front-url: ${FRONT_URL:http://localhost:3000}
+
+
+fake-service:
+  enable: true
+
+
+
