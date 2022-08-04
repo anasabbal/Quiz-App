@@ -29,6 +29,19 @@ public class FakeEventServiceImpl implements EventService {
         return List.of(eventDTO);
     }
 
+    @Override
+    public EventDTO getEvent(String id) {
+        return EventDTO.builder()
+                .name("DEVOXX MOROCCO")
+                .active(Boolean.TRUE)
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now().plusDays(3))
+                .location("Agadir")
+                .setup(buildEventSetup())
+                .themes(buildEventThemes())
+                .build();
+    }
+
     private List<EventThemeDTO> buildEventThemes() {
         EventThemeDTO themeDTO = EventThemeDTO.builder()
                 .id("1")

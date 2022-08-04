@@ -10,4 +10,5 @@ import java.util.List;
 public abstract class EventMapper {
 
     public abstract List<EventDTO> toEventDTO (List<Event> events);
+    public abstract EventDTO toEventDTO (Event event);
 }

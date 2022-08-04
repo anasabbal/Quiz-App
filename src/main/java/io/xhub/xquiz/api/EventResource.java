@@ -1,5 +1,6 @@
 package io.xhub.xquiz.api;
 
+import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.dto.EventDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.service.event.EventService;
@@ -21,6 +22,22 @@ public class EventResource {
 
     @GetMapping // add pagination & criteria
     public ResponseEntity<List<EventDTO>> getEvents() {
+        // todo:add pagination and sort + criteria for search
         return ResponseEntity.ok(eventService.getAllActiveEvents());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EventDTO> getEventDetails(
+            @PathVariable("id") final String id
+    ) {
+        return ResponseEntity.ok(eventService.getEvent(id));
+    }
+
+
+    @PostMapping("/{id}/sessions")
+    public ResponseEntity createSession(
+            @RequestBody final CreateEventSessionCommand body
+    ) {
+        return ResponseEntity.ok(eventService.createSession(body));
     }
 }

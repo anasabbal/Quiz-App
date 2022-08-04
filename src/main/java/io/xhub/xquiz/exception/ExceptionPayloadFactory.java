@@ -13,6 +13,8 @@ public enum ExceptionPayloadFactory {
     ATTENDEE_NOT_FOUND(2,  HttpStatus.BAD_REQUEST, "attendee.not.found"),
 
     SENIORITY_LEVEL_NOT_FOUND(3,  HttpStatus.BAD_REQUEST, "seniority.level.not.found"),
+    EVENT_NOT_FOUND(6,  HttpStatus.NOT_FOUND, "events.not.found"),
+    EVENT_SETUP_NOT_FOUND(7,  HttpStatus.NOT_FOUND, "events.setup.not.found"),
     FILE_NOT_FOUND(5, HttpStatus.NOT_FOUND, "file.not.found");
 
     private final Integer code;
