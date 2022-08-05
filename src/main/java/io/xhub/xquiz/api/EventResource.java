@@ -2,7 +2,6 @@ package io.xhub.xquiz.api;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.dto.EventDTO;
-import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.service.event.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

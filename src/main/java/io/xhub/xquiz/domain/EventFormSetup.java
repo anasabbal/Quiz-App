@@ -3,10 +3,7 @@ package io.xhub.xquiz.domain;
 import io.xhub.xquiz.enums.SubmitMethod;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "EVENT_FORM_SETUP")
@@ -20,15 +17,17 @@ public class EventFormSetup extends BaseEntity {
 
     @Column(name = "FORM_NAME")
     private String formName;
+
     @Column(name = "FORM_TITLE")
     private String formTitle;
 
     @Column(name = "SUBMIT_URL")
     private String submitUrl;
+
     @Column(name = "SUBMIT_METHOD")
+    @Enumerated(EnumType.STRING)
     private SubmitMethod submitMethod;
 
-    // todo: enhance this mapping
-    @OneToMany
+    @OneToMany(mappedBy = "eventFormSetup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EventFormElement> elements;
 }

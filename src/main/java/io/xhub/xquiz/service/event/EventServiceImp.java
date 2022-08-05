@@ -5,19 +5,18 @@ import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.domain.EventSetup;
 import io.xhub.xquiz.domain.User;
 import io.xhub.xquiz.dto.EventDTO;
+import io.xhub.xquiz.dto.ResponseDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
+import io.xhub.xquiz.exception.ExceptionPayload;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.EventRepository;
 import io.xhub.xquiz.repository.EventSetupRepository;
 import io.xhub.xquiz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
@@ -68,17 +67,20 @@ public class EventServiceImp implements EventService {
                 user = getOrCreateUser(body);
             } else {
                 final RestTemplate template = new RestTemplate();
+                HttpHeaders headers = new HttpHeaders();
+                HttpEntity<?> entity = new HttpEntity<>(headers);
                 final HttpEntity request = new HttpEntity(body.getPayload());
                 final HttpMethod method = getHttpSubmitMethod(eventSetup.getSubmitMethod());
-                final ResponseEntity<User> response = template.exchange(
+                final ResponseEntity<ResponseDTO> response = template.exchange(
                         eventSetup.getSubmitUrl(),
                         method,
-                        request,
-                        User.class
+                        entity,
+                        ResponseDTO.class,
+                        body.getPayload()
                 );
                 ensureResponseIsOk(response);
-                user = response.getBody();
-                user = saveNewUser(user);
+                ResponseDTO userResponse = response.getBody();
+                user = saveNewUser(userResponse);
             }
 
             if (Objects.isNull(user)) {
@@ -95,7 +97,7 @@ public class EventServiceImp implements EventService {
             }
         }
 
-        return null;
+        return user;
     }
 
     private void createEventSession(Event event, EventSetup eventSetup, User user) {
@@ -106,15 +108,21 @@ public class EventServiceImp implements EventService {
         // todo: fixme
         return null;
     }
-    private User saveNewUser(User user) {
-        /**
-         * 1. check if the user already exists with the unique column
-         * 2. return userRepo.save(user)
-         */
-        return null;
+
+    private User saveNewUser(ResponseDTO responseDTO) {
+        Boolean exists = this.checkIfUserExists(responseDTO.getEmail());
+        if (Boolean.TRUE.equals(exists)) {
+            throw new BusinessException(ExceptionPayloadFactory.USER_ALREADY_EXISTS.get());
+        }
+        User user = User.create(responseDTO);
+        return userRepository.save(user);
     }
 
-    private void ensureResponseIsOk(ResponseEntity<User> response) {
+    private Boolean checkIfUserExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    private void ensureResponseIsOk(ResponseEntity<ResponseDTO> response) {
         if (!HttpStatus.OK.equals(response.getStatusCode())) {
             // todo: fix this!
             throw new RuntimeException("status is not ok");
@@ -131,6 +139,5 @@ public class EventServiceImp implements EventService {
         // todo: fix this!
         throw new RuntimeException(new NotSupportedException(submitMethod.toString()));
     }
-
 
 }

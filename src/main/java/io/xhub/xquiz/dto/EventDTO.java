@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class EventDTO {
 
+    private String id;
     private String name;
     private Boolean active;
     private LocalDateTime startDate;

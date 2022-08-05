@@ -1,9 +1,11 @@
 package io.xhub.xquiz.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "events")
 @Entity
@@ -16,8 +18,8 @@ public class Event extends BaseEntity {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "LOGO_ID")
-    private String logoId;
+    @Column(name = "LOGO")
+    private String logo;
 
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
@@ -28,15 +30,12 @@ public class Event extends BaseEntity {
     @Column(name = "LOCATION")
     private String location;
 
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false AND active= true")
+    private List<EventSetup> setup;
 
-    @Column(name = "COVER_IMAGE_ID")
-    private String coverImageId;
-
-
-    @Column(name = "PRIMARY_COLOR")
-    private String primaryColor;
-
-    @Column(name = "SECONDARY_COLOR")
-    private String secondaryColor;
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false AND active= true")
+    private List<EventTheme> themes;
 
 }

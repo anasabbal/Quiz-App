@@ -1,8 +1,8 @@
 package io.xhub.xquiz.service.event;
 
+import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.enums.EventSetupType;
-import io.xhub.xquiz.enums.FormElementType;
 import io.xhub.xquiz.enums.SubmitMethod;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -42,6 +42,11 @@ public class FakeEventServiceImpl implements EventService {
                 .build();
     }
 
+    @Override
+    public Object createSession(CreateEventSessionCommand body) {
+        return null;
+    }
+
     private List<EventThemeDTO> buildEventThemes() {
         EventThemeDTO themeDTO = EventThemeDTO.builder()
                 .id("1")
@@ -59,7 +64,7 @@ public class FakeEventServiceImpl implements EventService {
                 .name("FIRST NAME")
                 .placeholder("First name")
                 .required(Boolean.TRUE)
-                .type(FormElementType.INPUT)
+                .type("input")
                 .htmlType("TEXT")
                 .build();
 
@@ -67,7 +72,7 @@ public class FakeEventServiceImpl implements EventService {
                 .name("LAST NAME")
                 .placeholder("Last name")
                 .required(Boolean.TRUE)
-                .type(FormElementType.INPUT)
+                .type("input")
                 .htmlType("TEXT")
                 .build();
 
@@ -75,13 +80,13 @@ public class FakeEventServiceImpl implements EventService {
                 .name("EMAIL")
                 .placeholder("xAttendee@x-hub.io")
                 .required(Boolean.TRUE)
-                .type(FormElementType.INPUT)
+                .type("input")
                 .htmlType("TEXT")
                 .build();
 
         EventFormElementDTO registerButton = EventFormElementDTO.builder()
                 .name("Register now")
-                .type(FormElementType.BUTTON)
+                .type("button")
                 .htmlType("button")
                 .build();
 

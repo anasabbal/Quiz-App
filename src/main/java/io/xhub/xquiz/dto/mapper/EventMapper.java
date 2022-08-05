@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {EventSetupMapper.class,EventThemeMapper.class})
 public abstract class EventMapper {
 
     public abstract List<EventDTO> toEventDTO (List<Event> events);

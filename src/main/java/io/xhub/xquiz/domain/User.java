@@ -1,6 +1,7 @@
 package io.xhub.xquiz.domain;
 
 import io.xhub.xquiz.command.UserCommand;
+import io.xhub.xquiz.dto.ResponseDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,16 @@ public class User extends BaseEntity {
         user.lastName = userCommand.getLastName();
         user.email = userCommand.getEmail();
         user.phoneNumber = userCommand.getPhoneNumber();
+        return user;
+    }
+
+    public static User create(final ResponseDTO responseDTO) {
+        final User user = new User();
+
+        user.firstName = responseDTO.getFirstname();
+        user.lastName = responseDTO.getLastname();
+        user.email = responseDTO.getEmail();
+        user.phoneNumber = responseDTO.getPhone();
         return user;
     }
 }
