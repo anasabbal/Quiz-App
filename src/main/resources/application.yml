@@ -10,6 +10,8 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/xQuiz-db}
     username: ${DATABASE_USER:postgres}
     password: ${DATABASE_PASSWORD:postgres}
+    initialization-mode: always
+    platform: postgres
 
   sql:
     init:
@@ -23,10 +25,20 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+
+
 server:
   servlet:
     context-path: /api
+  port: 8080
 
 # application config :
 application:
   front-url: ${FRONT_URL:http://localhost:3000}
+
+
+fake-service:
+  enabled: false
+
+
+

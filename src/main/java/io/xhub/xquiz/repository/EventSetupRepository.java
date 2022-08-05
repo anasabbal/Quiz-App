@@ -1,11 +1,9 @@
 package io.xhub.xquiz.repository;
 
-import io.xhub.xquiz.domain.User;
+import io.xhub.xquiz.domain.EventSetup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-
-    Boolean existsByEmail(String email);
+public interface EventSetupRepository extends JpaRepository<EventSetup, String> {
 }
