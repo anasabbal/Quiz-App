@@ -30,6 +30,9 @@ public class Event extends BaseEntity {
     @Column(name = "LOCATION")
     private String location;
 
+    @Column(name = "INITIALIZED")
+    private Boolean initialized;
+
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Where(clause = "deleted = false AND active= true")
     private List<EventSetup> setup;

@@ -18,6 +18,7 @@ public class EventDTO {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String logo;
+    private Boolean initialized;
     private List<EventSetupDTO> setup;
     private List<EventThemeDTO> themes;
 }
