@@ -30,4 +30,8 @@ public class EventFormSetup extends BaseEntity {
 
     @OneToMany(mappedBy = "eventFormSetup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EventFormElement> elements;
+
+    @ManyToOne
+    @JoinColumn(name = "THEME_ID")
+    private EventTheme theme;
 }

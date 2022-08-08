@@ -17,5 +17,6 @@ public class EventFormSetupDTO {
     private String submitUrl;
     private SubmitMethod submitMethod;
     private List<EventFormElementDTO> elements;
+    private EventThemeDTO theme;
 
 }

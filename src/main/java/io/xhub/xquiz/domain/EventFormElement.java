@@ -25,6 +25,9 @@ public class EventFormElement extends BaseEntity {
     @Column(name = "PLACEHOLDER")
     private String placeholder;
 
+    @Column(name = "LABEL")
+    private String label;
+
     @Column(name = "REQUIRED")
     private Boolean required;
 

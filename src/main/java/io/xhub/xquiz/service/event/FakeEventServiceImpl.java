@@ -22,7 +22,7 @@ public class FakeEventServiceImpl implements EventService {
                 .active(Boolean.TRUE)
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now().plusDays(3))
-                .location("Agadir")
+                .logo("https://svgshare.com/i/jt1.svg")
                 .setup(buildEventSetup())
                 .themes(buildEventThemes())
                 .build();
@@ -36,7 +36,7 @@ public class FakeEventServiceImpl implements EventService {
                 .active(Boolean.TRUE)
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now().plusDays(3))
-                .location("Agadir")
+                .logo("https://svgshare.com/i/jt1.svg")
                 .setup(buildEventSetup())
                 .themes(buildEventThemes())
                 .build();
