@@ -1,6 +1,7 @@
 package io.xhub.xquiz.service.event;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
+import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.domain.EventSetup;
 import io.xhub.xquiz.domain.User;
@@ -9,13 +10,14 @@ import io.xhub.xquiz.dto.ResponseDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
-import io.xhub.xquiz.exception.ExceptionPayload;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.EventRepository;
 import io.xhub.xquiz.repository.EventSetupRepository;
 import io.xhub.xquiz.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +25,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.NotSupportedException;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,17 +37,18 @@ public class EventServiceImp implements EventService {
     private final EventMapper eventMapper;
 
     @Override
-    @Transactional
-    public List<EventDTO> getAllActiveEvents() {
-        return eventMapper.toEventDTO(eventRepository.findAllActiveEvents());
-    }
-
-    @Override
     public EventDTO getEvent(String id) {
         final Event event = eventRepository
                 .findById(id)
                 .orElseThrow(() -> new BusinessException(ExceptionPayloadFactory.EVENT_NOT_FOUND.get()));
         return eventMapper.toEventDTO(event);
+    }
+
+    @Override
+    @Transactional
+    public Page<EventDTO> getEventsByCriteria(Pageable pageable, EventCriteria eventCriteria) {
+        Page<Event> events = eventRepository.findAllEventsSortByDateWithCriteria(pageable, eventCriteria);
+        return events.map(eventMapper::toEventDTO);
     }
 
     @Override
