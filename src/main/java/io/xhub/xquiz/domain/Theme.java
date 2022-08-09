@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -19,5 +20,9 @@ public class Theme extends BaseEntity{
 
     @Column(name = "LABEL")
     private String label;
+
+
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<SubTheme> subThemes;
 
 }
