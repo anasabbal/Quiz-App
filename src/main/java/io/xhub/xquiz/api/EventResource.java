@@ -1,13 +1,15 @@
 package io.xhub.xquiz.api;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
+import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.dto.EventDTO;
 import io.xhub.xquiz.service.event.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 import static io.xhub.xquiz.constants.ResourcePath.EVENTS;
 import static io.xhub.xquiz.constants.ResourcePath.V1;
@@ -19,10 +21,9 @@ public class EventResource {
 
     private final EventService eventService;
 
-    @GetMapping // add pagination & criteria
-    public ResponseEntity<List<EventDTO>> getEvents() {
-        // todo:add pagination and sort + criteria for search
-        return ResponseEntity.ok(eventService.getAllActiveEvents());
+    @GetMapping
+    public ResponseEntity<Page<EventDTO>> getEvents(Pageable pageable, EventCriteria eventCriteria) {
+        return ResponseEntity.ok(eventService.getEventsByCriteria(pageable, eventCriteria));
     }
 
     @GetMapping("/{id}")

@@ -1,10 +1,13 @@
 package io.xhub.xquiz.service.event;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
+import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.enums.EventSetupType;
 import io.xhub.xquiz.enums.SubmitMethod;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,20 +17,6 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "fake-service", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class FakeEventServiceImpl implements EventService {
 
-    @Override
-    public List<EventDTO> getAllActiveEvents() {
-
-        EventDTO eventDTO = EventDTO.builder()
-                .name("DEVOXX MOROCCO")
-                .active(Boolean.TRUE)
-                .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusDays(3))
-                .logo("https://svgshare.com/i/jt1.svg")
-                .setup(buildEventSetup())
-                .themes(buildEventThemes())
-                .build();
-        return List.of(eventDTO);
-    }
 
     @Override
     public EventDTO getEvent(String id) {
@@ -40,6 +29,11 @@ public class FakeEventServiceImpl implements EventService {
                 .setup(buildEventSetup())
                 .themes(buildEventThemes())
                 .build();
+    }
+
+    @Override
+    public Page<EventDTO> getEventsByCriteria(Pageable pageable, EventCriteria eventCriteria) {
+        return null;
     }
 
     @Override
