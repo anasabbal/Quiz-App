@@ -16,7 +16,8 @@ public enum ExceptionPayloadFactory {
     EVENT_NOT_FOUND(6, HttpStatus.NOT_FOUND, "events.not.found"),
     EVENT_SETUP_NOT_FOUND(7, HttpStatus.NOT_FOUND, "events.setup.not.found"),
     FILE_NOT_FOUND(5, HttpStatus.NOT_FOUND, "file.not.found"),
-    USER_ALREADY_EXISTS(8, HttpStatus.BAD_REQUEST, "user.already.exists");
+    ATTENDEE_ALREADY_EXISTS(8, HttpStatus.BAD_REQUEST, "attendee.already.exists"),
+    QUIZ_INSTANCE_NOT_FOUND(9, HttpStatus.NOT_FOUND, "quiz.instance.not.found");
 
     private final Integer code;
     private final HttpStatus status;

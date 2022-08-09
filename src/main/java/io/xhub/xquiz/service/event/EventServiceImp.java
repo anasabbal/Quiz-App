@@ -2,18 +2,19 @@ package io.xhub.xquiz.service.event;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.criteria.EventCriteria;
+import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.domain.EventSetup;
-import io.xhub.xquiz.domain.User;
 import io.xhub.xquiz.dto.EventDTO;
 import io.xhub.xquiz.dto.ResponseDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
+import io.xhub.xquiz.exception.ExceptionPayload;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.EventRepository;
 import io.xhub.xquiz.repository.EventSetupRepository;
-import io.xhub.xquiz.repository.UserRepository;
+import io.xhub.xquiz.repository.AttendeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Page;
@@ -25,13 +26,15 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.NotSupportedException;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 @ConditionalOnProperty(prefix = "fake-service", name = "enabled", havingValue = "false", matchIfMissing = false)
 public class EventServiceImp implements EventService {
-    private final UserRepository userRepository;
+    private final AttendeeRepository attendeeRepository;
     private final EventRepository eventRepository;
     private final EventSetupRepository eventSetupRepository;
     private final EventMapper eventMapper;
@@ -61,11 +64,11 @@ public class EventServiceImp implements EventService {
                 .orElseThrow(() -> new BusinessException(ExceptionPayloadFactory.EVENT_SETUP_NOT_FOUND.get()));
 
 
-        User user = null;
+        Attendee attendee = null;
 
         try {
             if (Objects.isNull(eventSetup.getSubmitUrl())) {
-                user = getOrCreateUser(body);
+                attendee = getOrCreateUser(body);
             } else {
                 final RestTemplate template = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
@@ -81,46 +84,46 @@ public class EventServiceImp implements EventService {
                 );
                 ensureResponseIsOk(response);
                 ResponseDTO userResponse = response.getBody();
-                user = saveNewUser(userResponse);
+                attendee = saveNewUser(userResponse);
             }
 
-            if (Objects.isNull(user)) {
+            if (Objects.isNull(attendee)) {
                 // todo: fix this!
-                throw new RuntimeException("user was not created for some reason! mostly a bug");
+                throw new RuntimeException("attendee was not created for some reason! mostly a bug");
             }
 
-            createEventSession(event, eventSetup, user);
+            createEventSession(event, eventSetup, attendee);
 
         } catch (RestClientException e) {
-            if (Objects.isNull(user)) {
+            if (Objects.isNull(attendee)) {
                 // todo: fix this!
-                throw new RuntimeException("could not communicate with client to get user information");
+                throw new RuntimeException("could not communicate with client to get attendee information");
             }
         }
 
-        return user;
+        return attendee;
     }
 
-    private void createEventSession(Event event, EventSetup eventSetup, User user) {
+    private void createEventSession(Event event, EventSetup eventSetup, Attendee attendee) {
 
     }
 
-    private User getOrCreateUser(CreateEventSessionCommand body) {
+    private Attendee getOrCreateUser(CreateEventSessionCommand body) {
         // todo: fixme
         return null;
     }
 
-    private User saveNewUser(ResponseDTO responseDTO) {
+    private Attendee saveNewUser(ResponseDTO responseDTO) {
         Boolean exists = this.checkIfUserExists(responseDTO.getEmail());
         if (Boolean.TRUE.equals(exists)) {
-            throw new BusinessException(ExceptionPayloadFactory.USER_ALREADY_EXISTS.get());
+            throw new BusinessException(ExceptionPayloadFactory.ATTENDEE_ALREADY_EXISTS.get());
         }
-        User user = User.create(responseDTO);
-        return userRepository.save(user);
+        Attendee attendee = Attendee.create(responseDTO);
+        return attendeeRepository.save(attendee);
     }
 
     private Boolean checkIfUserExists(String email) {
-        return userRepository.existsByEmail(email);
+        return attendeeRepository.existsByEmail(email);
     }
 
     private void ensureResponseIsOk(ResponseEntity<ResponseDTO> response) {
