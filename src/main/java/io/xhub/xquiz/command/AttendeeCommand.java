@@ -9,7 +9,7 @@ import static io.xhub.xquiz.util.Assert.*;
 
 @Getter
 @RequiredArgsConstructor
-public class UserCommand implements Validatable {
+public class AttendeeCommand implements Validatable {
 
     private final String firstName;
     private final String lastName;

@@ -1,5 +1,6 @@
 package io.xhub.xquiz.domain;
 
+
 import io.xhub.xquiz.enums.SubmitMethod;
 import lombok.*;
 

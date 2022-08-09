@@ -1,5 +1,6 @@
 package io.xhub.xquiz.domain;
 
+
 import lombok.*;
 
 import javax.persistence.Column;
