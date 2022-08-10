@@ -2,7 +2,6 @@ package io.xhub.xquiz.service.theme;
 
 import io.xhub.xquiz.domain.Theme;
 import io.xhub.xquiz.repository.ThemeRepository;
-import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,8 @@ public class ThemeServiceImpl implements ThemeService{
     @Transactional(readOnly = true)
     public List<Theme> getThemes() {
         log.info("Begin fetching themes ");
-        List<Theme> themes = themeRepository.findAllByDeletedFalse();
-        log.info("Themes with payload {} fetched successfully", JSONUtil.toJSON(themes));
+        List<Theme> themes = themeRepository.findThemesByDeletedFalse();
+        log.info("Themes with size {} fetched successfully", themes.size());
         return themes;
     }
 }

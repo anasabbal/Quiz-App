@@ -10,4 +10,5 @@ public class ResourcePath {
     public static final String QUIZ_INSTANCE = "/quiz-instance";
     public static final String LOGOUT = "/logout";
     public static final String SUB_THEMES = "/sub-themes";
+    public static final String QUIZ_INSTRUCTION = "/quiz-instructions";
 }
