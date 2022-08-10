@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme, String> {
-    List<Theme> findAllByDeletedFalse();
+    List<Theme> findThemesByDeletedFalse();
 }

@@ -39,6 +39,3 @@ application:
 
 fake-service:
   enabled: false
-
-
-
