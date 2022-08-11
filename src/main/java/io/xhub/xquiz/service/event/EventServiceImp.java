@@ -2,8 +2,6 @@ package io.xhub.xquiz.service.event;
 
 import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.domain.Event;
-import io.xhub.xquiz.dto.EventDTO;
-import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.EventRepository;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class EventServiceImp implements EventService {
 
     private final EventRepository eventRepository;
-    private final EventMapper eventMapper;
 
     @Override
     public Event getEvent(String id) {

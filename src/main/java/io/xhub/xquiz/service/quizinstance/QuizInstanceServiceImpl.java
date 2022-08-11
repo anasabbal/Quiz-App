@@ -60,10 +60,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
         if (Status.PENDING.equals(status)) {
             quizInstance.updateStatusToClosed();
+            quizInstanceRepository.save(quizInstance);
+            log.info("Status of Quiz instance with id {} updated successfully and payload is {}", quizInstanceId, JSONUtil.toJSON(quizInstance));
         }
-        log.info("Status of Quiz instance with id {} updated successfully and payload is {}", quizInstanceId, JSONUtil.toJSON(quizInstance));
 
-        quizInstanceRepository.save(quizInstance);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 attendee = attendeeService.getOrCreateAttendee(body);
             } else {
 
-                log.info("Begin fetching attendee with the register code : {}", JSONUtil.toJSON(body.getPayload().get("registrationCode")));
+                log.info("Start fetching attendee with the registration code : {}", JSONUtil.toJSON(body.getPayload().get("registrationCode")));
 
                 final RestTemplate template = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
@@ -91,7 +91,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 ensureResponseIsOk(response);
                 ResponseAttendeeDTO userResponse = response.getBody();
                 log.info("attendee with the payload {} retrieved successfully", JSONUtil.toJSON(userResponse));
-                attendee = attendeeService.create(userResponse);
+                attendee = attendeeService.getOrCreateAttendee(userResponse);
             }
             if (Objects.isNull(attendee))
                 throw new BusinessException(ExceptionPayloadFactory.TECHNICAL_ERROR.get());
@@ -103,7 +103,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         AttendeeEvent attendeeEvent = attendeeEventService.getOrCreateAttendeeEvent(attendee, event);
 
         QuizInstance quizInstance = getOrCreate(attendeeEvent);
-        log.info("Session opened successfully");
+        log.info("Quiz Session opened successfully with ID {}", quizInstance.getId());
         return quizInstance;
     }
 
@@ -111,7 +111,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         Optional<QuizInstance> quizInstance = quizInstanceRepository.findByAttendeeEvent(attendeeEvent);
         if (quizInstance.isEmpty()) {
             return quizInstanceRepository.save(QuizInstance.create(attendeeEvent));
-        }else if (!Status.CLOSED.equals(quizInstance.get().getCurrentStatus())) {
+        } else if (!Status.CLOSED.equals(quizInstance.get().getCurrentStatus())) {
             return quizInstance.get();
         }
         throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_CLOSED.get());
@@ -131,7 +131,8 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         }
         throw new BusinessException(ExceptionPayloadFactory.HTTP_SUBMIT_METHOD_NOT_SUPPORTED.get());
     }
-    public List<QuizInstructionDTO> getQuizInstructions(){
+
+    public List<QuizInstructionDTO> getQuizInstructions() {
         return quizInstructionMapper.dtoList(quizInstructionRepository.findAllQuizInstructionByDeletedFalse());
     }
 }

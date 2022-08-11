@@ -5,6 +5,8 @@ import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 
 public interface AttendeeService {
+
     Attendee getOrCreateAttendee(final CreateEventSessionCommand body);
-    Attendee create(final ResponseAttendeeDTO body);
+
+    Attendee getOrCreateAttendee(final ResponseAttendeeDTO body);
 }

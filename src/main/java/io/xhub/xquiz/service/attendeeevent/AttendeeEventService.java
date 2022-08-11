@@ -5,5 +5,6 @@ import io.xhub.xquiz.domain.AttendeeEvent;
 import io.xhub.xquiz.domain.Event;
 
 public interface AttendeeEventService {
+
     AttendeeEvent getOrCreateAttendeeEvent(final Attendee attendee, final Event event);
 }

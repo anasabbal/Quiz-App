@@ -19,10 +19,10 @@ public class CreateEventSessionCommand implements Validatable {
 
     @Override
     public void validate() {
-        assertRegex(payload.get("firstname"), ALPHABETIC_MIN_2_CHARS);
-        assertRegex(payload.get("lastname"), ALPHABETIC_MIN_2_CHARS);
+        assertRegex(payload.get("firstName"), ALPHABETIC_MIN_2_CHARS);
+        assertRegex(payload.get("lastName"), ALPHABETIC_MIN_2_CHARS);
         assertRegex(payload.get("email"), EMAIL);
-        if (payload.get("phone") != null)
-            assertRegex(payload.get("phone"), PHONE_NUMBER);
+        if (payload.get("phoneNumber") != null)
+            assertRegex(payload.get("phoneNumber"), PHONE_NUMBER);
     }
 }

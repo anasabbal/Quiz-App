@@ -21,28 +21,24 @@ public class AttendeeServiceImpl implements AttendeeService {
     private final AttendeeRepository attendeeRepository;
 
     @Override
-    public Attendee create(final ResponseAttendeeDTO body) {
-        log.info("Begin registering new attendee with payload {}", JSONUtil.toJSON(body));
-        return attendeeRepository.save(Attendee.create(body));
+    public Attendee getOrCreateAttendee(final ResponseAttendeeDTO response) {
+        Optional<Attendee> attendee = attendeeRepository.findByEmail(response.getEmail());
+        if (attendee.isEmpty()) {
+            log.info("Begin registering new attendee with payload {}", JSONUtil.toJSON(response));
+            return attendeeRepository.save(Attendee.create(response));
+        }
+        return attendee.get();
     }
 
     @Override
     public Attendee getOrCreateAttendee(final CreateEventSessionCommand body) {
-        Optional<Attendee> attendee = attendeeRepository.findByEmail(body.getPayload().get("email"));
-        return attendee.orElseGet(
-                () -> create(mapIntoResponse(body)));
-    }
-
-    private ResponseAttendeeDTO mapIntoResponse(final CreateEventSessionCommand body) {
         body.validate();
-        ResponseAttendeeDTO responseAttendeeDTO = new ResponseAttendeeDTO();
-
-        responseAttendeeDTO.setEmail(body.getPayload().get("email"));
-        responseAttendeeDTO.setFirstname(body.getPayload().get("firstname"));
-        responseAttendeeDTO.setLastname(body.getPayload().get("lastname"));
-        responseAttendeeDTO.setPhone(body.getPayload().get("phone"));
-
-        return responseAttendeeDTO;
+        Optional<Attendee> attendee = attendeeRepository.findByEmail(body.getPayload().get("email"));
+        if (attendee.isEmpty()) {
+            log.info("Begin registering new attendee with payload {}", JSONUtil.toJSON(body.getPayload()));
+            return attendeeRepository.save(Attendee.create(body));
+        }
+        return attendee.get();
     }
 
 }

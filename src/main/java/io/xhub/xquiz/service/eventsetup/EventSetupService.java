@@ -5,5 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface EventSetupService {
+
     EventSetup getEventSetup(final String id);
 }

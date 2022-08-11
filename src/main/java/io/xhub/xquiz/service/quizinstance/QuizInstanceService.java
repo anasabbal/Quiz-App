@@ -7,8 +7,12 @@ import io.xhub.xquiz.dto.QuizInstructionDTO;
 import java.util.List;
 
 public interface QuizInstanceService {
+
     QuizInstance findById(String quizInstanceId);
+
     void updateStatus(String quizInstanceId);
+
     QuizInstance createSession(final CreateEventSessionCommand body);
+
     List<QuizInstructionDTO> getQuizInstructions();
 }

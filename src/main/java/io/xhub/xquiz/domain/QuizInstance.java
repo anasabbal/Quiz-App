@@ -26,7 +26,7 @@ public class QuizInstance extends BaseEntity{
     @Column(name = "FINAL_SCORE")
     private Integer finalScore;
     @Column(name = "LAST_QUESTION_INDEX")
-    private int lastQuestionIndex;
+    private Integer lastQuestionIndex;
     @OneToOne(cascade = CascadeType.PERSIST)
     private AttendeeEvent attendeeEvent;
 

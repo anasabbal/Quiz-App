@@ -24,10 +24,10 @@ VALUES ('5', true, '2022-08-04 16:01:25.000000', null, false, null, null, 1, 'wh
 /* EVENT FORM SETUP */
 
 INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, form_name, form_title, submit_method, submit_url,theme_id)
-VALUES ('1', true, null, null, false, null, null, 1, 'qr-code', 'registration form', 'POST', '/api/v1/events/session','3' );
+VALUES ('1', true, null, null, false, null, null, 1, 'qr-code', 'registration form', 'POST', '/api/v1/quiz-instance','3' );
 
 INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, form_name, form_title, submit_method, submit_url,theme_id)
-VALUES ('2', true, null, null, false, null, null, 1, 'Registration', 'registration form', 'POST', '/api/v1/events/session','4' );
+VALUES ('2', true, null, null, false, null, null, 1, 'Registration', 'registration form', 'POST', '/api/v1/quiz-instance','4' );
 
 /* EVENT SETUP */
 INSERT INTO public.event_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, description, initialize_button_text, kind, submit_method, submit_url, title, event_id, form_setup_id)

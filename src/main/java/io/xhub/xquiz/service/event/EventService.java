@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface EventService {
 
     Event getEvent(final String id);
+
     Page<Event> getEventsByCriteria(Pageable pageable, EventCriteria eventCriteria);
 
 }

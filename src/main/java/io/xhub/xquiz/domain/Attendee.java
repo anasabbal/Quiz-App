@@ -1,6 +1,7 @@
 package io.xhub.xquiz.domain;
 
 import io.xhub.xquiz.command.AttendeeCommand;
+import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,13 +29,13 @@ public class Attendee extends BaseEntity {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    public static Attendee create(final AttendeeCommand attendeeCommand) {
+    public static Attendee create(final CreateEventSessionCommand command) {
         final Attendee attendee = new Attendee();
 
-        attendee.firstName = attendeeCommand.getFirstName();
-        attendee.lastName = attendeeCommand.getLastName();
-        attendee.email = attendeeCommand.getEmail();
-        attendee.phoneNumber = attendeeCommand.getPhoneNumber();
+        attendee.firstName = command.getPayload().get("firstName");
+        attendee.lastName = command.getPayload().get("lastName");
+        attendee.email = command.getPayload().get("email");
+        attendee.phoneNumber = command.getPayload().get("phoneNumber");
         return attendee;
     }
 
