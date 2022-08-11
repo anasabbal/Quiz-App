@@ -1,7 +1,10 @@
 package io.xhub.xquiz.service.attendee;
 
-import io.xhub.xquiz.command.AttendeeCommand;
+import io.xhub.xquiz.command.CreateEventSessionCommand;
+import io.xhub.xquiz.domain.Attendee;
+import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 
 public interface AttendeeService {
-    void create(AttendeeCommand attendeeCommand);
+    Attendee getOrCreateAttendee(final CreateEventSessionCommand body);
+    Attendee create(final ResponseAttendeeDTO body);
 }
