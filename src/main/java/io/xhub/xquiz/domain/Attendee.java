@@ -1,14 +1,13 @@
 package io.xhub.xquiz.domain;
 
 import io.xhub.xquiz.command.AttendeeCommand;
-import io.xhub.xquiz.dto.ResponseDTO;
+import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 
 @Table(name = "attendees")
 @Entity
@@ -39,13 +38,13 @@ public class Attendee extends BaseEntity {
         return attendee;
     }
 
-    public static Attendee create(final ResponseDTO responseDTO) {
+    public static Attendee create(final ResponseAttendeeDTO responseAttendeeDTO) {
         final Attendee attendee = new Attendee();
 
-        attendee.firstName = responseDTO.getFirstname();
-        attendee.lastName = responseDTO.getLastname();
-        attendee.email = responseDTO.getEmail();
-        attendee.phoneNumber = responseDTO.getPhone();
+        attendee.firstName = responseAttendeeDTO.getFirstname();
+        attendee.lastName = responseAttendeeDTO.getLastname();
+        attendee.email = responseAttendeeDTO.getEmail();
+        attendee.phoneNumber = responseAttendeeDTO.getPhone();
         return attendee;
     }
 }

@@ -4,15 +4,16 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
 
+import javax.persistence.*;
 
 @Table(name = "ATTENDEE_EVENT")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class AttendeeEvent{
+public class AttendeeEvent {
+
     @EmbeddedId
     private AttendeeEventId id;
 

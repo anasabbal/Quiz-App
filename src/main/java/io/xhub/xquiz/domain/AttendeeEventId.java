@@ -9,11 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-
 @Embeddable
 @Setter
 @Getter
 public class AttendeeEventId implements Serializable {
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Event event;
 
