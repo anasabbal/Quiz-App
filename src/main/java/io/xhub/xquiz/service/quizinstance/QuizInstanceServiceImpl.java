@@ -1,8 +1,11 @@
 package io.xhub.xquiz.service.quizinstance;
 
 
+import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.QuizInstance;
+import io.xhub.xquiz.dto.QuizInstanceDetailsDTO;
 import io.xhub.xquiz.dto.QuizInstructionDTO;
+import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstructionMapper;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.domain.*;
@@ -11,6 +14,8 @@ import io.xhub.xquiz.enums.Status;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
+import io.xhub.xquiz.repository.QuestionRepository;
+import io.xhub.xquiz.repository.QuizInstanceDetailRepository;
 import io.xhub.xquiz.repository.QuizInstanceRepository;
 import io.xhub.xquiz.repository.QuizInstructionRepository;
 import io.xhub.xquiz.service.attendee.AttendeeService;
@@ -26,10 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -44,6 +47,9 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final QuizInstanceRepository quizInstanceRepository;
     private final QuizInstructionRepository quizInstructionRepository;
     private final QuizInstructionMapper quizInstructionMapper;
+    private final QuestionRepository questionRepository;
+    private final QuizInstanceDetailMapper quizInstanceDetailMapper;
+    private final QuizInstanceDetailRepository quizInstanceDetailRepository;
 
     @Override
     public QuizInstance findById(String quizInstanceId) {
@@ -134,5 +140,27 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
     public List<QuizInstructionDTO> getQuizInstructions() {
         return quizInstructionMapper.dtoList(quizInstructionRepository.findAllQuizInstructionByDeletedFalse());
+    }
+    @Override
+    public QuizInstanceDetailsDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand){
+
+        QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
+
+        QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
+        Integer totalQuestions  = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+
+        List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                quizInstanceDetailsCommand.getSeniorityLevelId(),
+                quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
+
+        LocalDateTime startDate = LocalDateTime.now();
+
+        quizInstance.setStartDate(startDate);
+
+        return quizInstanceDetailMapper.toQuizInstanceDetailsDTO(
+                quizInstanceDetailRepository.save(
+                        QuizInstanceDetails.create(questions, quizInstance)
+                ), quizInstruction
+        );
     }
 }

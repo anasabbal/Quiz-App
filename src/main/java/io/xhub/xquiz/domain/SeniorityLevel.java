@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Table(name = "seniority_levels")
@@ -17,5 +18,8 @@ public class SeniorityLevel extends BaseEntity{
 
     @Column(name = "LABEL")
     private String label;
+
+    @OneToMany(mappedBy = "seniorityLevel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Question> questions;
 }
 

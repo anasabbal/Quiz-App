@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface QuizInstructionRepository extends JpaRepository<QuizInstruction, String> {
     List<QuizInstruction> findAllQuizInstructionByDeletedFalse();
+
+    QuizInstruction findQuizInstructionByKey(String key);
 }
