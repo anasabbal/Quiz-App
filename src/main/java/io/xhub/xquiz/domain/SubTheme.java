@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "sub_themes")
 @Entity
@@ -28,4 +26,7 @@ public class SubTheme extends BaseEntity{
 
     @ManyToOne
     private Theme theme;
+
+    @OneToMany(mappedBy = "subTheme", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Question> questions;
 }

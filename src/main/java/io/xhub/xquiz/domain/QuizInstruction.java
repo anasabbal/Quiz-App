@@ -20,4 +20,7 @@ public class QuizInstruction extends BaseEntity{
 
     @Column(name = "VALUE")
     private String value;
+
+    @Column(name = "KEY")
+    private String key;
 }

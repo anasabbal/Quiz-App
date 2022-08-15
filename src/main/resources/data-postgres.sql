@@ -72,7 +72,7 @@ VALUES (1, 'SENIOR'), (2, 'JUNIOR'), (3, 'INTERMEDIATE');
 
 /*  Quiz Instance */
 insert into public.quiz_instance (id, active, created_at, created_by, deleted, updated_at, updated_by, version, end_date,last_question_index ,  start_date, status, final_score, attendee_event_attendee_id, attendee_event_event_id)
-values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '2022-04-16 01:27:07.8801', 3,  '2022-04-16 01:27:07.8801', 0, 1, null, null);
+values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '2022-04-16 01:27:07.8801', 3,  '2022-04-16 01:27:07.8801', 'OPENED', 1, null, null);
 
 /* themes modes seed */
 insert into public.themes(id, active, created_at, created_by, deleted, updated_at, updated_by, version, label, icon)
@@ -88,11 +88,31 @@ values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
        (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'java', null, 1);
 
 
-insert into public.quiz_instructions (id, active, created_at, created_by, deleted, updated_at, updated_by, version,label, value)
-values (1, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,  'Total Number of questions:', '20'),
-       (2, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Time limit:', '15:00'),
-       (3, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Total Number of attempts:', '1'),
-       (4, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Pass Task:', '80%');
+insert into public.quiz_instructions (id, active, created_at, created_by, deleted, updated_at, updated_by, version,label, value, key)
+values (1, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,  'Total Number of questions:', '20', 'TOTAL_QUESTIONS'),
+       (2, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Time limit:', '900', 'TIME_LIMIT'),
+       (3, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Total Number of attempts:', '1', 'TOTAL_ATTEMPTS'),
+       (4, true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0,   'Pass Task:', '80', 'PASS_TASK');
 
 
-
+insert into public.questions(id, active, created_at, created_by, deleted, updated_at, updated_by, version,is_multiple_choice , score, seniority_level_id, sub_theme_id, content)
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'A'),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'AN'),
+       (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'ANA'),
+       (4, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'ANAS'),
+       (5, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'SDFVSDVS'),
+       (6, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'DVVVVV'),
+       (7, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'ANABBBBBBSAB'),
+       (8, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'NNNNN'),
+       (9, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'WWWWW'),
+       (10, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'QQQQ'),
+       (11, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'ANAAAASAB'),
+       (12, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'AAAAA'),
+       (13, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'ZZZZZ'),
+       (14, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'EEEEEE'),
+       (15, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'RRRRRRR'),
+       (16, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'TTTTT'),
+       (17, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'YYYYY'),
+       (18, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'UUUUUUU'),
+       (19, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'IIIII'),
+       (20, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,true, 80, 1, 1, 'OOOOO');
