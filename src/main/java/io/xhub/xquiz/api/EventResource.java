@@ -3,6 +3,7 @@ package io.xhub.xquiz.api;
 import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.dto.EventDTO;
+import io.xhub.xquiz.dto.EventDetailsDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.service.event.EventService;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,9 @@ public class EventResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventDTO> getEventDetails(@PathVariable final String id) {
+    public ResponseEntity<EventDetailsDTO> getEventDetails(@PathVariable final String id) {
 
-        return ResponseEntity.ok(eventMapper.toEventDTO(eventService.getEvent(id)));
+        return ResponseEntity.ok(eventMapper.toEventDetailsDTO(eventService.getEvent(id)));
     }
 
 }
