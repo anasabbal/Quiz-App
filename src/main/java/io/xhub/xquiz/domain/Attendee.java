@@ -1,6 +1,5 @@
 package io.xhub.xquiz.domain;
 
-import io.xhub.xquiz.command.AttendeeCommand;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 import lombok.AccessLevel;
