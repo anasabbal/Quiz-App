@@ -4,7 +4,6 @@ package io.xhub.xquiz.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Table(name = "QUIZ_INSTANCE_DETAILS")
 @Entity
@@ -15,22 +14,22 @@ import java.util.List;
 public class QuizInstanceDetails extends BaseEntity{
 
     @Column(name = "SCORE")
-    private int score;
+    private Integer score;
 
     @Column(name = "QUESTION_INDEX")
-    private int questionIndex;
-    @OneToMany
-    private List<Question> questions;
-    @OneToOne
+    private Integer questionIndex;
+    @ManyToOne
+    private Question question;
+    @ManyToOne
     private QuizInstance quizInstance;
 
-
-    public static QuizInstanceDetails create(List<Question> questions,
-                                             QuizInstance quizInstance) {
+    public static QuizInstanceDetails create(Question question, QuizInstance quizInstance, Integer questionIndex){
         final QuizInstanceDetails quizInstanceDetails = new QuizInstanceDetails();
 
-        quizInstanceDetails.questions = questions;
+        quizInstanceDetails.question = question;
         quizInstanceDetails.quizInstance = quizInstance;
+        quizInstanceDetails.questionIndex = questionIndex;
+
         return quizInstanceDetails;
     }
 }

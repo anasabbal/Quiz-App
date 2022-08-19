@@ -3,13 +3,12 @@ package io.xhub.xquiz.service.quizinstance;
 
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.QuizInstance;
-import io.xhub.xquiz.dto.QuizInstanceDetailsDTO;
-import io.xhub.xquiz.dto.QuizInstructionDTO;
+import io.xhub.xquiz.dto.*;
+import io.xhub.xquiz.dto.mapper.QuestionMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstructionMapper;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.domain.*;
-import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 import io.xhub.xquiz.enums.Status;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
@@ -33,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -48,8 +48,9 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final QuizInstructionRepository quizInstructionRepository;
     private final QuizInstructionMapper quizInstructionMapper;
     private final QuestionRepository questionRepository;
-    private final QuizInstanceDetailMapper quizInstanceDetailMapper;
     private final QuizInstanceDetailRepository quizInstanceDetailRepository;
+    private final QuizInstanceDetailMapper quizInstanceDetailMapper;
+    private final QuestionMapper questionMapper;
 
     @Override
     public QuizInstance findById(String quizInstanceId) {
@@ -142,25 +143,37 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         return quizInstructionMapper.dtoList(quizInstructionRepository.findAllQuizInstructionByDeletedFalse());
     }
     @Override
-    public QuizInstanceDetailsDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand){
+    public QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand){
 
-        QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
+        final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
 
-        QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
-        Integer totalQuestions  = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+        final Integer totalQuestions  = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
 
-        List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
-                quizInstanceDetailsCommand.getSeniorityLevelId(),
-                quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
+        final QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
 
-        LocalDateTime startDate = LocalDateTime.now();
+        final LocalDateTime startDate = LocalDateTime.now();
 
-        quizInstance.setStartDate(startDate);
 
-        return quizInstanceDetailMapper.toQuizInstanceDetailsDTO(
-                quizInstanceDetailRepository.save(
-                        QuizInstanceDetails.create(questions, quizInstance)
-                ), quizInstruction
-        );
+        quizInstance.setStartDate(LocalDateTime.now());
+
+        if(!checkIfSessionQuestionsExist(quizInstance.getId())){
+
+            final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                    quizInstanceDetailsCommand.getSeniorityLevelId(),
+                    quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
+
+            questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question))));
+            return QuizDetailDTO.create(questionMapper.toList(questions), Integer.valueOf(quizInstruction.getValue()), startDate);
+        }else{
+            List<QuestionDTO> questionDTOS = mapQuestions(quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
+                    findQuizInstanceDetailsByQuizInstanceId(quizInstance.getId())));
+            return QuizDetailDTO.create(questionDTOS, Integer.valueOf(quizInstruction.getValue()), startDate);
+        }
+    }
+    private List<QuestionDTO> mapQuestions(final List<QuizInstanceDetailsDTO> quizInstanceDetailsDTOS){
+        return quizInstanceDetailsDTOS.stream().map(QuizInstanceDetailsDTO::getQuestion).collect(Collectors.toList());
+    }
+    private Boolean checkIfSessionQuestionsExist(String sessionId){
+        return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
 }

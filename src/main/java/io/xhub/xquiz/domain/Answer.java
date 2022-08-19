@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Answer extends BaseEntity {
 
     @Column(name = "is_correct")
-    private boolean isCorrect;
+    private Boolean isCorrect;
 
     @Column(name = "CONTENT")
     private String content;
