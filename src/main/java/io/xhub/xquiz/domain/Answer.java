@@ -4,7 +4,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+
 @Table(name = "answers")
 @Entity
 @Getter
@@ -19,5 +21,6 @@ public class Answer extends BaseEntity {
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 }

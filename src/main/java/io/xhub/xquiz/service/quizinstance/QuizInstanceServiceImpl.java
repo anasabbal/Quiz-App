@@ -1,14 +1,13 @@
 package io.xhub.xquiz.service.quizinstance;
 
 
+import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
-import io.xhub.xquiz.domain.QuizInstance;
+import io.xhub.xquiz.domain.*;
 import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.dto.mapper.QuestionMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstructionMapper;
-import io.xhub.xquiz.command.CreateEventSessionCommand;
-import io.xhub.xquiz.domain.*;
 import io.xhub.xquiz.enums.Status;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
@@ -31,7 +30,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -176,4 +177,12 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private Boolean checkIfSessionQuestionsExist(String sessionId) {
         return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
+
+    public void updateLastQuestionIndex(String id, QuizInstanceDetails quizInstanceDetails) {
+        final QuizInstance quizInstance = findById(id);
+        quizInstance.setLastQuestionIndex(quizInstanceDetails.getQuestionIndex() + 1);
+        quizInstanceRepository.save(quizInstance);
+        log.info("Last question index updated  successfully with value {}", quizInstanceDetails.getQuestionIndex());
+    }
+
 }
