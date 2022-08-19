@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "QUESTIONS")
 @Entity
@@ -30,4 +31,7 @@ public class Question extends BaseEntity{
 
     @ManyToOne
     private SubTheme subTheme;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Answer> answers;
 }
