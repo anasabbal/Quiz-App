@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface QuizInstanceDetailRepository extends JpaRepository<QuizInstanceDetails, String> {
-    List<QuizInstanceDetails> findQuizInstanceDetailsByQuizInstanceId(String id);
+
+    QuizInstanceDetails findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(String id, Integer questionIndex);
+
     boolean existsByQuizInstanceId(String id);
 }

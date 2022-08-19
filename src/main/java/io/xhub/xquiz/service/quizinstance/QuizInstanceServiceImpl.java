@@ -142,12 +142,13 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     public List<QuizInstructionDTO> getQuizInstructions() {
         return quizInstructionMapper.dtoList(quizInstructionRepository.findAllQuizInstructionByDeletedFalse());
     }
+
     @Override
-    public QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand){
+    public QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand) {
 
         final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
 
-        final Integer totalQuestions  = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+        final Integer totalQuestions = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
 
         final QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
 
@@ -156,24 +157,23 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
         quizInstance.setStartDate(LocalDateTime.now());
 
-        if(!checkIfSessionQuestionsExist(quizInstance.getId())){
+        if (!checkIfSessionQuestionsExist(quizInstance.getId())) {
 
             final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
                     quizInstanceDetailsCommand.getSeniorityLevelId(),
                     quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
 
-            questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question))));
-            return QuizDetailDTO.create(questionMapper.toList(questions), Integer.valueOf(quizInstruction.getValue()), startDate);
-        }else{
-            List<QuestionDTO> questionDTOS = mapQuestions(quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
-                    findQuizInstanceDetailsByQuizInstanceId(quizInstance.getId())));
-            return QuizDetailDTO.create(questionDTOS, Integer.valueOf(quizInstruction.getValue()), startDate);
+            questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
+            return QuizDetailDTO.create(questionMapper.toQuestionDTO(questions.get(0)), Integer.valueOf(quizInstruction.getValue()), startDate);
+        } else {
+            QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
+                    findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
+            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate);
         }
     }
-    private List<QuestionDTO> mapQuestions(final List<QuizInstanceDetailsDTO> quizInstanceDetailsDTOS){
-        return quizInstanceDetailsDTOS.stream().map(QuizInstanceDetailsDTO::getQuestion).collect(Collectors.toList());
-    }
-    private Boolean checkIfSessionQuestionsExist(String sessionId){
+
+
+    private Boolean checkIfSessionQuestionsExist(String sessionId) {
         return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
 }
