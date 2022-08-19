@@ -13,4 +13,5 @@ public class ResourcePath {
     public static final String QUIZ_INSTRUCTION = "/quiz-instructions";
     public static final String QUESTIONS = "/questions";
     public static final String START_QUIZ = "/start-quiz";
+    public static final String ANSWER = "/answer";
  }

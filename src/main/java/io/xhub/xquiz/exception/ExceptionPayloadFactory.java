@@ -21,7 +21,8 @@ public enum ExceptionPayloadFactory {
     HTTP_SUBMIT_METHOD_NOT_SUPPORTED(10, HttpStatus.METHOD_NOT_ALLOWED,"http.method.not.supported"),
     QUIZ_INSTANCE_NOT_FOUND(11, HttpStatus.NOT_FOUND, "quiz.instance.not.found"),
     THEME_NOT_FOUND(12, HttpStatus.NOT_FOUND, "theme.not.found"),
-    QUIZ_INSTANCE_CLOSED(13, HttpStatus.FORBIDDEN,"quiz.instance.closed");
+    QUIZ_INSTANCE_CLOSED(13, HttpStatus.FORBIDDEN,"quiz.instance.closed"),
+    QUIZ_INSTANCE_DETAILS_NOT_FOUND(14,HttpStatus.NOT_FOUND,"quiz.instance.details.not.found");
 
     private final Integer code;
     private final HttpStatus status;
