@@ -16,15 +16,20 @@ public class QuizInstance extends BaseEntity{
 
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
+
     @Column(name = "END_DATE")
     private LocalDateTime endDate;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
+
     @Column(name = "FINAL_SCORE")
     private Integer finalScore;
+
     @Column(name = "LAST_QUESTION_INDEX")
     private Integer lastQuestionIndex;
+
     @OneToOne(cascade = CascadeType.PERSIST)
     private AttendeeEvent attendeeEvent;
 
