@@ -104,8 +104,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 throw new BusinessException(ExceptionPayloadFactory.TECHNICAL_ERROR.get());
 
         } catch (RestClientException e) {
-            if (Objects.isNull(attendee))
-                throw new BusinessException(ExceptionPayloadFactory.TECHNICAL_ERROR.get());
+                throw new BusinessException(ExceptionPayloadFactory.REGISTRATION_CODE_NOT_FOUND.get());
         }
         AttendeeEvent attendeeEvent = attendeeEventService.getOrCreateAttendeeEvent(attendee, event);
 
@@ -157,7 +156,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
         quizInstance.setStartDate(LocalDateTime.now());
 
-        if (!checkIfSessionQuestionsExist(quizInstance.getId())) {
+        if (Boolean.FALSE.equals(checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
             final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
                     quizInstanceDetailsCommand.getSeniorityLevelId(),
