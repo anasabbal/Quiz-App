@@ -2,6 +2,7 @@ package io.xhub.xquiz.service.quizinstance;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
+import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.domain.QuizInstance;
 import io.xhub.xquiz.domain.QuizInstanceDetails;
 import io.xhub.xquiz.dto.QuizDetailDTO;
@@ -22,4 +23,6 @@ public interface QuizInstanceService {
     void updateLastQuestionIndex(String id, QuizInstanceDetails quizInstanceDetails);
 
     QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand);
+
+    Attendee getAttendeeByQuizInstanceId(final String id);
 }

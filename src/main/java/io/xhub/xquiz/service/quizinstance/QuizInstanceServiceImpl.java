@@ -33,7 +33,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -173,8 +172,14 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         }
     }
 
+    @Override
+    public Attendee getAttendeeByQuizInstanceId(final String id) {
+        return quizInstanceRepository.findAttendeeByQuizInstance(id).orElseThrow(
+                () -> new BusinessException(ExceptionPayloadFactory.ATTENDEE_NOT_FOUND.get())
+        );
+    }
 
-    private Boolean checkIfSessionQuestionsExist(String sessionId) {
+    private Boolean checkIfSessionQuestionsExist(final String sessionId) {
         return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
 

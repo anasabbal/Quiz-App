@@ -3,9 +3,9 @@ package io.xhub.xquiz.api;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.command.UpdateQuizInstanceDetailsCommand;
-import io.xhub.xquiz.dto.QuestionDTO;
-import io.xhub.xquiz.dto.QuizDetailDTO;
-import io.xhub.xquiz.dto.QuizInstanceDTO;
+import io.xhub.xquiz.domain.Attendee;
+import io.xhub.xquiz.dto.*;
+import io.xhub.xquiz.dto.mapper.AttendeeMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstanceMapper;
 import io.xhub.xquiz.service.answer.AnswerService;
 import io.xhub.xquiz.service.quizinstance.QuizInstanceService;
@@ -24,6 +24,7 @@ public class QuizInstanceResource {
     private final QuizInstanceService quizInstanceService;
     private final QuizInstanceMapper quizInstanceMapper;
     private final AnswerService answerService;
+    private final AttendeeMapper attendeeMapper;
 
     @PostMapping
     public ResponseEntity<QuizInstanceDTO> create(@RequestBody final CreateEventSessionCommand body) {
@@ -45,5 +46,11 @@ public class QuizInstanceResource {
     @PatchMapping("/{quizInstanceId}" + ANSWER)
     public ResponseEntity<QuestionDTO> answer(@PathVariable("quizInstanceId") String quizInstanceId, @RequestBody UpdateQuizInstanceDetailsCommand command) {
         return ResponseEntity.ok(answerService.answer(quizInstanceId, command));
+    }
+
+    @GetMapping("{quizInstanceId}")
+    public ResponseEntity<AttendeeDTO> getAttendee(@PathVariable final String quizInstanceId) {
+        final Attendee attendee = quizInstanceService.getAttendeeByQuizInstanceId(quizInstanceId);
+        return ResponseEntity.ok(attendeeMapper.toAttendeeDTO(attendee));
     }
 }
