@@ -22,7 +22,9 @@ public enum ExceptionPayloadFactory {
     QUIZ_INSTANCE_NOT_FOUND(11, HttpStatus.NOT_FOUND, "quiz.instance.not.found"),
     THEME_NOT_FOUND(12, HttpStatus.NOT_FOUND, "theme.not.found"),
     QUIZ_INSTANCE_CLOSED(13, HttpStatus.FORBIDDEN,"quiz.instance.closed"),
-    QUIZ_INSTANCE_DETAILS_NOT_FOUND(14,HttpStatus.NOT_FOUND,"quiz.instance.details.not.found");
+    QUIZ_INSTANCE_DETAILS_NOT_FOUND(14,HttpStatus.NOT_FOUND,"quiz.instance.details.not.found"),
+    REGISTRATION_CODE_NOT_FOUND(15,HttpStatus.NOT_FOUND,"registration.code.not.found");
+
 
     private final Integer code;
     private final HttpStatus status;
