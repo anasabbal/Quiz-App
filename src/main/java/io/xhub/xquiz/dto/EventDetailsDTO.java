@@ -14,6 +14,7 @@ public class EventDetailsDTO {
     private String id;
     private String name;
     private String logo;
+    private String location;
     private List<LocalDate> eventDates;
     private List<EventSetupDTO> setup;
     private Boolean active;
