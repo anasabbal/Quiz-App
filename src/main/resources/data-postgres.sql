@@ -78,16 +78,19 @@ values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
 
 /* themes modes seed */
 insert into public.themes(id, active, created_at, created_by, deleted, updated_at, updated_by, version, label, icon)
-VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'BackEnd', 'https://svgshare.com/i/m1s'),
-       (2, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'FrontEnd', 'https://svgshare.com/i/m2s'),
-       (3, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Big data','https://svgshare.com/i/m2D'),
-       (4, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'AI', 'https://svgshare.com/i/m2D'),
-       (5, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Mobile', 'https://svgshare.com/i/m2Q');
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Backend', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660154514/Backend_icon_ffaody.png'),
+       (2, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Frontend', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660128579/Web_development_rdmwfh.png'),
+       (3, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Fullstack','https://res.cloudinary.com/dizlyig0d/image/upload/v1661282875/fi-rs-layers_xov9iu.png'),
+       (4, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'DevOps', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661282808/Group_2_ywswmq.png'),
+       (5, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'UX/UI', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661336538/design_icon_kmpejb.png'),
+       (6, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Agile methodologies', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661282912/file-icons_test-generic_wuom8u.png'),
+       (7, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'QA', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660155052/bxs_data_qupdkg.png'),
+       (8, true, '2022-04-06 01:27:07.8802', 'SYSTEM', false, '2022-04-16 01:27:07.8802', 'SYSTEM', 0, 'Mobile', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660155135/phone_lzswzx.png');
 
 
 insert into public.sub_themes (id, active, created_at, created_by, deleted, updated_at, updated_by, version,title, icon,theme_id)
-values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'spring', 'https://svgshare.com/i/m1r', 1),
-       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'java', 'https://svgshare.com/i/m0o', 1);
+values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Spring', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661336412/Spring_Boot_kchrrv.png', 1),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Java', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png', 1);
 
 
 insert into public.quiz_instructions (id, active, created_at, created_by, deleted, updated_at, updated_by, version,label, value, key)
