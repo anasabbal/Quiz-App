@@ -20,7 +20,7 @@ public class EventServiceImp implements EventService {
 
     @Override
     public Event getEvent(String id) {
-        return eventRepository.findById(id).orElseThrow(
+        return eventRepository.findEventByIdAndDeletedFalse(id).orElseThrow(
                 () -> new BusinessException(ExceptionPayloadFactory.EVENT_NOT_FOUND.get()));
     }
 
