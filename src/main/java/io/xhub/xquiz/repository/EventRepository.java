@@ -25,7 +25,6 @@ public interface EventRepository extends JpaRepository<Event, String>, JpaSpecif
     default Page<Event> findAllEventsSortByDateWithCriteria(Pageable pageable, EventCriteria eventCriteria) {
         return findAll((root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>(Arrays.asList(
-                    builder.lessThanOrEqualTo(root.get(START_DATE), LocalDateTime.now()),
                     builder.greaterThanOrEqualTo(root.get(END_DATE), LocalDateTime.now())
             ));
             if (eventCriteria.getName() != null) {
