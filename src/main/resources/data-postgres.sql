@@ -74,7 +74,7 @@ VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
 
 /*  Quiz Instance */
 insert into public.quiz_instance (id, active, created_at, created_by, deleted, updated_at, updated_by, version, end_date,last_question_index ,  start_date, status, final_score, attendee_event_attendee_id, attendee_event_event_id)
-values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '2022-04-16 01:27:07.8801', 0,  '2022-04-16 01:27:07.8801', 'OPENED', 0, null, null);
+values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '2022-04-16 01:27:07.8801', 3,  '2022-04-16 01:27:07.8801', 'OPENED', 1, 1, null);
 
 /* themes modes seed */
 insert into public.themes(id, active, created_at, created_by, deleted, updated_at, updated_by, version, label, icon)
