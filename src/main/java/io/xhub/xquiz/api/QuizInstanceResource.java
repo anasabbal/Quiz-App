@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import static io.xhub.xquiz.constants.ResourcePath.*;
 
 @RequiredArgsConstructor
@@ -52,5 +51,10 @@ public class QuizInstanceResource {
     public ResponseEntity<AttendeeDTO> getAttendee(@PathVariable final String quizInstanceId) {
         final Attendee attendee = quizInstanceService.getAttendeeByQuizInstanceId(quizInstanceId);
         return ResponseEntity.ok(attendeeMapper.toAttendeeDTO(attendee));
+    }
+
+    @GetMapping("{quizInstanceId}" + FINISH_QUIZ)
+    public ResponseEntity<PassMarkDTO> finishQuiz(@PathVariable String quizInstanceId) {
+        return ResponseEntity.ok(answerService.finishQuiz(quizInstanceId));
     }
 }

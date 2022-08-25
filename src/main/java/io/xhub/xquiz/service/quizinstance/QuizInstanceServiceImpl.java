@@ -4,7 +4,10 @@ package io.xhub.xquiz.service.quizinstance;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.*;
-import io.xhub.xquiz.dto.*;
+import io.xhub.xquiz.dto.QuizDetailDTO;
+import io.xhub.xquiz.dto.QuizInstanceDetailsDTO;
+import io.xhub.xquiz.dto.QuizInstructionDTO;
+import io.xhub.xquiz.dto.ResponseAttendeeDTO;
 import io.xhub.xquiz.dto.mapper.QuestionMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstructionMapper;
@@ -104,7 +107,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 throw new BusinessException(ExceptionPayloadFactory.TECHNICAL_ERROR.get());
 
         } catch (RestClientException e) {
-                throw new BusinessException(ExceptionPayloadFactory.REGISTRATION_CODE_NOT_FOUND.get());
+            throw new BusinessException(ExceptionPayloadFactory.REGISTRATION_CODE_NOT_FOUND.get());
         }
         AttendeeEvent attendeeEvent = attendeeEventService.getOrCreateAttendeeEvent(attendee, event);
 
@@ -182,11 +185,14 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
 
-    public void updateLastQuestionIndex(String id, QuizInstanceDetails quizInstanceDetails) {
+    public void updateLastQuestionIndexAndFinalScore(String id, QuizInstanceDetails quizInstanceDetails) {
         final QuizInstance quizInstance = findById(id);
-        quizInstance.setLastQuestionIndex(quizInstanceDetails.getQuestionIndex() + 1);
+        quizInstance.setLastQuestionIndex(quizInstanceDetails.getQuestionIndex());
+        quizInstance.setFinalScore(quizInstanceDetails.getScore() + quizInstance.getFinalScore());
         quizInstanceRepository.save(quizInstance);
-        log.info("Last question index updated  successfully with value {}", quizInstanceDetails.getQuestionIndex());
+        log.info("Last question index and final score updated  successfully with index value {} and score value {}"
+                , quizInstance.getLastQuestionIndex(), quizInstance.getFinalScore());
     }
+
 
 }
