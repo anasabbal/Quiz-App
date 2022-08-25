@@ -4,7 +4,7 @@ import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayload;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public interface Assert {
@@ -32,5 +32,9 @@ public interface Assert {
     static void assertRegex(String value, String regex) {
         if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(payload);
     }
-
+    static void isValid(Integer value) {
+        if (value < 1 || value > 5) {
+            throw new BusinessException(payload);
+        }
+    }
 }
