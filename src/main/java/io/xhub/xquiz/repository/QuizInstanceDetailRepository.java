@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.List;
 
 @Repository
 public interface QuizInstanceDetailRepository extends JpaRepository<QuizInstanceDetails, String> {
@@ -17,4 +16,8 @@ public interface QuizInstanceDetailRepository extends JpaRepository<QuizInstance
     Optional<QuizInstanceDetails> findQuizInstanceDetails(String quizInstanceId, String questionId);
 
     boolean existsByQuizInstanceId(String id);
+
+    @Query("SELECT sum (q.question.score) from QuizInstanceDetails q where q.quizInstance.id =?1 and q.deleted=false ")
+    Integer sumQuestionsScoreByQuizInstanceId(String id);
+
 }

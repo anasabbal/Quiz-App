@@ -5,6 +5,7 @@ import io.xhub.xquiz.domain.Answer;
 import io.xhub.xquiz.domain.Question;
 import io.xhub.xquiz.domain.QuizInstance;
 import io.xhub.xquiz.domain.QuizInstanceDetails;
+import io.xhub.xquiz.dto.PassMarkDTO;
 import io.xhub.xquiz.dto.QuestionDTO;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.enums.Status;
@@ -44,7 +45,8 @@ public class AnswerServiceImpl implements AnswerService {
         if (answerVerification(answers, question)) {
             quizInstanceDetails.setScore(quizInstanceDetails.getScore() + question.getScore());
         }
-        quizInstanceService.updateLastQuestionIndex(quizInstanceId, quizInstanceDetails);
+        quizInstanceService.updateLastQuestionIndexAndFinalScore(quizInstanceId, quizInstanceDetails);
+
         quizInstanceDetailRepository.save(quizInstanceDetails);
         log.info("quizInstanceDetails updated successfully");
         createQuestionAnswerDetails(answers, quizInstanceDetails);
@@ -78,5 +80,12 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAnswersByIdAndDeletedFalse(ids);
     }
 
+    public PassMarkDTO finishQuiz(String quizInstanceId) {
+        final Integer perfectScore = quizInstanceDetailRepository.sumQuestionsScoreByQuizInstanceId(quizInstanceId);
+        final Integer scorePercentage = quizInstanceService.findById(quizInstanceId).getFinalScore();
+        final Integer passMark = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("PASS_TASK").getValue());
+        float attendeeMark = (Float.valueOf(scorePercentage) * 100 / Float.valueOf(perfectScore));
+        return PassMarkDTO.create(passMark, attendeeMark);
+    }
 
 }
