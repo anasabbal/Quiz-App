@@ -20,7 +20,7 @@ public interface QuizInstanceService {
 
     List<QuizInstructionDTO> getQuizInstructions();
 
-    void updateLastQuestionIndexAndFinalScore(String id, QuizInstanceDetails quizInstanceDetails);
+    void updateLastQuestionIndexAndFinalScore(QuizInstanceDetails quizInstanceDetails, QuizInstance quizInstance);
 
     QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand);
 

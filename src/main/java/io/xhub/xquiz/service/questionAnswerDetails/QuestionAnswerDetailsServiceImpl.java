@@ -17,5 +17,6 @@ public class QuestionAnswerDetailsServiceImpl implements QuestionAnswerDetailsSe
     public QuestionAnswerDetails create(final Answer answer, final QuizInstanceDetails questionDetails) {
         return questionAnswerDetailsRepository.save(QuestionAnswerDetails.create(answer, questionDetails));
     }
-
 }
+
+
