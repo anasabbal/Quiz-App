@@ -15,10 +15,7 @@ import io.xhub.xquiz.enums.Status;
 import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
-import io.xhub.xquiz.repository.QuestionRepository;
-import io.xhub.xquiz.repository.QuizInstanceDetailRepository;
-import io.xhub.xquiz.repository.QuizInstanceRepository;
-import io.xhub.xquiz.repository.QuizInstructionRepository;
+import io.xhub.xquiz.repository.*;
 import io.xhub.xquiz.service.attendee.AttendeeService;
 import io.xhub.xquiz.service.attendeeevent.AttendeeEventService;
 import io.xhub.xquiz.service.event.EventService;
@@ -54,6 +51,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final QuizInstanceDetailRepository quizInstanceDetailRepository;
     private final QuizInstanceDetailMapper quizInstanceDetailMapper;
     private final QuestionMapper questionMapper;
+    private final QuestionAnswerDetailsRepository questionAnswerDetailsRepository;
 
     @Override
     public QuizInstance findById(String quizInstanceId) {
@@ -185,9 +183,11 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
     }
 
-    public void updateLastQuestionIndexAndFinalScore(String id, QuizInstanceDetails quizInstanceDetails) {
-        final QuizInstance quizInstance = findById(id);
-        quizInstance.setLastQuestionIndex(quizInstanceDetails.getQuestionIndex());
+    public void updateLastQuestionIndexAndFinalScore(QuizInstanceDetails quizInstanceDetails, QuizInstance quizInstance) {
+        if (questionAnswerDetailsRepository.existsQuestionAnswerDetailsById_QuestionDetails(quizInstanceDetails.getId())) {
+            throw new BusinessException(ExceptionPayloadFactory.QUESTION_ALREADY_ANSWERED.get());
+        }
+        quizInstance.setLastQuestionIndex(quizInstance.getLastQuestionIndex() + 1);
         quizInstance.setFinalScore(quizInstanceDetails.getScore() + quizInstance.getFinalScore());
         quizInstanceRepository.save(quizInstance);
         log.info("Last question index and final score updated  successfully with index value {} and score value {}"

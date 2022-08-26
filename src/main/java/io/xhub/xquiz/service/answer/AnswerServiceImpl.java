@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,14 +39,16 @@ public class AnswerServiceImpl implements AnswerService {
 
     public QuestionDTO answer(String quizInstanceId, UpdateQuizInstanceDetailsCommand command) {
         command.validate();
-        final List<Answer> answers = getAnswersByIds(command.getAnswersId());
+        final QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
+        final List<Answer> answers = getAnswersByIds(command.getAnswersId().stream().distinct().collect(Collectors.toList()));
         final Question question = answers.get(0).getQuestion();
         final QuizInstanceDetails quizInstanceDetails = quizInstanceDetailsService
                 .getQuizInstanceDetails(quizInstanceId, question.getId());
         if (answerVerification(answers, question)) {
-            quizInstanceDetails.setScore(quizInstanceDetails.getScore() + question.getScore());
+            quizInstanceDetails.setScore(question.getScore());
         }
-        quizInstanceService.updateLastQuestionIndexAndFinalScore(quizInstanceId, quizInstanceDetails);
+
+        quizInstanceService.updateLastQuestionIndexAndFinalScore(quizInstanceDetails, quizInstance);
 
         quizInstanceDetailRepository.save(quizInstanceDetails);
         log.info("quizInstanceDetails updated successfully");
@@ -54,17 +57,16 @@ public class AnswerServiceImpl implements AnswerService {
         final Integer totalQuestions = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
 
         if (quizInstanceDetails.getQuestionIndex().equals(totalQuestions)) {
-            QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
-            quizInstance.setStatus(Status.FINISHED);
-            quizInstance.setEndDate(LocalDateTime.now());
             return null;
         }
-        QuizInstanceDetails nextQuizInstanceDetails = quizInstanceDetailsService.getQuizInstanceDetailsByQuestionIndex(quizInstanceId, quizInstanceDetails.getQuestionIndex() + 1);
+        QuizInstanceDetails nextQuizInstanceDetails = quizInstanceDetailsService.getQuizInstanceDetailsByQuestionIndex(quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
+
         return quizInstanceDetailMapper.toQuizInstanceDetailsDTO(nextQuizInstanceDetails).getQuestion();
     }
 
     private Boolean answerVerification(List<Answer> answers, Question question) {
         Integer totalCorrectAnswers = answerRepository.countCorrectAnswers(question.getId());
+
         if (totalCorrectAnswers.equals(answers.size())) {
             return answers.stream().allMatch(a -> Boolean.TRUE.equals(a.getIsCorrect()));
         }
@@ -81,6 +83,9 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     public PassMarkDTO finishQuiz(String quizInstanceId) {
+        QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
+        quizInstance.setStatus(Status.FINISHED);
+        quizInstance.setEndDate(LocalDateTime.now());
         final Integer perfectScore = quizInstanceDetailRepository.sumQuestionsScoreByQuizInstanceId(quizInstanceId);
         final Integer scorePercentage = quizInstanceService.findById(quizInstanceId).getFinalScore();
         final Integer passMark = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("PASS_TASK").getValue());

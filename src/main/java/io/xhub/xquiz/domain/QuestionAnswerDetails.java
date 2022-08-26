@@ -21,11 +21,7 @@ public class QuestionAnswerDetails {
 
     public static QuestionAnswerDetails create(final Answer answer, final QuizInstanceDetails questionDetails) {
         final QuestionAnswerDetails questionAnswerDetails = new QuestionAnswerDetails();
-        final QuestionAnswerDetailsId questionAnswerDetailsId = new QuestionAnswerDetailsId();
-
-        questionAnswerDetailsId.setAnswer(answer);
-        questionAnswerDetailsId.setQuestionDetails(questionDetails);
-        questionAnswerDetails.id = questionAnswerDetailsId;
+        questionAnswerDetails.id = QuestionAnswerDetailsId.create(answer, questionDetails);
 
         return questionAnswerDetails;
     }

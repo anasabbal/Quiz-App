@@ -23,7 +23,8 @@ public enum ExceptionPayloadFactory {
     THEME_NOT_FOUND(12, HttpStatus.NOT_FOUND, "theme.not.found"),
     QUIZ_INSTANCE_CLOSED(13, HttpStatus.FORBIDDEN,"quiz.instance.closed"),
     QUIZ_INSTANCE_DETAILS_NOT_FOUND(14,HttpStatus.NOT_FOUND,"quiz.instance.details.not.found"),
-    REGISTRATION_CODE_NOT_FOUND(15,HttpStatus.NOT_FOUND,"registration.code.not.found");
+    REGISTRATION_CODE_NOT_FOUND(15,HttpStatus.NOT_FOUND,"registration.code.not.found"),
+    QUESTION_ALREADY_ANSWERED(16,HttpStatus.BAD_REQUEST,"question.already.answered");
 
 
     private final Integer code;
