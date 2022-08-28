@@ -12,29 +12,23 @@ public interface Assert {
     ExceptionPayload payload = ExceptionPayloadFactory.INVALID_PAYLOAD.get();
 
     static void assertNotNull(Object value, ExceptionPayload exception) {
-        if (value == null) {
-            throw new BusinessException(exception);
-        }
+        if (value == null) throw new BusinessException(exception);
     }
 
     static void assertNotNull(Object value) {
-        if (value == null) {
-            throw new BusinessException(payload);
-        }
+        if (value == null) throw new BusinessException(payload);
     }
 
     static void assertStringListNotEmpty(List<String> value) {
-        if (value.isEmpty()) {
-            throw new BusinessException(payload);
-        }
+        if (value.isEmpty()) throw new BusinessException(payload);
     }
 
     static void assertRegex(String value, String regex) {
         if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(payload);
     }
+
     static void isValid(Integer value) {
-        if (value < 1 || value > 5) {
-            throw new BusinessException(payload);
-        }
+        if (value < 1 || value > 5) throw new BusinessException(payload);
     }
+
 }
