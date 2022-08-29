@@ -6,6 +6,11 @@ import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static io.xhub.xquiz.constants.RegexExpressions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,7 +68,6 @@ class AssertTest {
     @DisplayName("given invalid name when assertRegex called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_invalid_value() {
 
-
         BusinessException actualException = assertThrows(BusinessException.class,
                 () -> Assert.assertRegex("A", ALPHABETIC_MIN_2_CHARS));
 
@@ -74,6 +78,42 @@ class AssertTest {
     @DisplayName("given valid name when assertRegex called then dont throw invalid payload exception")
     void should_not_throw_invalid_payload_exception_given_valid_value() {
         assertDoesNotThrow(() -> Assert.assertRegex("WORKING", ALPHABETIC_MIN_2_CHARS));
+    }
+
+    @Test
+    @DisplayName("given valid value between 1 and 5 when isValid called then dont throw invalid payload exception")
+    void should_not_throw_invalid_payload_exception_given_valid_value_between_1_and_5() {
+        assertDoesNotThrow(() -> Assert.isValid(4));
+    }
+
+    @Test
+    @DisplayName("given invalid value not between 1 and 5 when isValid called then throw invalid payload exception")
+    void should_throw_invalid_payload_exception_given_invalid_value_not_between_1_and_5() {
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.isValid(88));
+
+        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+
+    }
+
+    @Test
+    @DisplayName("given empty list when assertStringListNotEmpty is called should throw invalid payload exception")
+    void should_throw_invalid_payload_exception_given_an_empty_list() {
+        List<String> list = new ArrayList<>();
+        BusinessException actualException = assertThrows(BusinessException.class,
+                () -> Assert.assertStringListNotEmpty(list));
+
+        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+
+    }
+
+    @Test
+    @DisplayName("given a valid list when assertStringListNotEmpty is called should not throw invalid payload exception")
+    void should_throw_not_invalid_payload_exception_given_a_valid_list() {
+        assertDoesNotThrow(() -> Assert.assertStringListNotEmpty(
+                new ArrayList<>(Arrays.asList("0","1"))
+        ));
+
     }
 
 }
