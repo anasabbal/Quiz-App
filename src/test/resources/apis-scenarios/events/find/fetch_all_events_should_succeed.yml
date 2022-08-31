@@ -1,0 +1,38 @@
+description: fetch all events should succeed when theres some events
+request:
+  method: GET
+  url: /v1/events
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    content:
+      - id: '1'
+        name: "DEVOXX MOROCCO"
+        logo: "https://svgshare.com/i/jt1.svg"
+      - id: '2'
+        name: "DEVOXX4KIDS"
+        logo: "https://svgshare.com/i/jt1.svg"
+    pageable:
+      sort:
+        sorted: false
+        unsorted: true
+        empty: true
+      offset: 0
+      pageNumber: 0
+      pageSize: 20
+      paged: true
+      unpaged: false
+    last: true
+    totalElements: 2
+    totalPages: 1
+    size: 20
+    number: 0
+    sort:
+      sorted: false
+      unsorted: true
+      empty: true
+    first: true
+    numberOfElements: 2
+    empty: false

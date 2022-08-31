@@ -1,0 +1,24 @@
+description: should fail creating session successfully given invalid email
+request:
+  method: POST
+  url: v1/quiz-instance
+  headers:
+    Content-Type: "application/json"
+  body:
+    eventId: "1"
+    eventSetupId: "2"
+    payload:
+      firstName: "firstname"
+      lastName: "lastname"
+      phoneNumber: "+212666666666"
+      email: "test@o"
+  matchers:
+    body:
+      - path: $.email
+        type: by_regex
+        value: "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}"
+response:
+  status: 400
+  body:
+    code: 1
+    message: Invalid request payload

@@ -1,0 +1,38 @@
+description: fetch all sub themes should succeed given valid theme id
+request:
+  method: GET
+  url: v1/themes/1/sub-themes
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    content:
+      - id: '1'
+        title: "Spring"
+        icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1661336412/Spring_Boot_kchrrv.png"
+      - id: '2'
+        title: "Java"
+        icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png"
+    pageable:
+      sort:
+        sorted: false
+        unsorted: true
+        empty: true
+      offset: 0
+      pageNumber: 0
+      pageSize: 20
+      paged: true
+      unpaged: false
+    last: true
+    totalElements: 2
+    totalPages: 1
+    size: 20
+    number: 0
+    sort:
+      sorted: false
+      unsorted: true
+      empty: true
+    first: true
+    numberOfElements: 2
+    empty: false

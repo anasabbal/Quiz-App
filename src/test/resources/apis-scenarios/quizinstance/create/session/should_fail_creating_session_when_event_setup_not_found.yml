@@ -1,0 +1,17 @@
+description: should fail creating session when event setup not found
+request:
+  method: POST
+  url: v1/quiz-instance
+  headers:
+    Content-Type: "application/json"
+
+  body:
+    eventId: "1"
+    eventSetupId: "fake"
+    payload:
+      registrationCode: "TRINGA-142-2019"
+response:
+  status: 404
+  body:
+    code: 5
+    message: Events setup not found

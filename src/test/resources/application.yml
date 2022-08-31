@@ -3,10 +3,9 @@ spring:
     url: jdbc:h2:mem:db
     username: sa
     password:
-    driverClassName: org.h2.Driver
-  sql:
-    init:
-      platform: h2
+    driver-class-name: org.h2.Driver
+    platform: h2
+    initialization-mode: always
   jpa:
     properties:
       hibernate:
@@ -16,6 +15,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+    database: h2
 
 application:
   front-url: ${FRONT_URL:http://localhost:3000}
+
+fake-service:
+  enabled: false

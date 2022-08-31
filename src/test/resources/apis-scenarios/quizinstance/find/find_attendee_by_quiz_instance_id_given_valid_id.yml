@@ -1,0 +1,13 @@
+description: find attendee by quiz instance id should succeed when id is valid
+request:
+  method: GET
+  urlPath: v1/quiz-instance/1
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    email: "xhub@gmail.com"
+    firstName: "xhub"
+    lastName: "xhub"
+    phoneNumber: "+212666666666"

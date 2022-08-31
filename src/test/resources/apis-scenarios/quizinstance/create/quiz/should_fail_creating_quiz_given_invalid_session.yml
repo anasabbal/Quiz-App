@@ -1,0 +1,15 @@
+description: should fail creating quiz given invalid session id
+request:
+  method: POST
+  url: v1/quiz-instance/start-quiz
+  headers:
+    Content-Type: "application/json"
+  body:
+    seniorityLevelId: "1"
+    sessionId: "not working"
+    subThemeId: "1"
+response:
+  status: "404"
+  body:
+    code: 11
+    message: Quiz instance not found

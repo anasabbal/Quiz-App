@@ -1,0 +1,10 @@
+description: fetch all sub themes should succeed given invalid theme id
+ignored: true
+request:
+  method: GET
+  url: v1/themes/1/sub-themes
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "400"
+

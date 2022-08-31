@@ -1,0 +1,16 @@
+description: should fail creating quiz given invalid sub theme id
+ignored: true
+request:
+  method: POST
+  url: v1/quiz-instance/start-quiz
+  headers:
+    Content-Type: "application/json"
+  body:
+    seniorityLevelId: "1"
+    sessionId: "1"
+    subThemeId: "not working"
+response:
+  status: "404"
+  body:
+    code: null
+    message: Sub theme not found

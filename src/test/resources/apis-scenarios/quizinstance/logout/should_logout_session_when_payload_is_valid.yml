@@ -1,0 +1,8 @@
+description: should logout of session successfully given valid quiz instance id
+request:
+  method: PATCH
+  url: v1/quiz-instance/1/logout
+  headers:
+    Content-Type: "application/json"
+response:
+  status: 200

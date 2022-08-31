@@ -1,0 +1,8 @@
+description: should fail logout of session given invalid quiz instance id
+request:
+  method: PATCH
+  url: v1/quiz-instance/12/logout
+  headers:
+    Content-Type: "application/json"
+response:
+  status: 404

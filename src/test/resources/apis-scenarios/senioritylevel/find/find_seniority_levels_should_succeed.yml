@@ -1,0 +1,15 @@
+description: fetch all seniority level should succeed
+request:
+  method: GET
+  url: v1/seniority-levels
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    - id: '1'
+      label: "JUNIOR"
+    - id: '2'
+      label: "INTERMEDIATE"
+    - id: '3'
+      label: "SENIOR"
