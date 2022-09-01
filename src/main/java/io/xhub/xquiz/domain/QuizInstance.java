@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class QuizInstance extends BaseEntity{
+public class QuizInstance extends BaseEntity {
 
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
@@ -39,13 +39,17 @@ public class QuizInstance extends BaseEntity{
         quizInstance.attendeeEvent = attendeeEvent;
         quizInstance.status = Status.OPENED;
         quizInstance.startDate = LocalDateTime.now();
+        quizInstance.finalScore = 0;
+        quizInstance.lastQuestionIndex = 0;
 
         return quizInstance;
     }
-    public Status getCurrentStatus(){
+
+    public Status getCurrentStatus() {
         return status;
     }
-    public void updateStatusToClosed(){
+
+    public void updateStatusToClosed() {
         this.status = Status.CLOSED;
     }
 }
