@@ -1,0 +1,19 @@
+description: should fail creating session successfully given null last name
+request:
+  method: POST
+  url: v1/quiz-instance
+  headers:
+    Content-Type: "application/json"
+  body:
+    eventId: "1"
+    eventSetupId: "2"
+    payload:
+      firstName: "firstname"
+      lastName:
+      phoneNumber: "+212666666666"
+      email: "test@xhub.io"
+response:
+  status: 400
+  body:
+    code: 1
+    message: Invalid request payload

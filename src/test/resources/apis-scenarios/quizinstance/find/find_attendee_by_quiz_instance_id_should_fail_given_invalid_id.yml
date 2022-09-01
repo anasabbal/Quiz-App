@@ -1,0 +1,11 @@
+description: find attendee by quiz instance id should fail when id is invalid
+request:
+  method: GET
+  urlPath: v1/quiz-instance/100
+  headers:
+    Content-Type: "application/json"
+response:
+  status: 400
+  body:
+    code: 2
+    message: Attendee not found

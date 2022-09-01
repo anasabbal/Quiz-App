@@ -1,0 +1,67 @@
+description: fetch events by id should succeed when event id is valid
+request:
+  method: GET
+  url: /v1/events/1
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    id: "1"
+    name: "DEVOXX MOROCCO"
+    logo: "https://svgshare.com/i/jt1.svg"
+    location: "AGADIR"
+    eventDates:
+      - '2022-09-04'
+      - '2022-09-05'
+      - '2022-09-06'
+    setup:
+      - id: '1'
+        title: "Welcome to Devoxx Quiz"
+        description: "This quiz is made for you in order to book your interview slot and
+          possibily join our xFamily."
+        kind: FORM
+        initializeButtonText: "Register now"
+        formSetup:
+          formName: "qr-code"
+          formTitle: "registration form"
+          submitUrl: "/api/v1/quiz-instance"
+          submitMethod: POST
+          elements:
+            - id: "6"
+              type: "input"
+              name: "registrationCode"
+              placeholder: "Your registration code"
+              required: true
+              htmlType: "text"
+            - id: "7"
+              type: "button"
+              name: "GO"
+              innerText: "GO"
+              htmlType: "submit"
+          theme:
+            id: '3'
+            active: true
+            backgroundImage: "https://svgshare.com/i/kEs.svg"
+            backgroundColor: "white"
+            primaryColor: "#E17D00"
+            secondaryColor: "rgba(225, 125, 0, 0.5)"
+            fontFamily: "Poppins"
+    active: true
+    initialized:
+    themes:
+      - id: '1'
+        active: true
+        backgroundImage: "https://svgshare.com/i/k6A.svg"
+        backgroundColor: "white"
+        primaryColor: "#E17D00"
+        secondaryColor: "rgba(225, 125, 0, 0.5)"
+        fontFamily: "Poppins"
+      - id: '2'
+        active: true
+        backgroundImage: "https://svgshare.com/i/kEs.svg"
+        backgroundColor: "linear-gradient(116.52deg, rgba(225, 125, 0, 0.2) 0%, rgba(59,
+          58, 59, 0.2) 98.56%)"
+        primaryColor: "#E17D00"
+        secondaryColor: "rgba(225, 125, 0, 0.5)"
+        fontFamily: "Poppins"

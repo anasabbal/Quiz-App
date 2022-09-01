@@ -1,0 +1,22 @@
+description: fetch all quiz instuctions should succeed
+request:
+  method: GET
+  url: /v1/quiz-instructions
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    - label: 'Total Number of questions:'
+      value: '20'
+    - label: 'Time limit:'
+      value: '900'
+    - label: 'Total Number of attempts:'
+      value: '1'
+    - label: 'Pass Mark:'
+      value: '80'
+    - label: "Questions must be answered or you can’t go to the next one."
+      value:
+    - label: "You are not allowed to go back and change your answers."
+      value:
+

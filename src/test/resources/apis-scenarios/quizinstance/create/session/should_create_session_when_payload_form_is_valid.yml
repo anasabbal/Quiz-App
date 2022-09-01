@@ -1,0 +1,28 @@
+description: should create session successfully given valid payload
+request:
+  method: POST
+  urlPath: v1/quiz-instance
+  headers:
+    Content-Type: "application/json"
+  body:
+    eventId: "2"
+    eventSetupId: "2"
+    payload:
+      firstName: "test"
+      lastName: "xhub"
+      phoneNumber: "+212666666666"
+      email: "xhub@test.com"
+response:
+  status: 200
+  matchers:
+    body:
+      - path: $.id
+        type: by_regex
+        value: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+      - path: $.startDate
+        type: by_regex
+        value: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"
+  body:
+    id: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    status: OPENED
+    startDate: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"

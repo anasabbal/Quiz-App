@@ -1,1 +1,0 @@
-/* xQuiz tests data seed */

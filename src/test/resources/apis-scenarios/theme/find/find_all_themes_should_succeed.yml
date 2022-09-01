@@ -1,0 +1,33 @@
+description: fetch all themes should succeed
+request:
+  method: GET
+  url: v1/themes
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    - id: '1'
+      label: "Backend"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1660154514/Backend_icon_ffaody.png"
+    - id: '2'
+      label: "Frontend"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1660128579/Web_development_rdmwfh.png"
+    - id: '3'
+      label: "Fullstack"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1661282875/fi-rs-layers_xov9iu.png"
+    - id: '4'
+      label: "DevOps"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1661282808/Group_2_ywswmq.png"
+    - id: '5'
+      label: "UX/UI"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1661336538/design_icon_kmpejb.png"
+    - id: '6'
+      label: "Agile methodologies"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1661282912/file-icons_test-generic_wuom8u.png"
+    - id: '7'
+      label: "QA"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1660155052/bxs_data_qupdkg.png"
+    - id: '8'
+      label: "Mobile"
+      icon: "https://res.cloudinary.com/dizlyig0d/image/upload/v1660155135/phone_lzswzx.png"

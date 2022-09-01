@@ -30,6 +30,7 @@ public class ThemeResource {
     public ResponseEntity<List<ThemeDTO>> getThemes(){
         return ResponseEntity.ok(themeMapper.toListThemes(themeService.getThemes()));
     }
+
     @GetMapping("/{themeId}"+ SUB_THEMES)
     public ResponseEntity<Page<SubThemeDTO>> getSubThemesByThemeId(@PathVariable("themeId") String themeId, Pageable pageable){
         return ResponseEntity.ok(subThemeService.findAllSubThemeByTheme(themeId, pageable));

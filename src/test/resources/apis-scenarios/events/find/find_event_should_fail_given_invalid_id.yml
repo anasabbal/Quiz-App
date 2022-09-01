@@ -1,0 +1,11 @@
+description: fetch events by id should fail when event id is invalid
+request:
+  method: GET
+  url: /v1/events/130
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "404"
+  body:
+    code: 4
+    message: Events not found

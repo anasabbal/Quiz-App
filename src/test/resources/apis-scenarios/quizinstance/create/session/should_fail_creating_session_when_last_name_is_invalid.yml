@@ -1,0 +1,24 @@
+description: should fail creating session successfully given invalid last name
+request:
+  method: POST
+  url: v1/quiz-instance
+  headers:
+    Content-Type: "application/json"
+  body:
+    eventId: "1"
+    eventSetupId: "2"
+    payload:
+      firstName: "firstname"
+      lastName: "l"
+      phoneNumber: "+212666666666"
+      email: "test@xhub.io"
+  matchers:
+    body:
+      - path: $.['lastName']
+        type: by_regex
+        value: "^([A-Za-z]){2,}$"
+response:
+  status: 400
+  body:
+    code: 1
+    message: Invalid request payload
