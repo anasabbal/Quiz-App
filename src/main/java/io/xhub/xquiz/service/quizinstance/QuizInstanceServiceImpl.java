@@ -156,6 +156,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
 
         quizInstance.setStartDate(LocalDateTime.now());
+        quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.valueOf(quizInstruction.getValue())));
 
         if (Boolean.FALSE.equals(checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
