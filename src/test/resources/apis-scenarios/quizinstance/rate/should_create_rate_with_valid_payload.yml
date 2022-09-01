@@ -1,0 +1,11 @@
+description: should create rate with valid payload
+request:
+  method: POST
+  url: v1/rate-experience/1
+  headers:
+    Content-Type: "application/json"
+  body:
+    content: "Good quiz"
+    ratingScore: 1
+response:
+  status: 201
