@@ -1,0 +1,11 @@
+description: answer should succeed when answersIds are valid and quizInstanceId is valid
+request:
+  method: PATCH
+  url: v1/quiz-instance/1/answer
+  body:
+    answersId:
+      - '1'
+  headers:
+    Content-Type: "application/json"
+response:
+  status: 200
