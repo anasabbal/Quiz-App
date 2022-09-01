@@ -1,0 +1,11 @@
+description: answer should fail when answersIds are invalid
+request:
+  method: PATCH
+  url: v1/quiz-instance/1/answer
+  body:
+    answersId:
+      - '0'
+  headers:
+    Content-Type: "application/json"
+response:
+  status: 500
