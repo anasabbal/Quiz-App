@@ -165,11 +165,11 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                     quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
 
             questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
-            return QuizDetailDTO.create(questionMapper.toQuestionDTO(questions.get(0)), Integer.valueOf(quizInstruction.getValue()), startDate);
+            return QuizDetailDTO.create(questionMapper.toQuestionDTO(questions.get(0)), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
                     findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
-            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate);
+            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         }
     }
 
