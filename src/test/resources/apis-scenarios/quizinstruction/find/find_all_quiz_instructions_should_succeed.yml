@@ -1,4 +1,5 @@
 description: fetch all quiz instuctions should succeed
+ignored: true
 request:
   method: GET
   url: /v1/quiz-instructions
