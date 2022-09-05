@@ -1,4 +1,5 @@
 description: should create quiz successfully given valid payload
+ignored: true
 request:
   method: POST
   url: v1/quiz-instance/start-quiz
