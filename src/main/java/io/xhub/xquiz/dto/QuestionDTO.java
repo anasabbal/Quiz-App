@@ -15,4 +15,5 @@ public class QuestionDTO {
     private Boolean isMultipleChoice;
     private Integer index;
     private List<AnswerDTO> answers;
+    private Integer totalCorrectAnswers;
 }

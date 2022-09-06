@@ -16,12 +16,15 @@ response:
       - path: $.startDate
         type: by_regex
         value: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"
+      - path: $.endDate
+        type: by_regex
+        value: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"
   body:
     question:
       id: "1"
       content: "question?"
       isMultipleChoice: false
-      index:
+      index: 1
       answers:
         - id: "1"
           content: "right"
@@ -29,4 +32,4 @@ response:
           content: "wrong"
     timeLimit: "900"
     startDate: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"
-
+    endDate: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9A-Z]+"
