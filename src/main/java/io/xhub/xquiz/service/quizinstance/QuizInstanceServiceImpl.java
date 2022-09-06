@@ -4,10 +4,7 @@ package io.xhub.xquiz.service.quizinstance;
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.*;
-import io.xhub.xquiz.dto.QuizDetailDTO;
-import io.xhub.xquiz.dto.QuizInstanceDetailsDTO;
-import io.xhub.xquiz.dto.QuizInstructionDTO;
-import io.xhub.xquiz.dto.ResponseAttendeeDTO;
+import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.dto.mapper.QuestionMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.dto.mapper.QuizInstructionMapper;
@@ -52,6 +49,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final QuizInstanceDetailMapper quizInstanceDetailMapper;
     private final QuestionMapper questionMapper;
     private final QuestionAnswerDetailsRepository questionAnswerDetailsRepository;
+    private final AnswerRepository answerRepository;
 
     @Override
     public QuizInstance findById(String quizInstanceId) {
@@ -156,7 +154,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
 
         quizInstance.setStartDate(LocalDateTime.now());
-        quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.valueOf(quizInstruction.getValue())));
+        quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
 
         if (Boolean.FALSE.equals(checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
@@ -165,10 +163,13 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                     quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
 
             questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
-            return QuizDetailDTO.create(questionMapper.toQuestionDTO(questions.get(0)), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
+            QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
+            questionDTO.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(questions.get(0).getId()));
+            return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
                     findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
+            quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(answerRepository.countCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
             return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         }
     }

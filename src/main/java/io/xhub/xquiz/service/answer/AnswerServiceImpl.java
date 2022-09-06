@@ -60,8 +60,9 @@ public class AnswerServiceImpl implements AnswerService {
             return null;
         }
         QuizInstanceDetails nextQuizInstanceDetails = quizInstanceDetailsService.getQuizInstanceDetailsByQuestionIndex(quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
-
-        return quizInstanceDetailMapper.toQuizInstanceDetailsDTO(nextQuizInstanceDetails).getQuestion();
+        QuestionDTO nextQuestion = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(nextQuizInstanceDetails).getQuestion();
+        nextQuestion.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(nextQuestion.getId()));
+        return nextQuestion;
     }
 
     private Boolean answerVerification(List<Answer> answers, Question question) {
