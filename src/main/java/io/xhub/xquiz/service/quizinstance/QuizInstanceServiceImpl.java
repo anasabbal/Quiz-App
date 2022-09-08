@@ -165,11 +165,15 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
             questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
             questionDTO.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(questions.get(0).getId()));
+            log.info("Status set to PENDING");
+            quizInstance.setStatus(Status.PENDING);
             return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
                     findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
             quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(answerRepository.countCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
+            log.info("Status set to PENDING");
+            quizInstance.setStatus(Status.PENDING);
             return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         }
     }
