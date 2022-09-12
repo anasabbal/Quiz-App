@@ -8,6 +8,7 @@ import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.QuizInstanceRepository;
 import io.xhub.xquiz.repository.RatingRepository;
+import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class RatingServiceImpl implements RatingService{
         final Attendee attendee = quizInstanceRepository.findAttendeeByQuizInstance(quizInstanceId).orElseThrow(
                 () -> new BusinessException(ExceptionPayloadFactory.ATTENDEE_NOT_FOUND.get())
         );
+        log.info("Begin fetching rating with attendee id {} or create new rating with payload ", attendee.getId(), JSONUtil.toJSON(ratingCommand));
         final Rating rating = ratingRepository.findRatingByAttendee(attendee).orElseGet(
                         ()  -> Rating.create(ratingCommand, attendee));
         rating.setRatingScore(ratingCommand.getRatingScore());

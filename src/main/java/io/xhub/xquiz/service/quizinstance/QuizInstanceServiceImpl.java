@@ -143,27 +143,30 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
     @Override
     public QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand) {
-
         final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
+        log.info("Session with id {} fetched successfully", quizInstance.getId());
 
+        log.info("Begin fetching total questions from quiz instruction");
         final Integer totalQuestions = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+        log.info("Begin fetching quiz instruction with key time limit");
 
         final QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
 
         final LocalDateTime startDate = LocalDateTime.now();
-
 
         quizInstance.setStartDate(LocalDateTime.now());
         quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
 
         if (Boolean.FALSE.equals(checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
+            log.info("Begin fetching questions with seniority level id {} and sub theme id {}" , quizInstanceDetailsCommand.getSeniorityLevelId(),
+                    quizInstanceDetailsCommand.getSubThemeId());
             final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
                     quizInstanceDetailsCommand.getSeniorityLevelId(),
                     quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
-
             questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
+            log.info("Begin seating total correct answers");
             questionDTO.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(questions.get(0).getId()));
             log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
