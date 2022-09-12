@@ -43,8 +43,8 @@ public class AnswerServiceImpl implements AnswerService {
         final QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
         log.info("Session with id {} fetched successfully", quizInstanceId);
 
-        log.info("Begin fetching answers with payload {}", JSONUtil.toJSON(getAnswersByIds(command.getAnswersId().stream().distinct().collect(Collectors.toList()))));
         final List<Answer> answers = getAnswersByIds(command.getAnswersId().stream().distinct().collect(Collectors.toList()));
+        log.info("Answers with size {} fetched successfully", answers.size());
 
         final Question question = answers.get(0).getQuestion();
         final QuizInstanceDetails quizInstanceDetails = quizInstanceDetailsService
