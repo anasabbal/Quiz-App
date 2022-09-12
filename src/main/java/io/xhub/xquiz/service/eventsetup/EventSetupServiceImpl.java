@@ -17,6 +17,7 @@ public class EventSetupServiceImpl implements EventSetupService {
 
     @Override
     public EventSetup getEventSetup(final String id) {
+        log.info("Begin fetching event setup with id {}", id);
         return eventSetupRepository.findById(id).orElseThrow(
                 () -> new BusinessException(ExceptionPayloadFactory.EVENT_SETUP_NOT_FOUND.get()));
     }

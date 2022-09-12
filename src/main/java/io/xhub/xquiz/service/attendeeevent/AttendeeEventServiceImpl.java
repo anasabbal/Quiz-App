@@ -17,6 +17,7 @@ public class AttendeeEventServiceImpl implements AttendeeEventService {
 
     @Override
     public AttendeeEvent getOrCreateAttendeeEvent(final Attendee attendee, final Event event) {
+        log.info("Begin fetching attendee event with attendee id {} and event id {}", attendee.getId(), event.getId());
         return attendeeEventRepository.findByAttendeeAndEvent(attendee.getEmail(), event.getId())
                 .orElseGet(() -> create(attendee, event));
     }
