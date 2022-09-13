@@ -1,4 +1,4 @@
-description: answer should fail when quizInstanceId is invalid
+description: should fail when answering given invalid quiz instance id
 request:
   method: PATCH
   url: v1/quiz-instance/0/answer
@@ -9,3 +9,6 @@ request:
     Content-Type: "application/json"
 response:
   status: 404
+  body:
+    code: 11
+    message: "Quiz instance not found"

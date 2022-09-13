@@ -12,9 +12,9 @@ response:
     logo: "https://svgshare.com/i/jt1.svg"
     location: "AGADIR"
     eventDates:
-      - '2022-09-04'
-      - '2022-09-05'
-      - '2022-09-06'
+      - '2023-09-04'
+      - '2023-09-05'
+      - '2023-09-06'
     setup:
       - id: '1'
         title: "Welcome to Devoxx Quiz"
