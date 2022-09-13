@@ -1,5 +1,4 @@
 description: fetch all quiz instuctions should succeed
-
 request:
   method: GET
   url: /v1/quiz-instructions
@@ -16,7 +15,7 @@ response:
       value: '1'
     - label: 'Pass Mark:'
       value: '80'
-    - label: "Questions must be answered or you can’t go to the next one."
+    - label: "Questions must be answered or you cant go to the next one."
       value:
     - label: "You are not allowed to go back and change your answers."
       value:

@@ -1,10 +1,10 @@
 description: answer should succeed when answersIds are valid and quizInstanceId is valid
 request:
   method: PATCH
-  url: v1/quiz-instance/1/answer
+  url: v1/quiz-instance/3/answer
   body:
     answersId:
-      - '1'
+      - '8'
   headers:
     Content-Type: "application/json"
 response:
