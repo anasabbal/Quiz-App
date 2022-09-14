@@ -60,9 +60,8 @@ public class AnswerServiceImpl implements AnswerService {
         quizInstanceDetailRepository.save(quizInstanceDetails);
         log.info("quizInstanceDetails updated successfully");
         createQuestionAnswerDetails(answers, quizInstanceDetails);
-
-        log.info("Begin fetching total question");
-        final Integer totalQuestions = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+log.info("Begin fetching total question");
+        final Integer totalQuestions = Integer.valueOf(quizInstanceService.getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
 
         if (quizInstanceDetails.getQuestionIndex().equals(totalQuestions)) {
             return null;
@@ -101,7 +100,7 @@ public class AnswerServiceImpl implements AnswerService {
         final Integer perfectScore = quizInstanceDetailRepository.sumQuestionsScoreByQuizInstanceId(quizInstanceId);
         final Integer scorePercentage = quizInstanceService.findById(quizInstanceId).getFinalScore();
         log.info("Begin fetching pass  mark from quiz instruction");
-        final Integer passMark = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("PASS_TASK").getValue());
+        final Integer passMark = Integer.valueOf(quizInstanceService.getQuizInstructionsByKey("PASS_TASK").getValue());
         float attendeeMark = (Float.valueOf(scorePercentage) * 100 / Float.valueOf(perfectScore));
         return PassMarkDTO.create(passMark, attendeeMark);
     }

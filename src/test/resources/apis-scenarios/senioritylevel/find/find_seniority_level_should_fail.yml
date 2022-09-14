@@ -6,7 +6,7 @@ request:
   headers:
     Content-Type: "application/json"
 response:
-  status: "500"
+  status: "400"
   body:
-    code: 0
-    message: Technical error
+    code: 3
+    message: Seniority level not found

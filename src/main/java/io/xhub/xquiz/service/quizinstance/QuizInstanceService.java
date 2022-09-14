@@ -5,6 +5,7 @@ import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.domain.QuizInstance;
 import io.xhub.xquiz.domain.QuizInstanceDetails;
+import io.xhub.xquiz.domain.QuizInstruction;
 import io.xhub.xquiz.dto.QuizDetailDTO;
 import io.xhub.xquiz.dto.QuizInstructionDTO;
 
@@ -25,4 +26,6 @@ public interface QuizInstanceService {
     QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand);
 
     Attendee getAttendeeByQuizInstanceId(final String id);
+
+    QuizInstruction getQuizInstructionsByKey(final String key);
 }

@@ -116,10 +116,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         Optional<QuizInstance> quizInstance = quizInstanceRepository.findByAttendeeEvent(attendeeEvent);
         if (quizInstance.isEmpty()) {
             return quizInstanceRepository.save(QuizInstance.create(attendeeEvent));
-        } else if (!Status.CLOSED.equals(quizInstance.get().getCurrentStatus())) {
-            return quizInstance.get();
+        } else if (Status.CLOSED.equals(quizInstance.get().getCurrentStatus()) || Status.FINISHED.equals(quizInstance.get().getCurrentStatus())) {
+            throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_CLOSED.get());
         }
-        throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_CLOSED.get());
+        return quizInstance.get();
     }
 
     private void ensureResponseIsOk(final ResponseEntity<ResponseAttendeeDTO> response) {
@@ -142,15 +142,22 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     }
 
     @Override
+    public QuizInstruction getQuizInstructionsByKey(final String key) {
+        return quizInstructionRepository.findQuizInstructionByKey(key).orElseThrow(
+                () -> new BusinessException(ExceptionPayloadFactory.QUIZ_INSTRUCTIONS_NOT_FOUND.get())
+        );
+    }
+
+    @Override
     public QuizDetailDTO startQuiz(QuizInstanceDetailsCommand quizInstanceDetailsCommand) {
         final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
         log.info("Session with id {} fetched successfully", quizInstance.getId());
 
         log.info("Begin fetching total questions from quiz instruction");
-        final Integer totalQuestions = Integer.valueOf(quizInstructionRepository.findQuizInstructionByKey("TOTAL_QUESTIONS").getValue());
+        final Integer totalQuestions = Integer.valueOf(getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
         log.info("Begin fetching quiz instruction with key time limit");
 
-        final QuizInstruction quizInstruction = quizInstructionRepository.findQuizInstructionByKey("TIME_LIMIT");
+        final QuizInstruction quizInstruction = getQuizInstructionsByKey("TIME_LIMIT");
 
         final LocalDateTime startDate = LocalDateTime.now();
 
@@ -164,6 +171,8 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
             final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
                     quizInstanceDetailsCommand.getSeniorityLevelId(),
                     quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
+            if (questions.isEmpty())
+                throw new BusinessException(ExceptionPayloadFactory.QUESTIONS_NOT_FOUND.get());
             questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
             log.info("Begin seating total correct answers");

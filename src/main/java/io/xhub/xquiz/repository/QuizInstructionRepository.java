@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface QuizInstructionRepository extends JpaRepository<QuizInstruction, String> {
     List<QuizInstruction> findAllQuizInstructionByDeletedFalse();
 
-    QuizInstruction findQuizInstructionByKey(String key);
+    Optional<QuizInstruction> findQuizInstructionByKey(String key);
 }

@@ -83,14 +83,17 @@ class AssertTest {
     @Test
     @DisplayName("given valid value between 1 and 5 when isValid called then dont throw invalid payload exception")
     void should_not_throw_invalid_payload_exception_given_valid_value_between_1_and_5() {
-        assertDoesNotThrow(() -> Assert.isValid(4));
+        ExceptionPayload exceptionPayload = ExceptionPayloadFactory.INVALID_RATING_PAYLOAD.get();
+        assertDoesNotThrow(() -> Assert.isValid(4,exceptionPayload));
     }
 
     @Test
     @DisplayName("given invalid value not between 1 and 5 when isValid called then throw invalid payload exception")
     void should_throw_invalid_payload_exception_given_invalid_value_not_between_1_and_5() {
+        ExceptionPayload exceptionPayload = ExceptionPayloadFactory.INVALID_RATING_PAYLOAD.get();
+
         BusinessException actualException = assertThrows(BusinessException.class,
-                () -> Assert.isValid(88));
+                () -> Assert.isValid(88, exceptionPayload));
 
         assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
 

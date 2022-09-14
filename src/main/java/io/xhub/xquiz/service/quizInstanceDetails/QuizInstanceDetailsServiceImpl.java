@@ -17,8 +17,9 @@ public class QuizInstanceDetailsServiceImpl implements QuizInstanceDetailsServic
     @Override
     public QuizInstanceDetails getQuizInstanceDetails(String quizInstanceId, String questionId) {
         log.info("Begin fetching quizInstanceDetails with id {}", quizInstanceId);
-        return quizInstanceDetailRepository.findQuizInstanceDetails(quizInstanceId, questionId)
-                .orElseThrow(() -> new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_DETAILS_NOT_FOUND.get()));
+        return quizInstanceDetailRepository.findQuizInstanceDetails(quizInstanceId, questionId).orElseThrow(
+                () -> new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_DETAILS_NOT_FOUND.get())
+        );
     }
 
     @Override

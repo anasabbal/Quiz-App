@@ -2,6 +2,8 @@ package io.xhub.xquiz.service.level;
 
 
 import io.xhub.xquiz.domain.SeniorityLevel;
+import io.xhub.xquiz.exception.BusinessException;
+import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.SeniorityLevelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
