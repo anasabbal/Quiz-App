@@ -20,11 +20,13 @@ public enum ExceptionPayloadFactory {
     ATTENDEE_EVENT_ALREADY_EXISTS(9, HttpStatus.FORBIDDEN, "attendee.event.already.exists"),
     HTTP_SUBMIT_METHOD_NOT_SUPPORTED(10, HttpStatus.METHOD_NOT_ALLOWED,"http.method.not.supported"),
     QUIZ_INSTANCE_NOT_FOUND(11, HttpStatus.NOT_FOUND, "quiz.instance.not.found"),
-    THEME_NOT_FOUND(12, HttpStatus.NOT_FOUND, "theme.not.found"),
     QUIZ_INSTANCE_CLOSED(13, HttpStatus.FORBIDDEN,"quiz.instance.closed"),
     QUIZ_INSTANCE_DETAILS_NOT_FOUND(14,HttpStatus.NOT_FOUND,"quiz.instance.details.not.found"),
     REGISTRATION_CODE_NOT_FOUND(15,HttpStatus.NOT_FOUND,"registration.code.not.found"),
-    QUESTION_ALREADY_ANSWERED(16,HttpStatus.BAD_REQUEST,"question.already.answered");
+    QUESTION_ALREADY_ANSWERED(16,HttpStatus.BAD_REQUEST,"question.already.answered"),
+    QUIZ_INSTRUCTIONS_NOT_FOUND(17, HttpStatus.NOT_FOUND, "quiz.instructions.not.found"),
+    QUESTIONS_NOT_FOUND(19, HttpStatus.NOT_FOUND, "questions.not.found"),
+    INVALID_RATING_PAYLOAD(20, HttpStatus.BAD_REQUEST, "invalid.rating.payload");
 
 
     private final Integer code;

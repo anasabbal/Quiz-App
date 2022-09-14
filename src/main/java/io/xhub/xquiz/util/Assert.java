@@ -27,8 +27,8 @@ public interface Assert {
         if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(payload);
     }
 
-    static void isValid(Integer value) {
-        if (value < 1 || value > 5) throw new BusinessException(payload);
+    static void isValid(Integer value, ExceptionPayload exception) {
+        if (value < 1 || value > 5) throw new BusinessException(exception);
     }
 
 }

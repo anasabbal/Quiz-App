@@ -32,7 +32,6 @@ public class QuizInstanceResource {
 
     @PatchMapping("/{quizInstanceId}" + LOGOUT)
     public ResponseEntity<Void> updateStatus(@PathVariable("quizInstanceId") String quizInstanceId) {
-
         quizInstanceService.updateStatus(quizInstanceId);
         return ResponseEntity.ok().build();
     }
