@@ -1,4 +1,4 @@
-description: answer should succeed when answersIds are valid and quizInstanceId is valid
+description: answer should succeed when answersIds and quizInstanceId are valid
 request:
   method: PATCH
   url: v1/quiz-instance/3/answer

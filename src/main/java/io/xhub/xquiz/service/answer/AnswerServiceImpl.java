@@ -10,12 +10,12 @@ import io.xhub.xquiz.dto.QuestionDTO;
 import io.xhub.xquiz.dto.mapper.QuizInstanceDetailMapper;
 import io.xhub.xquiz.enums.Status;
 import io.xhub.xquiz.repository.AnswerRepository;
+import io.xhub.xquiz.repository.QuestionRepository;
 import io.xhub.xquiz.repository.QuizInstanceDetailRepository;
 import io.xhub.xquiz.repository.QuizInstructionRepository;
 import io.xhub.xquiz.service.questionAnswerDetails.QuestionAnswerDetailsService;
 import io.xhub.xquiz.service.quizInstanceDetails.QuizInstanceDetailsService;
 import io.xhub.xquiz.service.quizinstance.QuizInstanceService;
-import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional
 public class AnswerServiceImpl implements AnswerService {
+    private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final QuizInstanceDetailsService quizInstanceDetailsService;
     private final QuizInstanceDetailRepository quizInstanceDetailRepository;
@@ -39,38 +40,45 @@ public class AnswerServiceImpl implements AnswerService {
     private final QuizInstructionRepository quizInstructionRepository;
 
     public QuestionDTO answer(String quizInstanceId, UpdateQuizInstanceDetailsCommand command) {
-        command.validate();
         final QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
         log.info("Session with id {} fetched successfully", quizInstanceId);
 
         final List<Answer> answers = getAnswersByIds(command.getAnswersId().stream().distinct().collect(Collectors.toList()));
         log.info("Answers with size {} fetched successfully", answers.size());
 
-        final Question question = answers.get(0).getQuestion();
+        final Question question = getQuestion(command, answers);
+
         final QuizInstanceDetails quizInstanceDetails = quizInstanceDetailsService
                 .getQuizInstanceDetails(quizInstanceId, question.getId());
         log.info("Quiz instance details with id {} fetched successfully", quizInstanceDetails.getId());
 
-        if (answerVerification(answers, question)) {
+        if (Boolean.TRUE.equals(answerVerification(answers, question)))
             quizInstanceDetails.setScore(question.getScore());
-        }
 
         quizInstanceService.updateLastQuestionIndexAndFinalScore(quizInstanceDetails, quizInstance);
 
         quizInstanceDetailRepository.save(quizInstanceDetails);
         log.info("quizInstanceDetails updated successfully");
         createQuestionAnswerDetails(answers, quizInstanceDetails);
-log.info("Begin fetching total question");
+
+        log.info("Begin fetching total question");
         final Integer totalQuestions = Integer.valueOf(quizInstanceService.getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
 
         if (quizInstanceDetails.getQuestionIndex().equals(totalQuestions)) {
             return null;
         }
+
         log.info("Begin fetching next quiz instance details with id {} and last question {}", quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
         QuizInstanceDetails nextQuizInstanceDetails = quizInstanceDetailsService.getQuizInstanceDetailsByQuestionIndex(quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
         QuestionDTO nextQuestion = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(nextQuizInstanceDetails).getQuestion();
         nextQuestion.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(nextQuestion.getId()));
         return nextQuestion;
+    }
+
+    private Question getQuestion(final UpdateQuizInstanceDetailsCommand command,final List<Answer> answers) {
+        if (command.getQuestionId() != null)
+            return questionRepository.findById(command.getQuestionId()).get();
+        return answers.get(0).getQuestion();
     }
 
     private Boolean answerVerification(List<Answer> answers, Question question) {
@@ -94,6 +102,7 @@ log.info("Begin fetching total question");
 
     public PassMarkDTO finishQuiz(String quizInstanceId) {
         QuizInstance quizInstance = quizInstanceService.findById(quizInstanceId);
+        log.info("Quiz instance with the id {} was set to finished", quizInstanceId);
         quizInstance.setStatus(Status.FINISHED);
         quizInstance.setEndDate(LocalDateTime.now());
         log.info("Begin sum question score by quiz instance id {}", quizInstanceId);
