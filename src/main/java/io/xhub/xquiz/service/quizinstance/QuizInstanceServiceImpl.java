@@ -67,7 +67,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         if (Status.PENDING.equals(status)) {
             quizInstance.updateStatusToClosed();
             quizInstanceRepository.save(quizInstance);
-            log.info("Status of Quiz instance with id {} updated successfully and payload is {}", quizInstanceId, JSONUtil.toJSON(quizInstance));
+            log.info("Status of Quiz instance with id {} updated successfully to {}", quizInstanceId, quizInstance.getStatus());
         }
 
     }
@@ -116,8 +116,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         Optional<QuizInstance> quizInstance = quizInstanceRepository.findByAttendeeEvent(attendeeEvent);
         if (quizInstance.isEmpty()) {
             return quizInstanceRepository.save(QuizInstance.create(attendeeEvent));
-        } else if (Status.CLOSED.equals(quizInstance.get().getCurrentStatus()) || Status.FINISHED.equals(quizInstance.get().getCurrentStatus())) {
+        } else if (Status.CLOSED.equals(quizInstance.get().getCurrentStatus()) ) {
             throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_CLOSED.get());
+        } else if (Status.FINISHED.equals(quizInstance.get().getCurrentStatus())) {
+            throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_FINISHED.get());
         }
         return quizInstance.get();
     }
