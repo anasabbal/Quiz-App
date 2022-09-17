@@ -26,4 +26,25 @@ public class QuizInstanceDetailsServiceImpl implements QuizInstanceDetailsServic
     public QuizInstanceDetails getQuizInstanceDetailsByQuestionIndex(String quizInstanceId, Integer questionIndex) {
         return quizInstanceDetailRepository.findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstanceId, questionIndex);
     }
+
+    @Override
+    public QuizInstanceDetails findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(final String id, final Integer index) {
+        return quizInstanceDetailRepository.
+                findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(id, index);
+    }
+
+    @Override
+    public void save(final QuizInstanceDetails quizInstanceDetails) {
+        quizInstanceDetailRepository.save(quizInstanceDetails);
+    }
+
+    @Override
+    public Boolean checkIfSessionQuestionsExist(final String sessionId) {
+        return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
+    }
+
+    @Override
+    public Integer sumQuestionScore(final String id) {
+        return quizInstanceDetailRepository.sumQuestionsScoreByQuizInstanceId(id);
+    }
 }
