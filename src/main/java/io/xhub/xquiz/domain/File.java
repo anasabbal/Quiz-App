@@ -23,7 +23,7 @@ public class File extends BaseEntity {
     @Column(name = "SIZE")
     private long size;
 
-    @Lob
+
     @Column(name = "CONTENT")
     private byte[] content;
 }
