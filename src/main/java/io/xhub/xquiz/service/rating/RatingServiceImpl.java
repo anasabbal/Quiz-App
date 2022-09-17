@@ -4,10 +4,8 @@ package io.xhub.xquiz.service.rating;
 import io.xhub.xquiz.command.RatingCommand;
 import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.domain.Rating;
-import io.xhub.xquiz.exception.BusinessException;
-import io.xhub.xquiz.exception.ExceptionPayloadFactory;
-import io.xhub.xquiz.repository.QuizInstanceRepository;
 import io.xhub.xquiz.repository.RatingRepository;
+import io.xhub.xquiz.service.quizinstance.QuizInstanceService;
 import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class RatingServiceImpl implements RatingService{
 
     private final RatingRepository ratingRepository;
-    private final QuizInstanceRepository quizInstanceRepository;
-
+    private final QuizInstanceService quizInstanceService;
 
     @Override
     public Rating createRating(String quizInstanceId, RatingCommand ratingCommand) {
         ratingCommand.validate();
         log.info("Begin fetching session with id {}", quizInstanceId);
-        final Attendee attendee = quizInstanceRepository.findAttendeeByQuizInstance(quizInstanceId).orElseThrow(
-                () -> new BusinessException(ExceptionPayloadFactory.ATTENDEE_NOT_FOUND.get())
-        );
+        final Attendee attendee = quizInstanceService.getAttendeeByQuizInstanceId(quizInstanceId);
+
         log.info("Begin fetching rating with attendee id {} or create new rating with payload ", attendee.getId(), JSONUtil.toJSON(ratingCommand));
         final Rating rating = ratingRepository.findRatingByAttendee(attendee).orElseGet(
                         ()  -> Rating.create(ratingCommand, attendee));

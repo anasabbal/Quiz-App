@@ -3,6 +3,7 @@ package io.xhub.xquiz.service.quizinstance;
 
 import io.xhub.xquiz.command.CreateEventSessionCommand;
 import io.xhub.xquiz.command.QuizInstanceDetailsCommand;
+import io.xhub.xquiz.command.UpdateQuizInstanceDetailsCommand;
 import io.xhub.xquiz.domain.*;
 import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.dto.mapper.QuestionMapper;
@@ -13,10 +14,14 @@ import io.xhub.xquiz.enums.SubmitMethod;
 import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.*;
+import io.xhub.xquiz.service.answer.AnswerService;
 import io.xhub.xquiz.service.attendee.AttendeeService;
 import io.xhub.xquiz.service.attendeeevent.AttendeeEventService;
 import io.xhub.xquiz.service.event.EventService;
 import io.xhub.xquiz.service.eventsetup.EventSetupService;
+import io.xhub.xquiz.service.question.QuestionService;
+import io.xhub.xquiz.service.quizInstanceDetails.QuizInstanceDetailsService;
+import io.xhub.xquiz.service.quizinstruction.QuizInstructionsService;
 import io.xhub.xquiz.util.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +35,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -42,14 +48,14 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final AttendeeService attendeeService;
     private final AttendeeEventService attendeeEventService;
     private final QuizInstanceRepository quizInstanceRepository;
-    private final QuizInstructionRepository quizInstructionRepository;
+    private final QuizInstructionsService quizInstructionsService;
     private final QuizInstructionMapper quizInstructionMapper;
-    private final QuestionRepository questionRepository;
-    private final QuizInstanceDetailRepository quizInstanceDetailRepository;
+    private final QuestionService questionService;
+    private final QuizInstanceDetailsService quizInstanceDetailsService;
     private final QuizInstanceDetailMapper quizInstanceDetailMapper;
     private final QuestionMapper questionMapper;
     private final QuestionAnswerDetailsRepository questionAnswerDetailsRepository;
-    private final AnswerRepository answerRepository;
+    private final AnswerService answerService;
     private final RestTemplate restTemplate;
 
     @Override
@@ -116,7 +122,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         Optional<QuizInstance> quizInstance = quizInstanceRepository.findByAttendeeEvent(attendeeEvent);
         if (quizInstance.isEmpty()) {
             return quizInstanceRepository.save(QuizInstance.create(attendeeEvent));
-        } else if (Status.CLOSED.equals(quizInstance.get().getCurrentStatus()) ) {
+        } else if (Status.CLOSED.equals(quizInstance.get().getCurrentStatus())) {
             throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_CLOSED.get());
         } else if (Status.FINISHED.equals(quizInstance.get().getCurrentStatus())) {
             throw new BusinessException(ExceptionPayloadFactory.QUIZ_INSTANCE_FINISHED.get());
@@ -140,14 +146,12 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     }
 
     public List<QuizInstructionDTO> getQuizInstructions() {
-        return quizInstructionMapper.dtoList(quizInstructionRepository.findAllQuizInstructionByDeletedFalse());
+        return quizInstructionMapper.dtoList(quizInstructionsService.findAllQuizInstruction());
     }
 
     @Override
     public QuizInstruction getQuizInstructionsByKey(final String key) {
-        return quizInstructionRepository.findQuizInstructionByKey(key).orElseThrow(
-                () -> new BusinessException(ExceptionPayloadFactory.QUIZ_INSTRUCTIONS_NOT_FOUND.get())
-        );
+        return quizInstructionsService.findQuizInstructionByKey(key);
     }
 
     @Override
@@ -166,30 +170,34 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         quizInstance.setStartDate(LocalDateTime.now());
         quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
 
-        if (Boolean.FALSE.equals(checkIfSessionQuestionsExist(quizInstance.getId()))) {
+        if (Boolean.FALSE.equals(quizInstanceDetailsService.checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
-            log.info("Begin fetching questions with seniority level id {} and sub theme id {}" , quizInstanceDetailsCommand.getSeniorityLevelId(),
+            log.info("Begin fetching questions with seniority level id {} and sub theme id {}", quizInstanceDetailsCommand.getSeniorityLevelId(),
                     quizInstanceDetailsCommand.getSubThemeId());
-            final List<Question> questions = questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
-                    quizInstanceDetailsCommand.getSeniorityLevelId(),
-                    quizInstanceDetailsCommand.getSubThemeId(), totalQuestions);
+            final List<Question> questions = questionService.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                    quizInstanceDetailsCommand, totalQuestions);
             if (questions.isEmpty())
                 throw new BusinessException(ExceptionPayloadFactory.QUESTIONS_NOT_FOUND.get());
-            questions.forEach(question -> quizInstanceDetailRepository.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
+            questions.forEach(question -> quizInstanceDetailsService.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
             log.info("Begin seating total correct answers");
-            questionDTO.setTotalCorrectAnswers(answerRepository.countCorrectAnswers(questions.get(0).getId()));
+            questionDTO.setTotalCorrectAnswers(getTotalCorrectAnswers(questions.get(0).getId()));
+
             log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
             return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
-            QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailRepository.
-                    findQuizInstanceDetailsByQuizInstanceIdAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
-            quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(answerRepository.countCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
+            QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailsService.
+                    findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
+            quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(getTotalCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
             log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
             return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         }
+    }
+
+    private Integer getTotalCorrectAnswers(final String id) {
+        return answerService.countCorrectAnswers(id);
     }
 
     @Override
@@ -199,10 +207,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         );
     }
 
-    private Boolean checkIfSessionQuestionsExist(final String sessionId) {
-        return quizInstanceDetailRepository.existsByQuizInstanceId(sessionId);
-    }
-
+    @Override
     public void updateLastQuestionIndexAndFinalScore(QuizInstanceDetails quizInstanceDetails, QuizInstance quizInstance) {
         if (questionAnswerDetailsRepository.existsQuestionAnswerDetailsById_QuestionDetails(quizInstanceDetails.getId())) {
             throw new BusinessException(ExceptionPayloadFactory.QUESTION_ALREADY_ANSWERED.get());
@@ -214,5 +219,56 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 , quizInstance.getLastQuestionIndex(), quizInstance.getFinalScore());
     }
 
+    @Override
+    public QuestionDTO answer(String quizInstanceId, UpdateQuizInstanceDetailsCommand command) {
+        final QuizInstance quizInstance = findById(quizInstanceId);
+        log.info("Session with id {} fetched successfully", quizInstanceId);
+
+        final List<Answer> answers = answerService.getAnswersByIds(command.getAnswersId().stream().distinct().collect(Collectors.toList()));
+        log.info("Answers with size {} fetched successfully", answers.size());
+
+        final Question question = answerService.getQuestion(command, answers);
+
+        final QuizInstanceDetails quizInstanceDetails = quizInstanceDetailsService
+                .getQuizInstanceDetails(quizInstanceId, question.getId());
+        log.info("Quiz instance details with id {} fetched successfully", quizInstanceDetails.getId());
+
+        if (Boolean.TRUE.equals(answerService.answerVerification(answers, question)))
+            quizInstanceDetails.setScore(question.getScore());
+
+        updateLastQuestionIndexAndFinalScore(quizInstanceDetails, quizInstance);
+
+        quizInstanceDetailsService.save(quizInstanceDetails);
+        log.info("quizInstanceDetails updated successfully");
+        answerService.createQuestionAnswerDetails(answers, quizInstanceDetails);
+
+        log.info("Begin fetching total question");
+        final Integer totalQuestions = Integer.valueOf(getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
+
+        if (quizInstanceDetails.getQuestionIndex().equals(totalQuestions)) {
+            return null;
+        }
+
+        log.info("Begin fetching next quiz instance details with id {} and last question {}", quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
+        QuizInstanceDetails nextQuizInstanceDetails = quizInstanceDetailsService.getQuizInstanceDetailsByQuestionIndex(quizInstanceId, quizInstance.getLastQuestionIndex() + 1);
+        QuestionDTO nextQuestion = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(nextQuizInstanceDetails).getQuestion();
+        nextQuestion.setTotalCorrectAnswers(answerService.countCorrectAnswers(nextQuestion.getId()));
+        return nextQuestion;
+    }
+
+    @Override
+    public PassMarkDTO finishQuiz(String quizInstanceId) {
+        QuizInstance quizInstance = findById(quizInstanceId);
+        log.info("Quiz instance with the id {} was set to finished", quizInstanceId);
+        quizInstance.setStatus(Status.FINISHED);
+        quizInstance.setEndDate(LocalDateTime.now());
+        log.info("Begin sum question score by quiz instance id {}", quizInstanceId);
+        final Integer perfectScore = quizInstanceDetailsService.sumQuestionScore(quizInstanceId);
+        final Integer scorePercentage = findById(quizInstanceId).getFinalScore();
+        log.info("Begin fetching pass  mark from quiz instruction");
+        final Integer passMark = Integer.valueOf(getQuizInstructionsByKey("PASS_TASK").getValue());
+        float attendeeMark = (Float.valueOf(scorePercentage) * 100 / Float.valueOf(perfectScore));
+        return PassMarkDTO.create(passMark, attendeeMark);
+    }
 
 }
