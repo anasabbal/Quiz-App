@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public interface Assert {
 
     ExceptionPayload payload = ExceptionPayloadFactory.INVALID_PAYLOAD.get();
+    ExceptionPayload formRegistration = ExceptionPayloadFactory.INVALID_FORM_REGISTRATION_PAYLOAD.get();
 
     static void assertNotNull(Object value, ExceptionPayload exception) {
         if (value == null) throw new BusinessException(exception);
@@ -24,7 +25,7 @@ public interface Assert {
     }
 
     static void assertRegex(String value, String regex) {
-        if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(payload);
+        if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(formRegistration);
     }
 
     static void isValid(Integer value, ExceptionPayload exception) {

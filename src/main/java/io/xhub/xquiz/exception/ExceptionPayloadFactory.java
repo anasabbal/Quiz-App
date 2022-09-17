@@ -27,7 +27,8 @@ public enum ExceptionPayloadFactory {
     QUIZ_INSTRUCTIONS_NOT_FOUND(17, HttpStatus.NOT_FOUND, "quiz.instructions.not.found"),
     QUESTIONS_NOT_FOUND(19, HttpStatus.NOT_FOUND, "questions.not.found"),
     INVALID_RATING_PAYLOAD(20, HttpStatus.BAD_REQUEST, "invalid.rating.payload"),
-    QUIZ_INSTANCE_FINISHED(21,HttpStatus.FORBIDDEN,"quiz.instance.finished");
+    QUIZ_INSTANCE_FINISHED(21,HttpStatus.FORBIDDEN,"quiz.instance.finished"),
+    INVALID_FORM_REGISTRATION_PAYLOAD(22,HttpStatus.BAD_REQUEST,"invalid.form.registration");
 
 
     private final Integer code;
