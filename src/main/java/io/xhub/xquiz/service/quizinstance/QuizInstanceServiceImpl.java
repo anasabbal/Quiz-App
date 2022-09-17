@@ -50,6 +50,7 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
     private final QuestionMapper questionMapper;
     private final QuestionAnswerDetailsRepository questionAnswerDetailsRepository;
     private final AnswerRepository answerRepository;
+    private final RestTemplate restTemplate;
 
     @Override
     public QuizInstance findById(String quizInstanceId) {
@@ -87,11 +88,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
                 log.info("Start fetching attendee with the registration code : {}", JSONUtil.toJSON(body.getPayload().get("registrationCode")));
 
-                final RestTemplate template = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
                 HttpEntity<?> entity = new HttpEntity<>(headers);
                 final HttpMethod method = getHttpSubmitMethod(eventSetup.getSubmitMethod());
-                final ResponseEntity<ResponseAttendeeDTO> response = template.exchange(eventSetup.getSubmitUrl(),
+                final ResponseEntity<ResponseAttendeeDTO> response = restTemplate.exchange(eventSetup.getSubmitUrl(),
                         method, entity, ResponseAttendeeDTO.class, body.getPayload());
 
                 ensureResponseIsOk(response);
