@@ -2,11 +2,8 @@ package io.xhub.xquiz.service.subtheme;
 
 
 
-import io.xhub.xquiz.domain.SubTheme;
 import io.xhub.xquiz.dto.SubThemeDTO;
 import io.xhub.xquiz.dto.mapper.SubThemeMapper;
-import io.xhub.xquiz.exception.BusinessException;
-import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.SubThemeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 
 @Service
