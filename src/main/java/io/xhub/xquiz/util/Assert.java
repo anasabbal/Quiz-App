@@ -25,7 +25,8 @@ public interface Assert {
     }
 
     static void assertRegex(String value, String regex) {
-        if (value == null || !Pattern.compile(regex).matcher(value).matches()) throw new BusinessException(formRegistration);
+        if (value == null || !Pattern.compile(regex).matcher(value).matches())
+            throw new BusinessException(formRegistration);
     }
 
     static void isValid(Integer value, ExceptionPayload exception) {
