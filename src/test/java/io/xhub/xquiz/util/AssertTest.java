@@ -6,7 +6,6 @@ import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +39,7 @@ class AssertTest {
         BusinessException actualException = assertThrows(BusinessException.class,
                 () -> Assert.assertRegex("invalid email", EMAIL));
 
-        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+        assertEquals(ExceptionPayloadFactory.INVALID_FORM_REGISTRATION_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test
@@ -55,7 +54,7 @@ class AssertTest {
         BusinessException actualException = assertThrows(BusinessException.class,
                 () -> Assert.assertRegex("+212 NOT WORKING", PHONE_NUMBER));
 
-        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+        assertEquals(ExceptionPayloadFactory.INVALID_FORM_REGISTRATION_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test
@@ -71,7 +70,7 @@ class AssertTest {
         BusinessException actualException = assertThrows(BusinessException.class,
                 () -> Assert.assertRegex("A", ALPHABETIC_MIN_2_CHARS));
 
-        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+        assertEquals(ExceptionPayloadFactory.INVALID_FORM_REGISTRATION_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
     }
 
     @Test
@@ -95,7 +94,7 @@ class AssertTest {
         BusinessException actualException = assertThrows(BusinessException.class,
                 () -> Assert.isValid(88, exceptionPayload));
 
-        assertEquals(ExceptionPayloadFactory.INVALID_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
+        assertEquals(ExceptionPayloadFactory.INVALID_RATING_PAYLOAD.get().getMessage(), actualException.getPayload().getMessage());
 
     }
 
