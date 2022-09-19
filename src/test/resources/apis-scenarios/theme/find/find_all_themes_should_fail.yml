@@ -1,12 +1,12 @@
 description: fetch all themes should fail
-ignored: true
+ignore: true
 request:
   method: GET
   url: v1/themes
   headers:
     Content-Type: "application/json"
 response:
-  status: "404"
+  status: 404
   body:
-    code: "12"
-    message: "Theme not found"
+    code: 12
+    message: Theme not found

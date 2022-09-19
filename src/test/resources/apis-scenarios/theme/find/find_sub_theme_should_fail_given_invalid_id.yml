@@ -1,13 +1,33 @@
 description: fetch all sub themes should succeed given invalid theme id
-ignored: true
 request:
   method: GET
   url: v1/themes/100/sub-themes
   headers:
     Content-Type: "application/json"
 response:
-  status: "404"
+  status: 200
   body:
-    code: 18
-    message: "Sub themes not found"
+    content: []
+      pageable:
+        sort:
+          sorted: false
+          unsorted: true
+          empty: true
+        offset: 0
+        pageNumber: 0
+        pageSize: 20
+        paged: true
+        unpaged: false
+      last: true
+      totalElements: 0
+      totalPages: 0
+      size: 20
+      number: 0
+      sort:
+        sorted: false
+        unsorted: true
+        empty: true
+      first: true
+      numberOfElements: 0
+      empty: true
 

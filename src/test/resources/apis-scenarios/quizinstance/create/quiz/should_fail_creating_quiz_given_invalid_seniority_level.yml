@@ -1,5 +1,4 @@
 description: should fail creating quiz given invalid seniority level id
-ignored: true
 request:
   method: POST
   url: v1/quiz-instance/start-quiz
@@ -10,7 +9,7 @@ request:
     sessionId: "1"
     subThemeId: "1"
 response:
-  status: "404"
+  status: 404
   body:
-    code: 3
-    message: Seniority level not found
+    code: 19
+    message: Questions not found
