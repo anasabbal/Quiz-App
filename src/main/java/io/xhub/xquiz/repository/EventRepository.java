@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Predicate;
@@ -21,6 +22,8 @@ import static io.xhub.xquiz.domain.Event_.*;
 @Repository
 public interface EventRepository extends JpaRepository<Event, String>, JpaSpecificationExecutor<Event> {
     Optional<Event> findEventByIdAndDeletedFalse(String id);
+    @Query(value = "SELECT * from events order by created_at desc limit 1", nativeQuery = true)
+    Optional<Event> findLast();
 
     default Page<Event> findAllEventsSortByDateWithCriteria(Pageable pageable, EventCriteria eventCriteria) {
         return findAll((root, query, builder) -> {

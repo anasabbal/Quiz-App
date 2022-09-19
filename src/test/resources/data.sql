@@ -178,3 +178,21 @@ values ('1', true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:2
        ('3', true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0, 2, 1, '4','3'),
        ('4', true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0, 1, 1, '3','4'),
        ('5', true, '2022-08-10 01:27:07.8801', 'SYSTEM', false, '2022-08-10 01:27:07.8801', 'SYSTEM', 0, 2, 1, '4','4');
+
+/*  Goodies seed */
+INSERT INTO PUBLIC.goodies(id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                           available_stock, win_score_threshold, label)
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 150, 0,
+        'Xhub pen'),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 0, 0,
+        'xHub sticker'),
+       (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 150, 20,
+        'Xhub Notebook'),
+       (4, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 50, 40,
+        'Xhub small pack'),
+       (5, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 30, 60,
+        'Xhub medium pack'),
+       (6, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 20, 80,
+        'Xhub large pack'),
+       (7, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 5, 80,
+        'Devoxx Ticket');

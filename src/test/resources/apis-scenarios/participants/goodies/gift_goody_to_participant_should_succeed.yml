@@ -1,0 +1,10 @@
+description: gift goody to participant should succeed
+request:
+  method: PATCH
+  url: /v1/participants/4/goodies
+  headers:
+    Content-Type: "application/json"
+  body:
+    goodyID: "1"
+response:
+  status: "200"

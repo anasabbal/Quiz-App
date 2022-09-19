@@ -19,9 +19,9 @@ public class AttendeeEvent {
 
     @EmbeddedId
     private AttendeeEventId id;
-
     @ManyToOne
     private Goody goody;
+
 
     public static AttendeeEvent create(final Attendee attendee, final Event event) {
         final AttendeeEvent attendeeEvent = new AttendeeEvent();
@@ -32,5 +32,21 @@ public class AttendeeEvent {
         attendeeEvent.id = attendeeEventId;
 
         return attendeeEvent;
+    }
+
+    public void giftGoody(Goody goody) {
+        if (this.goody == null) {
+            goody.decrementStock();
+        }
+        else if (!this.goody.equals(goody)) {
+            this.goody.incrementStock();
+            goody.decrementStock();
+        }
+        this.goody = goody;
+    }
+
+
+    public boolean isEligibleForGoody(Goody goody, float techQuizScore, float culturalQuizScore) {
+        return ((techQuizScore + culturalQuizScore) / 2) >= goody.getWinScoreThreshold();
     }
 }

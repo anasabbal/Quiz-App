@@ -291,8 +291,8 @@ VALUES ('1', true, '2022-09-13 19:59:40.428386', 'SYSTEM', false, '2022-09-13 19
         'john.doe@x-hub.io', 'John', 'Doe', '(+212)799-794-994');
 
 /* attendee event seed */
-INSERT INTO public.attendee_event (event_id, attendee_id, goody_id)
-VALUES ('1', '1', '1');
+INSERT INTO public.attendee_event (event_id, attendee_id)
+VALUES ('1', '1');
 
 /* quiz instance seed */
 INSERT INTO public.quiz_instance (id, active, created_at, created_by, deleted, updated_at, updated_by, version,

@@ -1,0 +1,10 @@
+description: gift goody should fail when participant is not eligible for goody
+request:
+  method: PATCH
+  url: /v1/participants/4/goodies
+  headers:
+    Content-Type: "application/json"
+  body:
+    goodyID: "5"
+response:
+  status: "400"
