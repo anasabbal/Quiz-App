@@ -23,58 +23,100 @@ VALUES ('5', true, '2022-08-04 16:01:25.000000', null, false, null, null, 1, 'wh
 
 /* EVENT FORM SETUP */
 
-INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, form_name, form_title, submit_method, submit_url,theme_id)
-VALUES ('1', true, null, null, false, null, null, 1, 'qr-code', 'registration form', 'POST', '/api/v1/quiz-instance','3' );
+INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                     form_name, form_title, submit_method, submit_url, theme_id)
+VALUES ('1', true, null, null, false, null, null, 1, 'qr-code', 'registration form', 'POST', '/api/v1/quiz-instance',
+        '3');
 
-INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, form_name, form_title, submit_method, submit_url,theme_id)
-VALUES ('2', true, null, null, false, null, null, 1, 'Registration', 'registration form', 'POST', '/api/v1/quiz-instance','4' );
+INSERT INTO public.event_form_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                     form_name, form_title, submit_method, submit_url, theme_id)
+VALUES ('2', true, null, null, false, null, null, 1, 'Registration', 'registration form', 'POST',
+        '/api/v1/quiz-instance', '4');
 
 /* EVENT SETUP */
-INSERT INTO public.event_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, description, initialize_button_text, kind, submit_method, submit_url, title, event_id, form_setup_id)
-VALUES ('1', true, '2022-08-04 18:24:36.000000', null, false, null, null, 1, 'This quiz is made for you in order to book your interview slot and possibily join our xFamily.', 'Register now', 'FORM', 'GET', 'https://devoxxma-registration-api.dev.x-hub.io/api/attendees/registration-code/{registrationCode}', 'Welcome to Devoxx Quiz', '1', '1');
+INSERT INTO public.event_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                description, initialize_button_text, kind, submit_method, submit_url, title, event_id,
+                                form_setup_id)
+VALUES ('1', true, '2022-08-04 18:24:36.000000', null, false, null, null, 1,
+        'This quiz is made for you in order to book your interview slot and possibily join our xFamily.',
+        'Register now', 'FORM', 'GET',
+        'https://devoxxma-registration-api.dev.x-hub.io/api/attendees/registration-code/{registrationCode}',
+        'Welcome to Devoxx Quiz', '1', '1');
 
-INSERT INTO public.event_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version, description, initialize_button_text, kind, submit_method, submit_url, title, event_id, form_setup_id)
-VALUES ('2', true, '2022-08-04 18:24:36.000000', null, false, null, null, 1, 'This quiz is made for you in order to book your interview slot and possibily join our xFamily.', 'Register now', 'FORM', null, null, 'Welcome to Devoxx Quiz', '2', '2');
+INSERT INTO public.event_setup (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                description, initialize_button_text, kind, submit_method, submit_url, title, event_id,
+                                form_setup_id)
+VALUES ('2', true, '2022-08-04 18:24:36.000000', null, false, null, null, 1,
+        'This quiz is made for you in order to book your interview slot and possibily join our xFamily.',
+        'Register now', 'FORM', null, null, 'Welcome to Devoxx Quiz', '2', '2');
 
 /* EVENT FORM ELEMENTS */
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('1', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text', 'firstName','FIRST NAME', 'First name', true, 'input',null, '2');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('1', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text', 'firstName', 'FIRST NAME',
+        'First name', true, 'input', null, '2');
 
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('2', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text','lastName', 'LAST NAME', 'Last name', true, 'input',null,  '2');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('2', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text', 'lastName', 'LAST NAME',
+        'Last name', true, 'input', null, '2');
 
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('3', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'email','email', 'EMAIL', 'xAtendee@x-hub.io', true, 'input',null,  '2');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('3', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'email', 'email', 'EMAIL',
+        'xAtendee@x-hub.io', true, 'input', null, '2');
 
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('4', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'phone','phoneNumber', 'PHONE NUMBER', '+212 6 xx xx xx xx', true, 'input',null,  '2');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('4', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'phone', 'phoneNumber', 'PHONE NUMBER',
+        '+212 6 xx xx xx xx', true, 'input', null, '2');
 
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('5', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'submit', 'Register',null,null, null, 'button','Register now',  '2');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('5', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'submit', 'Register', null, null, null,
+        'button', 'Register now', '2');
 
 /* **************************** */
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('6', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text', 'registrationCode',null, 'Your registration code', true, 'input',null,  '1');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('6', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'text', 'registrationCode', null,
+        'Your registration code', true, 'input', null, '1');
 
-INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version, html_type, name,label, placeholder, required, type,inner_text, event_form_setup_id)
-VALUES ('7', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'submit', 'GO',null,null, null, 'button','GO',  '1');
+INSERT INTO public.event_form_element (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                       html_type, name, label, placeholder, required, type, inner_text,
+                                       event_form_setup_id)
+VALUES ('7', true, '2022-08-04 17:35:57.000000', null, false, null, null, 1, 'submit', 'GO', null, null, null, 'button',
+        'GO', '1');
 
 
-/* Attendee */
-insert into public.attendees(id, active, created_at, created_by, deleted, updated_at, updated_by, version, email, first_name, last_name, phone_number)
-VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'xhub@gmail.com', 'xhub', 'xhub', '0766539731');
+/*  Goodies seed */
+INSERT INTO PUBLIC.goodies(id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                           available_stock, win_score_threshold, label)
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 150, 0,
+        'Xhub pen'),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 150, 20,
+        'Xhub Notebook'),
+       (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 50, 40,
+        'Xhub small pack'),
+       (4, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 30, 60,
+        'Xhub medium pack'),
+       (5, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 20, 80,
+        'Xhub large pack'),
+       (6, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 5, 80,
+        'Devoxx Ticket');
 
 
 /* SENIORITY LEVELS */
 insert into public.seniority_levels(id, active, created_at, created_by, deleted, updated_at, updated_by, version, label)
-VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'JUNIOR'),
-       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'INTERMEDIATE'),
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'JUNIOR'),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'INTERMEDIATE'),
        (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'SENIOR');
-
-
-/*  Quiz Instance */
-insert into public.quiz_instance (id, active, created_at, created_by, deleted, updated_at, updated_by, version, end_date,last_question_index ,  start_date, status, final_score, attendee_event_attendee_id, attendee_event_event_id)
-values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '2022-04-16 01:27:07.8801', 3,  '2022-04-16 01:27:07.8801', 'OPENED', 1, 1, null);
 
 /* themes modes seed */
 insert into public.themes(id, active, created_at, created_by, deleted, updated_at, updated_by, version, label, icon)
@@ -166,48 +208,140 @@ values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
        (39, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'annotation tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object.', false, 12),
        (40, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Declares a pointcut executed if the join point throws an exception', false, 19),
        (41, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Annotated fields and parameters values will be injected', false, 20),
-       (42, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Declares a pointcut executed before the call giving control over the execution of the join point to the advice', true, 19),
-       (43, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'that a bean should be created for the class', true, 11),
-       (44, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Valid', true, 14),
-       (45, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Autowiring feature of spring framework enables you to inject the object dependency implicitly', false, 18),
-       (46, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Instances of an annotated class are stored as part of an entity', true, 18),
-       (47, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'It tells to the Spring that any HTTP request should map to the corresponding method.', true, 13),
-       (48, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'sed to bind a web request parameter to a method parameter', false, 13),
-       (49, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'REST permits different data format such as Plain text, HTML, XML, JSON etc.', true, 9),
-       (50, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Object', false, 16),
-       (51, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, ' Class', true, 16),
-       (52, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'A technique to get dependencies of any project', false, 1),
-       (53, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Used to promote tight coupling in code.', false, 1),
-       (54, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Spring using Dependency Injection and supports loose coupling.', true, 3),
-       (55, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Container', false, 16),
-       (56, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Transient', false, 4),
-       (57, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@RolesAllowed', false, 4),
-       (58, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Prototype scope', false, 5),
-       (59, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Singleton and Prototype', false, 5),
-       (60, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Singleton scope', true, 5),
-       (61, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'SOAP uses URI to expose business logic.', false, 9),
-       (62, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Prototype', false, 2),
-       (63, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Request', false, 2),
+       (42, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Declares a pointcut executed before the call giving control over the execution of the join point to the advice',
+        true, 19),
+       (43, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'that a bean should be created for the class', true, 11),
+       (44, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Valid', true,
+        14),
+       (45, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Autowiring feature of spring framework enables you to inject the object dependency implicitly', false, 18),
+       (46, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Instances of an annotated class are stored as part of an entity', true, 18),
+       (47, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'It tells to the Spring that any HTTP request should map to the corresponding method.', true, 13),
+       (48, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'sed to bind a web request parameter to a method parameter', false, 13),
+       (49, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'REST permits different data format such as Plain text, HTML, XML, JSON etc.', true, 9),
+       (50, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Object', false,
+        16),
+       (51, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, ' Class', true,
+        16),
+       (52, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'A technique to get dependencies of any project', false, 1),
+       (53, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Used to promote tight coupling in code.', false, 1),
+       (54, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Spring using Dependency Injection and supports loose coupling.', true, 3),
+       (55, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Container',
+        false, 16),
+       (56, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Transient',
+        false, 4),
+       (57, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@RolesAllowed',
+        false, 4),
+       (58, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Prototype scope', false, 5),
+       (59, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Singleton and Prototype', false, 5),
+       (60, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Singleton scope', true, 5),
+       (61, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'SOAP uses URI to expose business logic.', false, 9),
+       (62, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Prototype',
+        false, 2),
+       (63, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Request',
+        false, 2),
        (64, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '20', true, 6),
        (65, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '8', false, 6),
-       (66, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Repository This is to indicate that the class defines a database repository.', true, 7),
-       (67, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Controller hold the business logic and call methods in the repository layer.', false, 7),
-       (68, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Service indicate that the annotate classes at presentation layers level, mainly used in Spring MVC.', false, 7),
-       (69, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@AfterMapping', false, 10),
-       (70, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@NotEmpty', true, 14),
-       (71, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Autowired', false, 14),
-       (73, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'SOAP is less preferred than REST..', true, 9),
-       (74, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'informs to the Spring to render the result back to the caller', false, 13),
-       (75, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'that autowiring should be enabled for the class', false, 11),
-       (76, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'that autowiring should not be enabled for the class', false, 11),
-       (77, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'in WEB_INF folder', true, 15),
-       (78, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '12', false, 17),
-       (72, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Specifies a list of security roles allowed to invoke protected method', false, 19);
+       (66, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        '@Repository This is to indicate that the class defines a database repository.', true, 7),
+       (67, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        '@Controller hold the business logic and call methods in the repository layer.', false, 7),
+       (68, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        '@Service indicate that the annotate classes at presentation layers level, mainly used in Spring MVC.', false,
+        7),
+       (69, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@AfterMapping',
+        false, 10),
+       (70, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@NotEmpty',
+        true, 14),
+       (71, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Autowired',
+        false, 14),
+       (73, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'SOAP is less preferred than REST..', true, 9),
+       (74, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'informs to the Spring to render the result back to the caller', false, 13),
+       (75, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'that autowiring should be enabled for the class', false, 11),
+       (76, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'that autowiring should not be enabled for the class', false, 11),
+       (77, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'in WEB_INF folder', true, 15),
+       (78, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '12', false,
+        17),
+       (72, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
+        'Specifies a list of security roles allowed to invoke protected method', false, 19);
 
 
+/* attendee seed */
+INSERT INTO public.attendees (id, active, created_at, created_by, deleted, updated_at, updated_by, version, email,
+                              first_name, last_name, phone_number)
+VALUES ('1', true, '2022-09-13 19:59:40.428386', 'SYSTEM', false, '2022-09-13 19:59:40.428386', 'SYSTEM', 0,
+        'john.doe@x-hub.io', 'John', 'Doe', '(+212)799-794-994');
+
+/* attendee event seed */
+INSERT INTO public.attendee_event (event_id, attendee_id, goody_id)
+VALUES ('1', '1', '1');
+
+/* quiz instance seed */
+INSERT INTO public.quiz_instance (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                  end_date, final_score, last_question_index, start_date, status,
+                                  attendee_event_attendee_id, attendee_event_event_id)
+VALUES ('1', true, '2022-09-13 19:59:40.458381', 'SYSTEM', false, '2022-09-13 20:00:23.982048', 'SYSTEM', 22,
+        '2022-09-13 20:00:23.978050', 6, 19, '2022-09-13 19:59:44.465600', 'FINISHED', '1', '1');
 
 
-
-
-
-
+/* quiz instance details seed for attendee  */
+INSERT INTO public.quiz_instance_details (id, active, created_at, created_by, deleted, updated_at, updated_by, version,
+                                          question_index, score, question_id, quiz_instance_id)
+VALUES ('f11e1853-2876-46a4-a7eb-5f709cdbcf3b', true, '2022-09-13 19:59:44.485614', 'SYSTEM', false,
+        '2022-09-13 19:59:44.485614', 'SYSTEM', 0, 1, 0, '8', '1'),
+       ('e36cf112-d5ff-46a4-8f2d-9875307e8679', true, '2022-09-13 19:59:44.486612', 'SYSTEM', false,
+        '2022-09-13 19:59:44.486612', 'SYSTEM', 0, 2, 0, '2', '1'),
+       ('0ff8dd60-e670-4fd3-a416-90072f09957a', true, '2022-09-13 19:59:44.486612', 'SYSTEM', false,
+        '2022-09-13 19:59:44.486612', 'SYSTEM', 0, 3, 0, '9', '1'),
+       ('002ddaed-11c1-4722-a7ae-7ff153bbe3d3', true, '2022-09-13 19:59:44.486612', 'SYSTEM', false,
+        '2022-09-13 19:59:44.486612', 'SYSTEM', 0, 4, 0, '15', '1'),
+       ('a2c8108c-334b-4f93-921d-35dd98f7df62', true, '2022-09-13 19:59:44.487613', 'SYSTEM', false,
+        '2022-09-13 19:59:44.487613', 'SYSTEM', 0, 5, 0, '19', '1'),
+       ('231e90da-6c5e-4d92-9796-740377c86a14', true, '2022-09-13 19:59:44.488613', 'SYSTEM', false,
+        '2022-09-13 19:59:44.488613', 'SYSTEM', 0, 8, 0, '14', '1'),
+       ('b01bacd9-07fa-48ae-9152-76033e46cfac', true, '2022-09-13 19:59:44.488613', 'SYSTEM', false,
+        '2022-09-13 19:59:44.488613', 'SYSTEM', 0, 9, 0, '18', '1'),
+       ('ca8d4922-a9d1-478f-bca2-f48c0b59062c', true, '2022-09-13 19:59:44.488613', 'SYSTEM', false,
+        '2022-09-13 19:59:44.488613', 'SYSTEM', 0, 10, 0, '12', '1'),
+       ('89b2b564-5ad2-433e-9ade-55eb6cfa587a', true, '2022-09-13 19:59:44.488613', 'SYSTEM', false,
+        '2022-09-13 19:59:44.488613', 'SYSTEM', 0, 12, 0, '10', '1'),
+       ('ca48b2a5-8739-4ec1-8bad-f57f1191c9e2', true, '2022-09-13 19:59:44.489614', 'SYSTEM', false,
+        '2022-09-13 19:59:44.489614', 'SYSTEM', 0, 13, 0, '17', '1'),
+       ('f646f622-f6cd-4384-befe-90880bd7db8a', true, '2022-09-13 19:59:44.489614', 'SYSTEM', false,
+        '2022-09-13 19:59:44.489614', 'SYSTEM', 0, 14, 0, '6', '1'),
+       ('c8796f8a-3cd5-42b3-91e4-70864fb61ef6', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 19:59:44.490615', 'SYSTEM', 0, 16, 0, '16', '1'),
+       ('dff4b0b8-9fe9-4a9d-8022-a81bc8f16c09', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 19:59:44.490615', 'SYSTEM', 0, 19, 0, '3', '1'),
+       ('08ee788e-4ed6-42d9-b853-2a78483483d2', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 19:59:44.490615', 'SYSTEM', 0, 20, 0, '5', '1'),
+       ('843afaef-7a63-4156-b079-99303bedfecd', true, '2022-09-13 19:59:44.487613', 'SYSTEM', false,
+        '2022-09-13 19:59:56.927784', 'SYSTEM', 1, 6, 1, '11', '1'),
+       ('f30c1d68-dc5d-4dcd-a988-32274b0eb4d4', true, '2022-09-13 19:59:44.487613', 'SYSTEM', false,
+        '2022-09-13 19:59:58.413843', 'SYSTEM', 1, 7, 1, '20', '1'),
+       ('979cd707-961f-4c75-9d1d-6b185c027c4b', true, '2022-09-13 19:59:44.488613', 'SYSTEM', false,
+        '2022-09-13 20:00:07.035121', 'SYSTEM', 1, 11, 1, '4', '1'),
+       ('8ac3afeb-88ec-46a4-b652-e4ccc5657327', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 20:00:14.532026', 'SYSTEM', 1, 15, 1, '7', '1'),
+       ('164c9d84-f3dc-42d6-9746-36f2f5327abf', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 20:00:19.207311', 'SYSTEM', 1, 17, 1, '13', '1'),
+       ('c6b8b9ef-320b-4856-8034-025f3128f0c6', true, '2022-09-13 19:59:44.490615', 'SYSTEM', false,
+        '2022-09-13 20:00:20.369398', 'SYSTEM', 1, 18, 1, '1', '1');

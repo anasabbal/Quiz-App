@@ -1,0 +1,34 @@
+description: find all participants by criteria should return no result
+request:
+  method: GET
+  url: /v1/participants
+  headers:
+    Content-Type: "application/json"
+  queryParameters:
+    keyword: "unknown"
+response:
+  status: "200"
+  body :
+    content: [ ]
+    pageable:
+      sort:
+        sorted: false
+        unsorted: true
+        empty: true
+      offset: 0
+      pageSize: 20
+      pageNumber: 0
+      paged: true
+      unpaged: false
+    last: true
+    totalPages: 0
+    totalElements: 0
+    number: 0
+    size: 20
+    sort:
+      sorted: false
+      unsorted: true
+      empty: true
+    first: true
+    numberOfElements: 0
+    empty: true
