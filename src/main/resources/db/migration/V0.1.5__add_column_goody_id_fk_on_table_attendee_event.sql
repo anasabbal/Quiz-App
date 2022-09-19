@@ -1,0 +1,8 @@
+ALTER TABLE attendee_event
+ADD COLUMN goody_id VARCHAR(255);
+
+ALTER TABLE attendee_event
+ADD CONSTRAINT FK_GOODIES_ON_ATTENDEE_EVENT
+FOREIGN KEY (goody_id)
+REFERENCES goodies (id);
+

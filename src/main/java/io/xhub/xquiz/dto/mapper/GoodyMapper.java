@@ -36,6 +36,7 @@ public class GoodyMapper {
         goodyDTO.setId(goody.getId());
         goodyDTO.setLabel(goody.getLabel());
         goodyDTO.setStock(goody.getAvailableStock());
+        goodyDTO.setAcquired(goody.equals(eventParticipant.getGoody()));
         goodyDTO.setEligible(
                 eventParticipant.isEligibleForGoody(goody,
                                 attendeeEventRepository

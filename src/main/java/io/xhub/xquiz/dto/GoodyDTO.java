@@ -1,6 +1,5 @@
 package io.xhub.xquiz.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +12,5 @@ public class GoodyDTO {
     private String label;
     private Integer stock;
     private boolean isEligible;
+    private boolean isAcquired;
 }
