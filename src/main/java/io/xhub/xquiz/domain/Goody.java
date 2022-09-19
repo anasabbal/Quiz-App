@@ -1,9 +1,5 @@
 package io.xhub.xquiz.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -16,9 +12,10 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Goody extends BaseEntity {
 
+    @EqualsAndHashCode.Include
     @Column(name = "LABEL")
     private String label;
     @Column(name = "AVAILABLE_STOCK")
