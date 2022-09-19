@@ -1,0 +1,9 @@
+description: find all participant eligible goodies should return empty list when participant id is not found.yml
+request:
+  method: GET
+  url: /v1/participants/unknown/goodies
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body: [ ]

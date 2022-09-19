@@ -1,0 +1,12 @@
+description: gift goody should fail when participant id is invalid
+request:
+  method: PATCH
+  url: /v1/participants/invalid/goodies
+  headers:
+    Content-Type: "application/json"
+  body:
+    goodyID: "1"
+response:
+  status: "404"
+  body:
+    code: 18

@@ -17,7 +17,8 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
 
     Optional<Attendee> findByEmail(String email);
 
-    @Query(value = "SELECT new io.xhub.xquiz.dto.ParticipantDetailsDTO(qid.quizInstance.attendeeEvent.id.attendee.firstName, " +
+    @Query(value = "SELECT new io.xhub.xquiz.dto.ParticipantDetailsDTO(qid.quizInstance.attendeeEvent.id.attendee.id," +
+            "                                                          qid.quizInstance.attendeeEvent.id.attendee.firstName, " +
             "                                                          qid.quizInstance.attendeeEvent.id.attendee.lastName, " +
             "                                                          qid.question.seniorityLevel.label, " +
             "                                                          qid.question.subTheme.title, " +
@@ -29,7 +30,8 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
             "WHERE qid.quizInstance.status = 'FINISHED' " +
             "   AND upper(concat(qid.quizInstance.attendeeEvent.id.attendee.firstName, qid.quizInstance.attendeeEvent.id.attendee.lastName)) " +
             "   LIKE concat('%', upper(replace(:keyword, ' ', ''))  ,'%')" +
-            "GROUP BY qid.quizInstance.attendeeEvent.id.attendee.firstName, " +
+            "GROUP BY qid.quizInstance.attendeeEvent.id.attendee.id, " +
+            "         qid.quizInstance.attendeeEvent.id.attendee.firstName, " +
             "         qid.quizInstance.attendeeEvent.id.attendee.lastName, " +
             "         qid.question.seniorityLevel.label, " +
             "         qid.question.subTheme.title, " +

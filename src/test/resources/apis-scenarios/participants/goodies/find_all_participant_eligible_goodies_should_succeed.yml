@@ -1,0 +1,38 @@
+description: gift goody to participant should succeed
+request:
+  method: GET
+  url: /v1/participants/4/goodies
+  headers:
+    Content-Type: "application/json"
+response:
+  status: "200"
+  body:
+    - id: "1"
+      label: "Xhub pen"
+      stock: 150
+      eligible: true
+    - id: "2"
+      label: "xHub sticker"
+      stock: 0
+      eligible: true
+    - id: "3"
+      label: "Xhub Notebook"
+      stock: 150
+      eligible: true
+    - id: "4"
+      label: "Xhub small pack"
+      stock: 50
+      eligible: true
+    - id: "5"
+      label: "Xhub medium pack"
+      stock: 30
+      eligible: false
+    - id: "6"
+      label: "Xhub large pack"
+      stock: 20
+      eligible: false
+    - id: "7"
+      label: "Devoxx Ticket"
+      stock: 5
+      eligible: false
+
