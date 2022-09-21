@@ -18,4 +18,5 @@ public class ResourcePath {
     public static final String RATE_EXPERIENCE = "/rate-experience";
     public static final String GOODIES = "/goodies";
     public static final String PARTICIPANTS = "/participants";
+    public static final String CULTURE_QUIZ = "/culture-quiz";
  }
