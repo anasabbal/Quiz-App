@@ -255,34 +255,31 @@ values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
         false, 2),
        (64, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '20', true, 6),
        (65, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '8', false, 6),
-       (66, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        '@Repository This is to indicate that the class defines a database repository.', true, 7),
-       (67, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        '@Controller hold the business logic and call methods in the repository layer.', false, 7),
-       (68, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        '@Service indicate that the annotate classes at presentation layers level, mainly used in Spring MVC.', false,
-        7),
-       (69, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@AfterMapping',
-        false, 10),
-       (70, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@NotEmpty',
-        true, 14),
-       (71, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Autowired',
-        false, 14),
-       (73, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'SOAP is less preferred than REST..', true, 9),
-       (74, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'informs to the Spring to render the result back to the caller', false, 13),
-       (75, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'that autowiring should be enabled for the class', false, 11),
-       (76, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'that autowiring should not be enabled for the class', false, 11),
-       (77, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'in WEB_INF folder', true, 15),
-       (78, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '12', false,
-        17),
-       (72, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
-        'Specifies a list of security roles allowed to invoke protected method', false, 19);
+       (66, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Repository This is to indicate that the class defines a database repository.', true, 7),
+       (67, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Controller hold the business logic and call methods in the repository layer.', false, 7),
+       (68, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Service indicate that the annotate classes at presentation layers level, mainly used in Spring MVC.', false, 7),
+       (69, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@AfterMapping', false, 10),
+       (70, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@NotEmpty', true, 14),
+       (71, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '@Autowired', false, 14),
+       (73, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'SOAP is less preferred than REST..', true, 9),
+       (74, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'informs to the Spring to render the result back to the caller', false, 13),
+       (75, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'that autowiring should be enabled for the class', false, 11),
+       (76, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'that autowiring should not be enabled for the class', false, 11),
+       (77, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'in WEB_INF folder', true, 15),
+       (78, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, '12', false, 17),
+       (72, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Specifies a list of security roles allowed to invoke protected method', false, 19);
 
+/* culture question */
+insert into public.culture_questions(id, active, created_at, created_by, deleted, updated_at, updated_by, version, type , score, content)
+VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'UNIQUE_CHOICE', 5, 'Do you have an idea about xHub'),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'MULTI_CHOICE', 5, 'Would you like to work with xHub'),
+       (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'TEXT', 5, 'How did you heard about xHub');
+
+insert into public.culture_answers(id, active, created_at, created_by, deleted, updated_at, updated_by, version, content, culture_question_id)
+values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Yes', 1),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'No', 1),
+       (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'No', 2),
+       (4, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 'Yes', 2);
 
 /* attendee seed */
 INSERT INTO public.attendees (id, active, created_at, created_by, deleted, updated_at, updated_by, version, email,
