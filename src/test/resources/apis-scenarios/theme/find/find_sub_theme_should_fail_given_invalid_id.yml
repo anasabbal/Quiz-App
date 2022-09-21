@@ -1,33 +1,32 @@
-description: fetch all sub themes should succeed given invalid theme id
+description: fetch all sub themes should fail given valid theme id
 request:
   method: GET
-  url: v1/themes/100/sub-themes
+  url: v1/themes/33/sub-themes
   headers:
     Content-Type: "application/json"
 response:
-  status: 200
+  status: "200"
   body:
-    content: []
-      pageable:
-        sort:
-          sorted: false
-          unsorted: true
-          empty: true
-        offset: 0
-        pageNumber: 0
-        pageSize: 20
-        paged: true
-        unpaged: false
-      last: true
-      totalElements: 0
-      totalPages: 0
-      size: 20
-      number: 0
+    content: [ ]
+    pageable:
       sort:
-        sorted: false
         unsorted: true
+        sorted: false
         empty: true
-      first: true
-      numberOfElements: 0
+      offset: 0
+      pageSize: 20
+      pageNumber: 0
+      unpaged: false
+      paged: true
+    last: true
+    totalPages: 0
+    totalElements: 0
+    size: 20
+    number: 0
+    sort:
+      unsorted: true
+      sorted: false
       empty: true
-
+    first: true
+    numberOfElements: 0
+    empty: true

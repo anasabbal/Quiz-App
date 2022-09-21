@@ -1,5 +1,4 @@
 description: should fail creating quiz given invalid sub theme id
-ignored: true
 request:
   method: POST
   url: v1/quiz-instance/start-quiz
@@ -12,5 +11,5 @@ request:
 response:
   status: "404"
   body:
-    code: null
-    message: Sub theme not found
+    code: 19
+    message: Questions not found
