@@ -35,14 +35,14 @@ public class QuestionServiceImpl implements QuestionService {
 
         final List<List<Question>> questions = new ArrayList<>();
 
-        subThemes.forEach(subTheme -> log.info("Begin creating list of question from sub theme id {} and percentage ", subTheme.getId(), subTheme.getPercentage()));
+        subThemes.forEach(subTheme -> log.info("Begin creating list of question from sub theme with id {} and percentage {}", subTheme.getId(), subTheme.getPercentage()));
         subThemes.forEach(subTheme -> questions.
                 add(questionRepository.
                         findListQuestionBySeniorityLevelIdAndSubThemeId(
                                 command.getSeniorityLevelId(),
                                 subTheme.getId(),
                                 subTheme.getPercentage() * totalQuestions /100)));
-        subThemes.forEach(subTheme -> log.info("List of question created successfully for sub theme id {} and percentage ", subTheme.getId(), subTheme.getPercentage()));
+        subThemes.forEach(subTheme -> log.info("List of question created successfully for sub theme  with id {} and percentage {}", subTheme.getId(), subTheme.getPercentage()));
         log.info("Question with size {} created successfully", questions.size());
        return questions.stream()
                .flatMap(List::stream)
