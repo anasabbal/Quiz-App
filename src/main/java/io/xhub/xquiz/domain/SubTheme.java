@@ -24,6 +24,9 @@ public class SubTheme extends BaseEntity{
     @Column(name = "ICON")
     private String icon;
 
+    @Column(name = "PERCENTAGE")
+    private Integer percentage;
+
     @ManyToOne
     private Theme theme;
 
