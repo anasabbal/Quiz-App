@@ -10,5 +10,5 @@ request:
 response:
   status: "400"
   body:
-    code: 20
+    code: 18
     message: Please enter a valid rating

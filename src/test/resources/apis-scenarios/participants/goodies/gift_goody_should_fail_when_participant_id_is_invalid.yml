@@ -9,4 +9,4 @@ request:
 response:
   status: "404"
   body:
-    code: 18
+    code: 21
