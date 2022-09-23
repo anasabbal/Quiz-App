@@ -10,8 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -33,22 +32,19 @@ public class QuestionServiceImpl implements QuestionService {
         final List<SubTheme> subThemes = subThemeRepository.findAllByThemeId(command.getThemeId());
         log.info("Sub theme with size {} fetched successfully");
 
-        final List<List<Question>> questions = new ArrayList<>();
+        final Map<String, List<Question>> map = new HashMap<>();
 
         subThemes.forEach(subTheme -> log.info("Begin creating list of question from sub theme with id {} and percentage {}", subTheme.getId(), subTheme.getPercentage()));
-        subThemes.forEach(subTheme -> questions.
-                add(questionRepository.
-                        findListQuestionBySeniorityLevelIdAndSubThemeId(
-                                command.getSeniorityLevelId(),
-                                subTheme.getId(),
-                                subTheme.getPercentage() * totalQuestions /100)));
+        subThemes.forEach(subTheme -> map.put(
+                subTheme.getId(), questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                command.getSeniorityLevelId(),
+                subTheme.getId(),
+                subTheme.getPercentage() * totalQuestions /100
+        )));
         subThemes.forEach(subTheme -> log.info("List of question created successfully for sub theme  with id {} and percentage {}", subTheme.getId(), subTheme.getPercentage()));
-        log.info("Question with size {} created successfully", questions.size());
 
-        List<Question> finalQuestions = questions.stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
-        log.info("Final questions with size {}", finalQuestions.size());
-       return finalQuestions;
+        List<Question> questions = map.values().stream().flatMap(List::stream).collect(Collectors.toList());
+        log.info("Final questions with size {}", questions.size());
+       return questions;
     }
 }
