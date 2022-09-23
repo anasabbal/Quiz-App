@@ -9,5 +9,5 @@ request:
 response:
   status: "404"
   body:
-    code: 25
+    code: 23
 
