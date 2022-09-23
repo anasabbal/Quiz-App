@@ -11,5 +11,5 @@ request:
 response:
   status: "404"
   body:
-    code: 19
+    code: 17
     message: Questions not found

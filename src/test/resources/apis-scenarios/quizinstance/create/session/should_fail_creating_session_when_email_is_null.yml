@@ -15,5 +15,5 @@ request:
 response:
   status: 400
   body:
-    code: 22
+    code: 26
     message: Invalid form registration
