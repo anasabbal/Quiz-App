@@ -4,7 +4,7 @@ import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayload;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 
-import java.util.*;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public interface Assert {
@@ -33,4 +33,7 @@ public interface Assert {
         if (value < 1 || value > 5) throw new BusinessException(exception);
     }
 
+    static void assertNotBlank(String value) {
+        if (value == null || value.isBlank()) throw new BusinessException(payload);
+    }
 }

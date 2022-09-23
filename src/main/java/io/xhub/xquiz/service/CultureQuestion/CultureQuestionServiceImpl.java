@@ -42,15 +42,17 @@ public class CultureQuestionServiceImpl implements CultureQuestionService{
         final QuizInstance quizInstance = getSessionAndCheckIfQuizPassed(command.getQuizInstanceId());
 
         CultureQuizDetails cultureQuizDetails = CultureQuizDetails.create(quizInstance);
+        double sum = cultureQuestionRepository.sumCultureQuestionsScore();
         command.getAnswers().forEach(
                 answer -> {
                     CultureQuestion question = getQuestionById(answer);
                     if (question.getType().equals(CultureQuestionType.TEXT)) {
                         answerQuestion(answer, question, cultureQuizDetails);
-                    }else {
+                    } else {
                         answerQuestion(answer, cultureQuizDetails);
                     }
                     cultureQuizDetails.addQuestionAndScore(question);
+                    cultureQuizDetails.updatePercentFinalScore(sum);
                 }
         );
         cultureQuizDetailsRepository.save(cultureQuizDetails);

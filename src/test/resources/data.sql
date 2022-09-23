@@ -196,3 +196,8 @@ VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
         'Xhub large pack'),
        (7, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0, 5, 80,
         'Devoxx Ticket');
+
+
+INSERT INTO public.business_config (id, key, value)
+VALUES ('TECHNICAL_QUIZ_FACTOR_PERCENT', 'TECHNICAL_QUIZ_FACTOR_PERCENT', '50'),
+       ('CULTURAL_QUIZ_FACTOR_PERCENT', 'CULTURAL_QUIZ_FACTOR_PERCENT', '50');

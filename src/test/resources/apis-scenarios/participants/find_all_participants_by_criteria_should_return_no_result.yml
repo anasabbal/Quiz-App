@@ -1,7 +1,7 @@
 description: find all participants by criteria should return no result
 request:
   method: GET
-  url: /v1/participants
+  url: /v1/events/participants
   headers:
     Content-Type: "application/json"
   queryParameters:

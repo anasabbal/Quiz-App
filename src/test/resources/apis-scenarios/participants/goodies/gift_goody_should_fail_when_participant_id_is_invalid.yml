@@ -1,7 +1,7 @@
 description: gift goody should fail when participant id is invalid
 request:
   method: PATCH
-  url: /v1/participants/invalid/goodies
+  url: /v1/events/1/participants/invalid/goodies
   headers:
     Content-Type: "application/json"
   body:
