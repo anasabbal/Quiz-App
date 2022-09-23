@@ -27,6 +27,9 @@ public class QuizInstance extends BaseEntity {
     @Column(name = "FINAL_SCORE")
     private Integer finalScore;
 
+    @Column(name = "PERCENT_FINAL_SCORE")
+    private Float percentFinalScore;
+
     @Column(name = "LAST_QUESTION_INDEX")
     private Integer lastQuestionIndex;
 
@@ -52,4 +55,9 @@ public class QuizInstance extends BaseEntity {
     public void updateStatusToClosed() {
         this.status = Status.CLOSED;
     }
+
+    public void updatePercentFinalScore(float finalScore) {
+        this.percentFinalScore = finalScore;
+    }
+
 }

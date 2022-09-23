@@ -1,21 +1,28 @@
 package io.xhub.xquiz.service.participant;
 
+import io.xhub.xquiz.command.FeedBackCommand;
 import io.xhub.xquiz.command.ParticipantGoodyCommand;
-import io.xhub.xquiz.domain.Event;
-import io.xhub.xquiz.domain.Goody;
-import io.xhub.xquiz.dto.ParticipantDetailsDTO;
+import io.xhub.xquiz.domain.*;
+import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
+import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ParticipantService {
-    List<Goody> getAllGoodies();
+    List<ParticipantGoodiesDTO> getGoodies(String eventID, String participantID);
 
-    void giftGoody(String participantID, ParticipantGoodyCommand command);
+    void giftGoody(String eventID, String participantID, ParticipantGoodyCommand command);
 
-    Goody getById(String id);
+    Goody getGoody(String id);
 
-    Page<ParticipantDetailsDTO> getAllByCriteria(String keyword, Pageable pageable);
-    int countEventParticipants();
+    Page<ParticipantDetailDTO> getAllEventParticipantsByCriteria(String keyword, Pageable pageable);
+
+    void submitFeedback(String eventIDn, String participantID, FeedBackCommand feedBackCommand);
+
+    AttendeeEvent getEventParticipant(String eventID, String participantID);
+
+
+    Feedback getFeedback(String eventID, String participantID);
 }

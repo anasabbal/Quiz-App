@@ -17,6 +17,9 @@ public class CultureQuizDetails extends BaseEntity {
     @Column(name = "SCORE")
     private float score = 0;
 
+    @Column(name = "PERCENT_FINAL_SCORE")
+    private Float percentFinalScore;
+
     @ManyToMany
     private List<CultureQuestion> cultureQuestion;
 
@@ -36,5 +39,9 @@ public class CultureQuizDetails extends BaseEntity {
     public void addQuestionAndScore(CultureQuestion question) {
         this.cultureQuestion.add(question);
         this.score += question.getScore();
+    }
+
+    public void updatePercentFinalScore(double totalScore) {
+        this.percentFinalScore = (float) (score * 100 / totalScore);
     }
 }

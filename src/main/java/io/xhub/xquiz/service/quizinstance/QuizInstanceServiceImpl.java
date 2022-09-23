@@ -285,6 +285,8 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         log.info("Begin fetching pass  mark from quiz instruction");
         final Integer passMark = Integer.valueOf(getQuizInstructionsByKey("PASS_TASK").getValue());
         float attendeeMark = (Float.valueOf(scorePercentage) * 100 / Float.valueOf(perfectScore));
+        quizInstance.updatePercentFinalScore(attendeeMark);
+        quizInstanceRepository.save(quizInstance);
         return PassMarkDTO.create(passMark, attendeeMark);
     }
 
