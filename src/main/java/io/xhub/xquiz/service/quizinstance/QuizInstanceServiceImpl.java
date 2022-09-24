@@ -151,7 +151,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
     @Override
     public QuizInstruction getQuizInstructionsByKey(final String key) {
-        return quizInstructionsService.findQuizInstructionByKey(key);
+        log.info("Begin fetching quiz instruction with time limit");
+        final QuizInstruction quizInstruction = quizInstructionsService.findQuizInstructionByKey(key);
+        log.info("Quiz instruction fetched successfully");
+        return quizInstruction;
     }
 
     @Override
@@ -159,23 +162,15 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
         log.info("Session with id {} fetched successfully", quizInstance.getId());
 
-        log.info("Begin fetching total questions from quiz instruction");
         final Integer totalQuestions = Integer.valueOf(getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
-        log.info("Begin fetching quiz instruction with key time limit");
 
-        log.info("Begin fetching quiz instruction with time limit");
         final QuizInstruction quizInstruction = getQuizInstructionsByKey("TIME_LIMIT");
-        log.info("Quiz instruction fetched successfully");
 
         final LocalDateTime startDate = LocalDateTime.now();
 
-        log.info("Begin set start date for session ");
         quizInstance.setStartDate(LocalDateTime.now());
-        log.info("Start date set successfully");
 
-        log.info("Begin set end date for session ");
         quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
-        log.info("End date set successfully");
 
         if (Boolean.FALSE.equals(quizInstanceDetailsService.checkIfSessionQuestionsExist(quizInstance.getId()))) {
 
@@ -189,19 +184,12 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
                 throw new BusinessException(ExceptionPayloadFactory.QUESTIONS_NOT_FOUND.get());
             log.info("Begin creating question");
             questions.forEach(question -> quizInstanceDetailsService.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
-            questions.forEach(question -> log.info("Question with index {} created successfully", questions.indexOf(question) + 1));
 
-            log.info("Begin mapping question ");
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
-            log.info("Question mapped successfully");
 
-            log.info("Begin seating total correct answers");
             questionDTO.setTotalCorrectAnswers(getTotalCorrectAnswers(questions.get(0).getId()));
-            log.info("Correct answers seating successfully");
 
-            log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
-            log.info("Status set successfully");
             return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailsService.
