@@ -5,8 +5,10 @@ import io.xhub.xquiz.command.ParticipantGoodyCommand;
 import io.xhub.xquiz.domain.AttendeeEvent;
 import io.xhub.xquiz.domain.Feedback;
 import io.xhub.xquiz.domain.Goody;
+import io.xhub.xquiz.domain.projection.ParticipantCulturalQuizAnswerDTO;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
+import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
 import io.xhub.xquiz.exception.BusinessException;
 import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.AttendeeEventRepository;
@@ -111,5 +113,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Feedback getFeedback(String eventID, String participantID) {
         log.info("Begin fetching xInterviewer feedback on participant with id '{}' and event with id '{}'", participantID, eventID);
         return getEventParticipant(eventID, participantID).getFeedBack();
+    }
+
+    @Override
+    public ParticipantCulturalQuizRecapDTO getCulturalQuizRecap(String participantID, String eventID) {
+        log.info("Begin fetching xInterviewer cultural quiz recap  on participant with id '{}' and event with id '{}'", participantID, eventID);
+        final List<ParticipantCulturalQuizAnswerDTO> participantAnswers = attendeeEventRepository.findCulturalQuizRecap(participantID, eventID);
+        final Integer participantPercentFinalScore = attendeeEventRepository.getEventParticipantCulturalQuizPercentScore(eventID, participantID);
+        return ParticipantCulturalQuizRecapDTO.create(participantPercentFinalScore, participantAnswers);
     }
 }

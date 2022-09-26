@@ -6,11 +6,13 @@ import io.xhub.xquiz.command.FeedBackCommand;
 import io.xhub.xquiz.command.ParticipantGoodyCommand;
 import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.domain.Event;
+import io.xhub.xquiz.domain.projection.ParticipantCulturalQuizAnswerDTO;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
 import io.xhub.xquiz.dto.EventDTO;
 import io.xhub.xquiz.dto.EventDetailsDTO;
 import io.xhub.xquiz.dto.FeedbackDTO;
+import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.dto.mapper.FeedbackMapper;
 import io.xhub.xquiz.service.event.EventService;
@@ -85,5 +87,12 @@ public class EventResource {
     public ResponseEntity<FeedbackDTO> getFeedBack(@PathVariable final String eventID,
                                                    @PathVariable final String participantID) {
         return ResponseEntity.ok().body(feedbackMapper.toFeedbackDTO(participantService.getFeedback(eventID, participantID)));
+    }
+
+    @GetMapping("/{eventID}" + PARTICIPANTS + "/{participantID}" + CULTURAL_QUIZ_RECAP)
+    @ApiOperation(value = "Get cultural quiz recap on the xQuiz Participant session")
+    public ResponseEntity<ParticipantCulturalQuizRecapDTO> getCulturalQuizRecap(@PathVariable final String eventID,
+                                                                                @PathVariable final String participantID) {
+        return ResponseEntity.ok().body(participantService.getCulturalQuizRecap(participantID, eventID));
     }
 }
