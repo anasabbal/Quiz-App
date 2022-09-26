@@ -166,13 +166,11 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
         final QuizInstruction quizInstruction = getQuizInstructionsByKey("TIME_LIMIT");
 
-        final LocalDateTime startDate = LocalDateTime.now();
-
-        quizInstance.setStartDate(LocalDateTime.now());
-
-        quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
-
         if (Boolean.FALSE.equals(quizInstanceDetailsService.checkIfSessionQuestionsExist(quizInstance.getId()))) {
+            final LocalDateTime startDate = LocalDateTime.now();
+
+            quizInstance.setStartDate(startDate);
+            quizInstance.setEndDate(startDate.plusSeconds(Long.parseLong(quizInstruction.getValue())));
 
             log.info("Begin fetching questions with seniority level id {} and sub theme id {}", quizInstanceDetailsCommand.getSeniorityLevelId(),
                     quizInstanceDetailsCommand.getThemeId());
@@ -193,11 +191,11 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
             return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailsService.
-                    findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
+                    findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex() + 1));
             quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(getTotalCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
             log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
-            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
+            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), quizInstance.getStartDate(), quizInstance.getEndDate());
         }
     }
 
