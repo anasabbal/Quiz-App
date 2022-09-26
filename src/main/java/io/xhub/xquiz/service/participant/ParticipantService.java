@@ -5,6 +5,7 @@ import io.xhub.xquiz.command.ParticipantGoodyCommand;
 import io.xhub.xquiz.domain.*;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
+import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,4 +26,6 @@ public interface ParticipantService {
 
 
     Feedback getFeedback(String eventID, String participantID);
+
+    ParticipantCulturalQuizRecapDTO getCulturalQuizRecap(String participantID, String eventID);
 }
