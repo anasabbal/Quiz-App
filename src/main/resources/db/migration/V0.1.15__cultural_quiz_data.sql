@@ -1,6 +1,6 @@
+DELETE FROM culture_quiz_details_culture_question;
 DELETE FROM culture_answers_details;
 DELETE FROM culture_quiz_details;
-DELETE FROM culture_quiz_details_culture_question;
 
 DELETE FROM culture_answers ca
 WHERE ca.culture_question_id = '1';
