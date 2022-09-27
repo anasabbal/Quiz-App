@@ -23,6 +23,7 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <mockito.version>3.8.0</mockito.version>
         <jpamodelgen.version>5.4.12.Final</jpamodelgen.version>
+        <flyway.version>7.2.0</flyway.version>
     </properties>
     <dependencies>
         <dependency>
@@ -96,6 +97,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

@@ -14,10 +14,11 @@ spring:
           use_jdbc_metadata_defaults: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     database: h2
   flyway:
-    placeholder-replacement: false
+    placeholderReplacement: false
+    enabled: false
 
 application:
   front-url: ${FRONT_URL:http://localhost:3000}
