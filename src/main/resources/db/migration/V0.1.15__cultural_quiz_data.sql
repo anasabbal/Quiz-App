@@ -1,25 +1,3 @@
-DELETE FROM culture_quiz_details_culture_question;
-DELETE FROM culture_answers_details;
-DELETE FROM culture_quiz_details;
-
-DELETE FROM culture_answers ca
-WHERE ca.culture_question_id = '1';
-
-DELETE FROM culture_answers ca
-WHERE ca.culture_question_id = '2';
-
-DELETE FROM culture_answers ca
-WHERE ca.culture_question_id = '3';
-
-DELETE FROM culture_questions
-WHERE id = '1';
-
-DELETE FROM culture_questions
-WHERE id = '2';
-
-DELETE FROM culture_questions
-WHERE id = '3';
-
 insert into public.culture_questions(id, active, created_at, created_by, deleted, updated_at, updated_by, version, type , score, content)
 VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'UNIQUE_CHOICE', 1.0, 'How did you hear about xHub?'),
        (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,'UNIQUE_CHOICE', 1.0, 'Would you like to join us?'),
