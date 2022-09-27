@@ -129,9 +129,9 @@ VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
 
 -- SUB_THEMES SEEDS TEST
 
-insert into sub_themes (id, active, created_at, created_by, deleted, updated_at, updated_by, version,title, icon,theme_id)
-values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Spring', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661336412/Spring_Boot_kchrrv.png', 1),
-       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Java', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png', 1);
+insert into sub_themes (id, active, created_at, created_by, deleted, updated_at, updated_by, version,title, icon,theme_id,percentage)
+values (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Spring', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1661336412/Spring_Boot_kchrrv.png', 1,50),
+       (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,  'Java', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png', 1,50);
 
 -- QUIZ INSTRUCTIONS SEEDS TEST
 
