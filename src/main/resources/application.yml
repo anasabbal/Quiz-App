@@ -13,11 +13,6 @@ spring:
     initialization-mode: never
     platform: postgres
 
-  sql:
-    init:
-      mode: always
-      platform: postgres
-
   jpa:
     properties:
       hibernate:
@@ -29,7 +24,6 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0.1.0
     enabled: true
-    placeholderReplacement: false
 
 server:
   servlet:
