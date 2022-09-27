@@ -29,6 +29,7 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0.1.0
     enabled: true
+    placeholderReplacement: false
 
 server:
   servlet:
