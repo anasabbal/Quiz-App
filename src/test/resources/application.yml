@@ -16,6 +16,8 @@ spring:
     hibernate:
       ddl-auto: create
     database: h2
+  flyway:
+    placeholder-replacement: false
 
 application:
   front-url: ${FRONT_URL:http://localhost:3000}
