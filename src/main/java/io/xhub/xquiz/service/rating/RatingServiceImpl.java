@@ -4,6 +4,8 @@ package io.xhub.xquiz.service.rating;
 import io.xhub.xquiz.command.RatingCommand;
 import io.xhub.xquiz.domain.Attendee;
 import io.xhub.xquiz.domain.Rating;
+import io.xhub.xquiz.exception.BusinessException;
+import io.xhub.xquiz.exception.ExceptionPayloadFactory;
 import io.xhub.xquiz.repository.RatingRepository;
 import io.xhub.xquiz.service.quizinstance.QuizInstanceService;
 import io.xhub.xquiz.util.JSONUtil;
@@ -35,5 +37,10 @@ public class RatingServiceImpl implements RatingService{
         log.info("Rating has been added successfully from attendee with id {}", attendee.getId());
 
         return ratingRepository.save(rating);
+    }
+    @Override
+    public Rating getParticipantRating(String participantID){
+        log.info("Begin fetching rating with theme participant id {}", participantID);
+        return ratingRepository.findRatingByAttenteeId(participantID).orElseThrow(() -> new BusinessException(ExceptionPayloadFactory.RATING_NOT_FOUND.get()));
     }
 }

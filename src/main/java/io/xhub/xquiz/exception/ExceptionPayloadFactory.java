@@ -36,7 +36,9 @@ public enum ExceptionPayloadFactory {
     PARTICIPANT_ALREADY_RECEIVED_GOODY(25, HttpStatus.BAD_REQUEST, "participant.already.received.goody"),
     INVALID_FORM_REGISTRATION_PAYLOAD(26, HttpStatus.BAD_REQUEST, "invalid.form.registration"),
     ATTENDEE_ALREADY_PASSED_CULTURE_QUIZ(27, HttpStatus.BAD_REQUEST, "attendee.already.passed.culture.quiz"),
-    ANSWER_NOT_FOUND(28, HttpStatus.NOT_FOUND,"answer.not.found");
+    ANSWER_NOT_FOUND(28, HttpStatus.NOT_FOUND,"answer.not.found"),
+
+    RATING_NOT_FOUND(29,HttpStatus.NOT_FOUND,"rating.not.found");
 
     private final Integer code;
     private final HttpStatus status;
