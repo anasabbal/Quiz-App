@@ -1,6 +1,3 @@
-delete FROM answers;
-delete FROM questions;
-
 insert into public.questions(id, active, created_at, created_by, deleted, updated_at, updated_by, version,is_multiple_choice , score, seniority_level_id, sub_theme_id, content)
 VALUES (1, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,false, 1, 1, 2, 'Variables in an interface are always: '),
        (2, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,false, 1, 1, 2, 'Are all Strings immutable?'),
