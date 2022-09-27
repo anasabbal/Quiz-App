@@ -7,7 +7,7 @@ request:
   body:
     seniorityLevelId: "1"
     sessionId: "1"
-    subThemeId: "1"
+    themeId: "1"
 response:
   status: 200
   matchers:

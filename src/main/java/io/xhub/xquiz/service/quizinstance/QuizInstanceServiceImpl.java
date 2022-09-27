@@ -151,7 +151,10 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
 
     @Override
     public QuizInstruction getQuizInstructionsByKey(final String key) {
-        return quizInstructionsService.findQuizInstructionByKey(key);
+        log.info("Begin fetching quiz instruction with time limit");
+        final QuizInstruction quizInstruction = quizInstructionsService.findQuizInstructionByKey(key);
+        log.info("Quiz instruction fetched successfully");
+        return quizInstruction;
     }
 
     @Override
@@ -159,40 +162,40 @@ public class QuizInstanceServiceImpl implements QuizInstanceService {
         final QuizInstance quizInstance = findById(quizInstanceDetailsCommand.getSessionId());
         log.info("Session with id {} fetched successfully", quizInstance.getId());
 
-        log.info("Begin fetching total questions from quiz instruction");
         final Integer totalQuestions = Integer.valueOf(getQuizInstructionsByKey("TOTAL_QUESTIONS").getValue());
-        log.info("Begin fetching quiz instruction with key time limit");
 
         final QuizInstruction quizInstruction = getQuizInstructionsByKey("TIME_LIMIT");
 
-        final LocalDateTime startDate = LocalDateTime.now();
-
-        quizInstance.setStartDate(LocalDateTime.now());
-        quizInstance.setEndDate(LocalDateTime.now().plusSeconds(Long.parseLong(quizInstruction.getValue())));
-
         if (Boolean.FALSE.equals(quizInstanceDetailsService.checkIfSessionQuestionsExist(quizInstance.getId()))) {
+            final LocalDateTime startDate = LocalDateTime.now();
+
+            quizInstance.setStartDate(startDate);
+            quizInstance.setEndDate(startDate.plusSeconds(Long.parseLong(quizInstruction.getValue())));
 
             log.info("Begin fetching questions with seniority level id {} and sub theme id {}", quizInstanceDetailsCommand.getSeniorityLevelId(),
-                    quizInstanceDetailsCommand.getSubThemeId());
-            final List<Question> questions = questionService.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                    quizInstanceDetailsCommand.getThemeId());
+            final List<Question> questions = questionService.findQuestionsByPercentage(
                     quizInstanceDetailsCommand, totalQuestions);
+            log.info("Questions with size {} fetched successfully", questions.size());
+
             if (questions.isEmpty())
                 throw new BusinessException(ExceptionPayloadFactory.QUESTIONS_NOT_FOUND.get());
+            log.info("Begin creating question");
             questions.forEach(question -> quizInstanceDetailsService.save(QuizInstanceDetails.create(question, quizInstance, questions.indexOf(question) + 1)));
+
             QuestionDTO questionDTO = questionMapper.toQuestionDTO(questions.get(0));
-            log.info("Begin seating total correct answers");
+
             questionDTO.setTotalCorrectAnswers(getTotalCorrectAnswers(questions.get(0).getId()));
 
-            log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
             return QuizDetailDTO.create(questionDTO, Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
         } else {
             QuizInstanceDetailsDTO quizInstanceDetailsDTO = quizInstanceDetailMapper.toQuizInstanceDetailsDTO(quizInstanceDetailsService.
-                    findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex()));
+                    findQuizInstanceDetailsByQuizInstanceAndQuestionIndex(quizInstance.getId(), quizInstance.getLastQuestionIndex() + 1));
             quizInstanceDetailsDTO.getQuestion().setTotalCorrectAnswers(getTotalCorrectAnswers(quizInstanceDetailsDTO.getQuestion().getId()));
             log.info("Status set to PENDING");
             quizInstance.setStatus(Status.PENDING);
-            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), startDate, quizInstance.getEndDate());
+            return QuizDetailDTO.create(quizInstanceDetailsDTO.getQuestion(), Integer.valueOf(quizInstruction.getValue()), quizInstance.getStartDate(), quizInstance.getEndDate());
         }
     }
 

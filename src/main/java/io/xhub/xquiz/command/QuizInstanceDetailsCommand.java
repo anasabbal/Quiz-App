@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class QuizInstanceDetailsCommand {
     private String seniorityLevelId;
-    private String subThemeId;
+    private String themeId;
     private String sessionId;
 }
