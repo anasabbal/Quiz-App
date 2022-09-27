@@ -9,10 +9,7 @@ import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.domain.projection.ParticipantCulturalQuizAnswerDTO;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
-import io.xhub.xquiz.dto.EventDTO;
-import io.xhub.xquiz.dto.EventDetailsDTO;
-import io.xhub.xquiz.dto.FeedbackDTO;
-import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
+import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.dto.mapper.FeedbackMapper;
 import io.xhub.xquiz.service.event.EventService;
@@ -95,4 +92,5 @@ public class EventResource {
                                                                                 @PathVariable final String participantID) {
         return ResponseEntity.ok().body(participantService.getCulturalQuizRecap(participantID, eventID));
     }
+
 }

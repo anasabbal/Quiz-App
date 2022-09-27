@@ -21,4 +21,5 @@ public class ResourcePath {
     public static final String CULTURE_QUIZ = "/culture-quiz";
     public static final String FEEDBACK = "/feedback";
     public static final String CULTURAL_QUIZ_RECAP = "/cultural-quiz-recap";
+    public static final String PARTICIPANTS_FEEDBACK = "/participant-feedback";
 }
