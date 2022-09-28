@@ -23,7 +23,6 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
             "                                                qid.quizInstance.attendeeEvent.id.attendee.firstName, " +
             "                                                qid.quizInstance.attendeeEvent.id.attendee.lastName, " +
             "                                                qid.question.seniorityLevel.label, " +
-            "                                                qid.question.subTheme.title, " +
             "                                                qid.question.subTheme.theme.label, " +
             "                                                qid.quizInstance.createdAt, g.label, " +
             "                                                qid.quizInstance.finalScorePercentage, cqd.finalScorePercentage * 5 / 100) " +
@@ -35,7 +34,6 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
             "                qid.quizInstance.attendeeEvent.id.attendee.firstName," +
             "                qid.quizInstance.attendeeEvent.id.attendee.lastName," +
             "                qid.question.seniorityLevel.label," +
-            "                qid.question.subTheme.title," +
             "                qid.question.subTheme.theme.label," +
             "                qid.quizInstance.createdAt," +
             "                qid.quizInstance.finalScore," +

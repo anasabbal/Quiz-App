@@ -16,7 +16,6 @@ public class ParticipantDetailDTO {
     private final String firstName;
     private final String lastName;
     private final String seniorityLevel;
-    private final String subTheme;
     private final String theme;
     private final LocalDateTime dateOfQuiz;
     private final String goodyTaken;
