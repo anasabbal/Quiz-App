@@ -12,11 +12,11 @@ WHERE id in ('22', '21', '24');
 
 UPDATE sub_themes
 SET percentage = 20
-WHERE id in ('15', '20');
+WHERE id in ('15', '20', '23');
 
 UPDATE sub_themes
 SET percentage = 100
-WHERE id in ('16', '17', '18', '23', '25');
+WHERE id in ('16', '17', '18', '25');
 
 UPDATE sub_themes
 SET percentage = 30
