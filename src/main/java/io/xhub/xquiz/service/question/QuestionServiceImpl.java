@@ -36,17 +36,22 @@ public class QuestionServiceImpl implements QuestionService {
         final List<SubTheme> subThemes = subThemeRepository.findAllByThemeId(command.getThemeId());
         log.info("Sub theme with size {} fetched successfully", subThemes.size());
 
-        final Map<String, List<Question>> map = new HashMap<>();
+        if(subThemes.size() > 1){
+            final Map<String, List<Question>> map = new HashMap<>();
 
-        subThemes.forEach(subTheme -> map.put(
-                subTheme.getId(), questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
-                command.getSeniorityLevelId(),
-                subTheme.getId(),
-                subTheme.getPercentage() * totalQuestions /100
-        )));
-
-        List<Question> questions = map.values().stream().flatMap(List::stream).collect(Collectors.toList());
-        log.info("Final questions with size {}", questions.size());
-       return questions;
+            subThemes.forEach(subTheme -> map.put(
+                    subTheme.getId(), questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                            command.getSeniorityLevelId(),
+                            subTheme.getId(),
+                            subTheme.getPercentage() * totalQuestions /100
+                    )));
+            return map.values().stream().flatMap(List::stream).collect(Collectors.toList());
+        }else{
+            return questionRepository.findListQuestionBySeniorityLevelIdAndSubThemeId(
+                    command.getSeniorityLevelId(),
+                    subThemes.get(0).getId(),
+                    subThemes.get(0).getPercentage() * totalQuestions /100
+            );
+        }
     }
 }
