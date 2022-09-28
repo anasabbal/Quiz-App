@@ -4,14 +4,21 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.xhub.xquiz.command.FeedBackCommand;
 import io.xhub.xquiz.command.ParticipantGoodyCommand;
+import io.xhub.xquiz.constants.ResourcePath;
 import io.xhub.xquiz.criteria.EventCriteria;
 import io.xhub.xquiz.domain.Event;
 import io.xhub.xquiz.domain.projection.ParticipantCulturalQuizAnswerDTO;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
 import io.xhub.xquiz.dto.*;
+import io.xhub.xquiz.dto.EventDTO;
+import io.xhub.xquiz.dto.EventDetailsDTO;
+import io.xhub.xquiz.dto.FeedbackDTO;
+import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
+import io.xhub.xquiz.dto.*;
 import io.xhub.xquiz.dto.mapper.EventMapper;
 import io.xhub.xquiz.dto.mapper.FeedbackMapper;
+import io.xhub.xquiz.dto.mapper.TechQuizRecapMapper;
 import io.xhub.xquiz.service.event.EventService;
 import io.xhub.xquiz.service.participant.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +41,7 @@ public class EventResource {
     private final ParticipantService participantService;
     private final EventMapper eventMapper;
     private final FeedbackMapper feedbackMapper;
+    private final TechQuizRecapMapper techQuizRecapMapper;
 
     @GetMapping
     public ResponseEntity<Page<EventDTO>> getEvents(Pageable pageable, EventCriteria eventCriteria) {
@@ -93,4 +101,16 @@ public class EventResource {
         return ResponseEntity.ok().body(participantService.getCulturalQuizRecap(participantID, eventID));
     }
 
+
+    @GetMapping("/{eventID}" + PARTICIPANTS + "/{participantID}" + ResourcePath.TECH_QUIZ_RECAP)
+    @ApiOperation(value = "Get xQuiz participant technical quiz recap")
+    public ResponseEntity<TechQuizRecapDTO> getTechQuizRecap(@PathVariable final String eventID,
+                                                             @PathVariable final String participantID) {
+        return ResponseEntity.ok().body(
+                techQuizRecapMapper.toTechQuizRecapDTO(
+                        participantService.getTechnicalQuizRecap(eventID, participantID),
+                        participantService.getEventParticipantTechnicalQuizPercentScore(eventID, participantID),
+                        participantService.getTimePassed(eventID, participantID)
+                ));
+    }
 }

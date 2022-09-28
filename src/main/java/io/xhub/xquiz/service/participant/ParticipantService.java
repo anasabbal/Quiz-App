@@ -6,6 +6,7 @@ import io.xhub.xquiz.domain.*;
 import io.xhub.xquiz.domain.projection.ParticipantDetailDTO;
 import io.xhub.xquiz.domain.projection.ParticipantGoodiesDTO;
 import io.xhub.xquiz.dto.ParticipantCulturalQuizRecapDTO;
+import io.xhub.xquiz.dto.TechQuizRecapAnswersDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,4 +29,10 @@ public interface ParticipantService {
     Feedback getFeedback(String eventID, String participantID);
 
     ParticipantCulturalQuizRecapDTO getCulturalQuizRecap(String participantID, String eventID);
+
+    List<TechQuizRecapAnswersDTO> getTechnicalQuizRecap(final String eventIdD, final String participantID);
+
+    Integer getEventParticipantTechnicalQuizPercentScore(String eventID, String participantID);
+
+    Long getTimePassed(String eventID, String participantID);
 }

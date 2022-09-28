@@ -1,5 +1,6 @@
 package io.xhub.xquiz.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,12 +19,14 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @EntityListeners(value = AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "ID")
+    @EqualsAndHashCode.Include
     protected String id;
 
     @Version

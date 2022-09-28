@@ -17,4 +17,7 @@ public interface QuizInstanceRepository extends JpaRepository<QuizInstance, Stri
 
     @Query("SELECT q.attendeeEvent.id.attendee FROM QuizInstance q WHERE q.id = ?1")
     Optional<Attendee> findAttendeeByQuizInstance(final String id);
+
+    @Query("SELECT q FROM QuizInstance q WHERE q.attendeeEvent.id.attendee.id = :participantId and q.attendeeEvent.id.event.id = :eventId")
+    Optional<QuizInstance> getQuizInstanceByAttendeeEventIdAndEventId(String eventId , String participantId );
 }

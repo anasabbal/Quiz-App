@@ -19,13 +19,13 @@ public interface AttendeeEventRepository extends JpaRepository<AttendeeEvent, At
             "WHERE qi.attendeeEvent.id.event.id = :eventID and qi.attendeeEvent.id.attendee.id = :participantID  and qi.status = 'FINISHED'")
     Optional<AttendeeEvent> findEventParticipantByID(String eventID, String participantID);
 
-    @Query("SELECT qi.percentFinalScore from QuizInstance qi " +
+    @Query("SELECT qi.finalScorePercentage from QuizInstance qi " +
             "WHERE qi.attendeeEvent.id.event.id = :eventID " +
             "and qi.attendeeEvent.id.attendee.id = :participantID " +
             "and qi.status = 'FINISHED'")
     Integer getEventParticipantTechnicalQuizPercentScore(String eventID, String participantID);
 
-    @Query("SELECT cqd.percentFinalScore from CultureQuizDetails cqd " +
+    @Query("SELECT cqd.finalScorePercentage from CultureQuizDetails cqd " +
             "WHERE cqd.quizInstance.attendeeEvent.id.event.id = :eventID " +
             "and cqd.quizInstance.attendeeEvent.id.attendee.id = :participantID " +
             "and cqd.quizInstance.status = 'FINISHED'")

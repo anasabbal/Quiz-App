@@ -26,7 +26,7 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
             "                                                qid.question.subTheme.title, " +
             "                                                qid.question.subTheme.theme.label, " +
             "                                                qid.quizInstance.createdAt, g.label, " +
-            "                                                qid.quizInstance.percentFinalScore, cqd.percentFinalScore * 5 / 100) " +
+            "                                                qid.quizInstance.finalScorePercentage, cqd.finalScorePercentage * 5 / 100) " +
             "       FROM QuizInstanceDetails qid" +
             "       JOIN CultureQuizDetails cqd on qid.quizInstance = cqd.quizInstance" +
             "       LEFT JOIN Goody g on qid.quizInstance.attendeeEvent.goody = g " +
@@ -40,8 +40,8 @@ public interface AttendeeRepository extends JpaRepository<Attendee, String> {
             "                qid.quizInstance.createdAt," +
             "                qid.quizInstance.finalScore," +
             "                qid.quizInstance.status," +
-            "                qid.quizInstance.percentFinalScore," +
-            "                cqd.percentFinalScore," +
+            "                qid.quizInstance.finalScorePercentage," +
+            "                cqd.finalScorePercentage," +
             "                g.label" +
             "        HAVING qid.quizInstance.status = 'FINISHED' and qid.quizInstance.attendeeEvent is not null" +
             "        AND upper(concat(qid.quizInstance.attendeeEvent.id.attendee.firstName, qid.quizInstance.attendeeEvent.id.attendee.lastName)) " +

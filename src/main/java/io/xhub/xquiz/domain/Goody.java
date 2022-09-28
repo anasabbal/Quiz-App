@@ -12,10 +12,8 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Goody extends BaseEntity {
 
-    @EqualsAndHashCode.Include
     @Column(name = "LABEL")
     private String label;
     @Column(name = "AVAILABLE_STOCK")
