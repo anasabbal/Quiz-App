@@ -45,6 +45,3 @@ VALUES (3, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:
         'Scrum team', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png', 6),
        (25, true, '2022-04-06 01:27:07.8801', 'SYSTEM', false, '2022-04-16 01:27:07.8801', 'SYSTEM', 0,
         'General', 'https://res.cloudinary.com/dizlyig0d/image/upload/v1660134120/Java_sqfbla.png', 5);
-
-delete from answers;
-delete from questions;
